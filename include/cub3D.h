@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/12 19:50:26 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:55:43 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,39 @@ typedef	struct s_map
 	// map struct	
 } t_map;
 
+typedef struct s_vector
+{
+	double	x_dir;
+	double	y_dir;
+} t_vector;
+
+typedef struct s_coord
+{
+	double	x_coord;
+	double	y_coord;
+} t_coord;
+
+typedef struct s_player 
+{
+	struct s_coord	ppos;
+	struct s_vector dir;
+	double	plane_x;	// player plane
+	double	plane_y;
+} t_player;
+
 typedef struct s_cub 
 {
-	mlx_t		*mlx;
-	t_map		map;
-	mlx_image_t	*img;
+	mlx_t				*mlx;
+	t_map				map;
+	mlx_image_t			*img;
+	
+	struct s_player		*player;
 } t_cub;
+
+/* Functions */
+
+/* Raycasting */
+t_vector    ray_direction(t_player player);
+
 
 #endif
