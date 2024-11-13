@@ -6,18 +6,22 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/12 19:52:57 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/13 20:00:54 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	init_cub3d()
+static void	init_cub3d(t_cub *cub)
 {
-    // parse map and
-	// init cub3d
-    // add some default map values 
-    // before implementing parse
+    cub->mlx = mlx_init(WIN_X, WIN_Y, "cube3D", true);
+	if (cub->mlx == NULL)
+		handle_error(&cub->map, mlx_errno);
+	cub->img = mlx_new_image(cub->mlx, WIN_X, WIN_Y);
+	if (cub->img == NULL)
+		error_terminate_mlx(cub, mlx_errno);
+	if (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0)
+		error_terminate_mlx(cub, mlx_errno);
 }
 
 static void	ft_hook(void *param)
@@ -50,7 +54,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		handle_error(NULL, EXIT_CMD_COUNT_ERROR);
 	load_map(argv[1]); // set some default map content
-	init_fdf(&cub);
+	init_cube3D(&cub);
 	draw_map(&cub);
 	mlx_loop_hook(cub.mlx, ft_hook, &cub);
 	mlx_loop(cub.mlx);
