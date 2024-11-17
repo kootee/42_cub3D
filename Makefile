@@ -1,10 +1,16 @@
 # Variables
 NAME	= cub3D
 CC		= cc
-CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g -fsanitize=address
+CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -ffast-math -0fast
+DBFLAGS = -g
 LIBMLX	= MLX42
 LIBFT	= libft
 debug	?= 0
+
+# Conditional inclusion of DBFLAGS
+ifeq ($(debug), 1)
+CFLAGS += $(DBFLAGS)
+endif
 
 # MLX42
 MLX_DIR = ./MLX42
@@ -46,14 +52,14 @@ $(NAME): $(OBJECTS)
 	$(CC) $(OBJECTS) $(LIBS) -o $(NAME) $(INCLUDES)
 
 # Compile source files into object files
-%.o: %.cpp
+%.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES) && printf "Compiling: $(notdir $<)\n"
 
 clean:
-	rm -rf $(OBJECTS)
+	rm -f $(OBJECTS)
 	rm -rf $(MLX_BUILD_DIR)
 
 fclean: clean
-	rm $(NAME)
+	rm -f $(NAME)
 
 .PHONY: clean fclean all libs

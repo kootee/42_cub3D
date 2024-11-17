@@ -6,24 +6,25 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 20:11:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/13 19:32:39 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/17 17:28:27 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void    raycast(t_cub *cub, t_wall_data *wall, int *side)
+void    raycast(t_cub *cub)
 {
-    t_wall_data wall;
+    t_ray_data  ray;
     t_coord     map_coord;
     t_vector    step; // direction in which the ray moves
     t_vector    side_dist; // initial distance for ray to travel
+    int         side;
     
     ray_direction(cub, cub->player);
     delta_distance(cub, *(cub->player), map_coord);
     step_dist(cub, map_coord, &step, &side_dist);
-    *side = ddiff_analysis(cub, side_dist, step, map_coord);
-    *wall = wall_height(cub, side, map_coord, step);
+    side = ddiff_analysis(cub, side_dist, step, map_coord);
+    ray = wall_height(cub, side, map_coord, step);
 }
 
 // 1: calculate ray direction
@@ -98,16 +99,16 @@ int    ddiff_analysis(t_cub *cub, t_vector side_dist, t_vector step, t_coord map
             side_dist.y_dir += cub->d_dist.y_dir;
             map.y_coord += step.y_dir;
             side = 1;
-        }if (cub->map.data[map.x_coord][map.y_coord] == '1')
+        }if (cub->map[map.x_coord][map.y_coord] == '1')
             break;
     }
     return (side);
 }
 
 // 5: calculate wall height
-t_wall_data    wall_height(t_cub *cub, int side, t_coord map_coord, t_vector step)
+t_ray_data    wall_height(t_cub *cub, int side, t_coord map_coord, t_vector step)
 {
-    t_wall_data wall;
+    t_ray_data wall;
     
     if (side == 0)
         wall.wall_dist = (map_coord.x_coord - cub->player->ppos.x_coord 

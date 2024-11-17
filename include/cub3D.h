@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/13 19:39:25 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/17 17:27:50 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 # define WIN_MARGIN 50
 # define NUM_TEXTURES 4
 # define TEXTURE_SIZE 64
+
+# define PLAYER_SPEED 0.045
+# define ROTATION_SPEED 4
 
 typedef enum e_errorcode
 {
@@ -59,11 +62,6 @@ typedef enum s_rgb_values
 	A
 }	t_rgb_values;
 
-typedef	struct s_map
-{
-	int	*data[2];
-	// map struct	
-} t_map;
 
 typedef struct s_vector
 {
@@ -79,37 +77,43 @@ typedef struct s_coord
 
 typedef struct s_player 
 {
-	struct s_coord	ppos;
-	struct s_vector dir;
+	struct	s_coord	ppos;
+	struct	s_vector dir;
+	double	p_angle;
 	double	plane_x;	// player plane
 	double	plane_y;
 } t_player;
 
-typedef	struct	s_wall_data
+typedef	struct s_ray_data
 {
+	double	x_dir;
+	double	y_dir;
+	double	side_dist_x;
+	double	side_dist_y;
 	t_coord wall_pos;
     double  wall_dist;
     int     draw_start;
     int     draw_end;
 	int		line_height;
-} t_wall_data;
+} t_ray_data;
 
 typedef struct s_cub 
 {
-	mlx_t				*mlx;
-	t_map				map;
-	mlx_image_t			*img;
-	t_vector			d_dist;
-	t_vector			ray;
 	struct s_player		*player;
+	struct s_ray_data	ray;
+	mlx_t				*mlx;
+	mlx_image_t			*mlx_img;
+	t_vector			d_dist;
+	char 				**map;
 	int					*texture_buff[NUM_TEXTURES]; // texture_buffer[n][y * 64 + x]
 	int					**pixel_map;
 } t_cub;
 
 /* Functions */
+static void	init_cub3d(t_cub *cub);
 
 /* Raycasting */
-t_vector    ray_direction(t_player player);
-
+void    ray_direction(t_player player);
+void    raycast(t_cub *cub);
 
 #endif
