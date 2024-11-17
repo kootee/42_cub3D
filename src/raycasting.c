@@ -6,130 +6,125 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 20:11:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/17 17:28:27 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/17 20:33:39 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void    raycast(t_cub *cub)
+/* To find the first wall that a ray encounters on its way, 
+you have to let it start at the player's position, 
+and then all the time, check whether or not the ray is inside a wall. 
+If it's inside a wall (hit), then the loop can stop, 
+calculate the distance, and draw the wall with the correct height. */
+
+/* Main structure for the raycasting */
+void    ray_cast(t_cub *cub)
 {
-    t_ray_data  ray;
-    t_coord     map_coord;
-    t_vector    step; // direction in which the ray moves
-    t_vector    side_dist; // initial distance for ray to travel
-    int         side;
-    
     ray_direction(cub, cub->player);
-    delta_distance(cub, *(cub->player), map_coord);
-    step_dist(cub, map_coord, &step, &side_dist);
-    side = ddiff_analysis(cub, side_dist, step, map_coord);
-    ray = wall_height(cub, side, map_coord, step);
+    delta_distance(cub->ray, cub->player);
+    step_dist(cub->ray, cub->player);
+    ddiff_analysis(cub, cub->ray);
+    wall_height(cub->ray, cub->player);
 }
 
-// 1: calculate ray direction
+/* 1: calculate ray direction */
 void    ray_direction(t_cub *cub, t_player *player)
 {
-    double      camera_x;
-    int         x;
+    int x;
 
-    x = 0;
-    while (x < WIN_X)
+    while(x < WIN_X) // calculate for each vertical line on the screen (along x axis)
     {
-        camera_x = 2 * x /(double)WIN_X - 1;
-        cub->ray.x_dir = player->dir.x_dir + player->plane_x * camera_x;
-        cub->ray.y_dir = player->dir.y_dir + player->plane_y * camera_x;
-
-        // ...
+        // calculate ray position and direction
+        cub->camera_plane.x_dir = 2 * x /(double)WIN_X - 1;
+        cub->ray.x_dir = player->dir.x_dir + player->plane_x 
+                        * cub->camera_plane.x_dir;
+        cub->ray.y_dir = player->dir.y_dir + player->plane_y 
+                        * cub->camera_plane.x_dir;
+        x++;
     }
 }
-
-// 2: calculate delta distance
-void    delta_distance(t_cub *cub, t_player player, t_coord map_coord)
+/* 2: calculate delta distance */
+void    delta_distance(t_ray_data *ray, t_player *player)
 {
-    map_coord.x_coord = (int)cub->player->ppos.x_coord;
-    map_coord.y_coord = (int)cub->player->ppos.y_coord;
-    cub->d_dist.x_dir = fabs(1 / cub->ray.x_dir);
-    cub->d_dist.y_dir = fabs(1 / cub->ray.y_dir);
+    // map coords are the current square of the map the ray is in
+    ray->map_coord.x_coord = (int)player->ppos.x_dir;
+    ray->map_coord.y_coord = (int)player->ppos.y_dir;
+    ray->d_dist.x_dir = fabs(1 / ray->x_dir);
+    ray->d_dist.y_dir = fabs(1 / ray->y_dir);
 }
 
-// 3: calculate step and initial side distance
-void    step_dist(t_cub *cub, t_coord map, t_vector *step, t_vector *side_dist)
+/* 3: calculate step and initial side distance */
+void    step_dist(t_ray_data *ray, t_player *player)
 {
-    t_coord ppos;
-
-    ppos = cub->player->ppos;
-    if (cub->ray.x_dir < 0)
+    if (ray->x_dir < 0)
     {
-        step->x_dir = - 1;
-        side_dist->x_dir = (ppos.x_coord - map.x_coord) * cub->d_dist.x_dir;
+        ray->step.x_dir = - 1;
+        ray->side_dist.x_dir = (player->ppos.x_dir - ray->map_coord.x_coord) 
+        * ray->d_dist.x_dir;
     }
     else
     {
-        step->x_dir = 1;
-        side_dist->x_dir = (map.x_coord + 1.0 - ppos.x_coord) * cub->d_dist.x_dir;
+        ray->step.x_dir = 1;
+        ray->side_dist.x_dir = (ray->map_coord.x_coord 
+        + 1.0 - player->ppos.x_dir) * ray->d_dist.x_dir;
     }
-    if (cub->ray.y_dir < 0)
+    if (ray->y_dir < 0)
     {
-        step->y_dir = -1;
-        side_dist->y_dir = (ppos.y_coord - map.y_coord) * cub->d_dist.y_dir;
+        ray->step.y_dir = -1;
+        ray->side_dist.y_dir = (player->ppos.y_dir - 
+        ray->map_coord.y_coord) * ray->d_dist.y_dir;
     }
     else
     {
-        step->y_dir = 1;
-        side_dist->y_dir = (map.y_coord + 1.0 - ppos.y_coord) * cub->d_dist.y_dir;   
+        ray->step.y_dir = 1;
+        ray->side_dist.y_dir = (ray->map_coord.y_coord + 1.0 
+        - player->ppos.y_dir) * ray->d_dist.y_dir;   
     }
 }
 
-// 4: digital differential analysis
-int    ddiff_analysis(t_cub *cub, t_vector side_dist, t_vector step, t_coord map)
-{ // cub here, includes map and player
-    int side;
-
+// 4: DDA (digital differential analysis) -> calculate the side length
+void    ddiff_analysis(t_cub *cub, t_ray_data *ray)
+{
     while(true)
     {
-        if (side_dist.x_dir < side_dist.y_dir)
+        if (ray->side_dist.x_dir < ray->side_dist.y_dir)
         {
-            side_dist.x_dir += cub->d_dist.x_dir;
-            map.x_coord += step.x_dir;
-            side = 0;
+            ray->side_dist.x_dir += ray->d_dist.x_dir;
+            ray->map_coord.x_coord += ray->step.x_dir;
+            ray->side = 0;
         }
         else
         {
-            side_dist.y_dir += cub->d_dist.y_dir;
-            map.y_coord += step.y_dir;
-            side = 1;
-        }if (cub->map[map.x_coord][map.y_coord] == '1')
+            ray->side_dist.y_dir += ray->d_dist.y_dir;
+            ray->map_coord.y_coord += ray->step.y_dir;
+            ray->side = 1;
+        }if (cub->map[ray->map_coord.x_coord][ray->map_coord.y_coord] == '1') // a wall is hit
             break;
     }
-    return (side);
 }
 
 // 5: calculate wall height
-t_ray_data    wall_height(t_cub *cub, int side, t_coord map_coord, t_vector step)
+t_ray_data    wall_height(t_ray_data *ray, t_player *player)
 {
-    t_ray_data wall;
-    
-    if (side == 0)
-        wall.wall_dist = (map_coord.x_coord - cub->player->ppos.x_coord 
-                    + (1 - step.x_dir) / 2) / cub->ray.x_dir;
+    if (ray->side == 0)
+       ray->wall_dist = (ray->map_coord.x_coord - player->ppos.x_dir 
+                    + (1 - ray->step.x_dir) / 2) / ray->x_dir;
     else
-        wall.wall_dist = (map_coord.y_coord - cub->player->ppos.y_coord 
-                    + (1 - step.y_dir) / 2) / cub->ray.y_dir;
-    wall.line_height = (int)(WIN_Y / wall.wall_dist);
-    wall.draw_start = -wall.line_height / 2 + WIN_Y / 2;
-    if (wall.draw_start < 0)
-        wall.draw_start = 0;
-
-    wall.draw_end = wall.line_height  / 2 + WIN_Y / 2;
-    if (wall.draw_end >= WIN_Y)
-        wall.draw_end = WIN_Y - 1;
-    if (side == 0)
-        wall.wall_pos.x_coord = cub->player->ppos.y_coord + wall.wall_dist 
-                                * cub->d_dist.y_dir;
+        ray->wall_dist = (ray->map_coord.y_coord - player->ppos.y_dir 
+                    + (1 - ray->step.y_dir) / 2) / ray->y_dir;
+    ray->line_height = (int)(WIN_Y / ray->wall_dist);
+    ray->wall_draw_start = -ray->line_height / 2 + WIN_Y / 2;
+    if (ray->wall_draw_start < 0)
+        ray->wall_draw_start  = 0;
+    ray->wall_draw_end = ray->line_height  / 2 + WIN_Y / 2;
+    if (ray->wall_draw_end >= WIN_Y)
+        ray->wall_draw_end = WIN_Y - 1;
+    if (ray->side == 0)
+        ray->wall_pos.x_coord = player->ppos.y_dir + ray->wall_dist 
+                                * ray->d_dist.y_dir;
     else
-        wall.wall_pos.x_coord = cub->player->ppos.x_coord + wall.wall_dist 
-                                * cub->d_dist.x_dir;
-    wall.wall_pos.x_coord -= floor(wall.wall_pos.x_coord);
-    return (wall);
+        ray->wall_pos.x_coord = player->ppos.x_dir + ray->wall_dist 
+                                * ray->d_dist.x_dir;
+    ray->wall_pos.x_coord -= floor(ray->wall_pos.x_coord);
 }

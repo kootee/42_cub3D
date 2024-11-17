@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/17 17:27:50 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/17 20:25:14 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include "MLX42.h"
 # include "libft.h"
 
-# define WIN_X	1080
-# define WIN_Y	1080
+# define WIN_X	640
+# define WIN_Y	480
 # define WIN_MARGIN 50
 # define NUM_TEXTURES 4
 # define TEXTURE_SIZE 64
@@ -77,8 +77,8 @@ typedef struct s_coord
 
 typedef struct s_player 
 {
-	struct	s_coord	ppos;
-	struct	s_vector dir;
+	struct	s_vector	ppos;
+	struct	s_vector	dir;
 	double	p_angle;
 	double	plane_x;	// player plane
 	double	plane_y;
@@ -86,34 +86,38 @@ typedef struct s_player
 
 typedef	struct s_ray_data
 {
-	double	x_dir;
-	double	y_dir;
-	double	side_dist_x;
-	double	side_dist_y;
-	t_coord wall_pos;
-    double  wall_dist;
-    int     draw_start;
-    int     draw_end;
-	int		line_height;
+	t_vector	d_dist;
+    t_vector    step; // direction in which the ray moves
+    t_vector    side_dist; // initial distance for ray to travel
+	t_coord 	wall_pos;
+	t_coord     map_coord;
+	double		x_dir;
+	double		y_dir;
+	double		side_dist_x;
+	double		side_dist_y;
+    double  	wall_dist;
+	int     	side;
+    int     	wall_draw_start;
+    int     	wall_draw_end;
+	int			line_height;
 } t_ray_data;
 
 typedef struct s_cub 
 {
 	struct s_player		*player;
-	struct s_ray_data	ray;
+	struct s_ray_data	*ray;
 	mlx_t				*mlx;
 	mlx_image_t			*mlx_img;
-	t_vector			d_dist;
+	t_vector      		camera_plane;
 	char 				**map;
 	int					*texture_buff[NUM_TEXTURES]; // texture_buffer[n][y * 64 + x]
 	int					**pixel_map;
 } t_cub;
 
 /* Functions */
-static void	init_cub3d(t_cub *cub);
+void	init_cub(t_cub *cub, char **argv, int argc);
 
 /* Raycasting */
-void    ray_direction(t_player player);
-void    raycast(t_cub *cub);
+void    ray_cast(t_cub *cub);
 
 #endif

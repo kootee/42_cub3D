@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/17 17:34:30 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/17 19:37:00 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,23 @@ void    add_temp_data(t_cub *cub)
     cub->map[3] = ft_strdup("10001");
     cub->map[4] = ft_strdup("11111");
     cub->map[5] = NULL;
-    cub->player->ppos.x_coord = 3;
-    cub->player->ppos.y_coord = 3;
+    // add player data: location in map, ray direction
+    cub->player->ppos.x_dir = 3;
+    cub->player->ppos.y_dir = 3;
+    cub->player->dir.x_dir = -1;
+    cub->player->dir.y_dir = 0;
+    cub->player->plane_x = 0;
+    cub->player->plane_y = 0.66;
 }
 
-static void	init_cub3d(t_cub *cub, char *map_data)
+static void	init_cub(t_cub *cub, char *map_data, int argc)
 {
+    if (argc != 2)
+		handle_error(NULL, EXIT_CMD_COUNT_ERROR);
     // temporary filling the data
     add_temp_data(cub);
-    // remove after init is added
     load_map(map_data);
     init_player();
-    
     // start mlx and open window
     cub->mlx = mlx_init(WIN_X, WIN_Y, "cube3D", true);
 	if (cub->mlx == NULL)
