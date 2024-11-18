@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/18 15:54:21 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:37:21 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,22 @@
 # define WIN_Y	480
 # define WIN_MARGIN 50
 # define NUM_TEXTURES 4
-# define TEXTURE_SIZE 64
+# define TEXTURE_X 64
+# define TEXTURE_Y 64
 
 # define PLAYER_SPEED 0.045
 # define ROT_SPEED 4
 
 typedef enum e_errorcode
 {
-	EXIT_CMD_COUNT_ERROR = 200,
-	EXIT_MALLOC_FAIL = 201,
-	EXIT_INVALID_MAP_PTS = 202,
-	EXIT_INVALID_MAP_DIM = 203,
-	EXIT_OPEN_ERROR = 204,
-	EXIT_INVALID_FILE_NAME = 205,
-	EXIT_INVALID_MAP = 206
+	ERROR_CMD_COUNT_ERROR = 200,
+	ERROR_MALLOC_FAIL = 201,
+	ERROR_INVALID_MAP_PTS = 202,
+	ERROR_INVALID_MAP_DIM = 203,
+	ERROR_OPEN_ERROR = 204,
+	ERROR_INVALID_FILE_NAME = 205,
+	ERROR_INVALID_MAP = 206,
+	ERROR_TEXTURE = 207
 }	t_errorcode;
 
 typedef enum e_cardinal_direction
@@ -91,21 +93,30 @@ typedef	struct s_ray_data
 	t_vector	d_dist;
     t_vector    step; // direction in which the ray moves
     t_vector    side_dist; //length of ray from current position to next x or y-side
-	t_coord 	wall_pos;
 	t_coord     map_coord;
 	double		x_dir; // replace with vector
 	double		y_dir; // replace with vector
     double  	wall_dist;
+	double		wall_x;
 	int     	side;
     int     	draw_start;
     int     	draw_end;
 } t_ray_data;
+
+typedef struct s_textures 
+{
+	mlx_texture_t	*north;
+	mlx_texture_t	*south;
+	mlx_texture_t	*east;
+	mlx_texture_t	*west;
+} t_textures;
 
 typedef struct s_cub 
 {
 	mlx_t				*mlx;
 	mlx_image_t			*mlx_img;
 	mlx_texture_t		*texture_buff[NUM_TEXTURES]; // texture_buffer[n][y * 64 + x]
+	struct s_textures	textures;
 	struct s_player		player;
 	struct s_ray_data	ray;
 	t_vector      		camera_plane;
@@ -121,5 +132,9 @@ void    ray_cast(t_cub *cub);
 
 /* Key actions */
 static void	ft_hook(void *param);
+
+/* Error handling */
+void	handle_error(int errno);
+void	error_terminate_mlx(t_cub *cub, int errno);
 
 #endif

@@ -6,46 +6,34 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:42:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/18 15:27:08 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:41:06 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	draw_to_screen(t_cub * cub, t_ray_data *ray, int pixel_column)
+void	draw_to_screen(t_cub * cub, t_ray_data *ray, int x_to_draw)
 {
-	draw_texture_column(cub, ray, pixel_column);
-	draw_floor_ceiling(cub, ray, pixel_column);
-	
-	/* 	int		len;
-
-	delta_v.axis[X] = end.axis[X] - start.axis[X];
-	delta_v.axis[Y] = end.axis[Y] - start.axis[Y];
-	line = sqrt((delta_v.axis[X] * delta_v.axis[X]) + \
-		(delta_v.axis[Y] * delta_v.axis[Y]));
-	len = line;
-	delta_v.axis[X] /= line;
-	delta_v.axis[Y] /= line;
-	pixel.axis[X] = start.axis[X];
-	pixel.axis[Y] = start.axis[Y];
-	while (line > 0)
-	{
-		pixel.color = gradient(start.color, end.color, len, len - line);
-		ft_putpixel(fdf->img, pixel.axis[X], pixel.axis[Y], pixel.color);
-		pixel.axis[X] += delta_v.axis[X];
-		pixel.axis[Y] += delta_v.axis[Y];
-		line -= 1;
-	} */
+	draw_texture_column(cub, ray, x_to_draw);
+	draw_floor_ceiling(cub, ray, x_to_draw);
 }
 
-void	draw_texture_column(t_cub *cub, t_ray_data *ray, int pixel_column)
+void	draw_texture_column(t_cub *cub, t_ray_data *ray, int x_to_draw)
 {
-	uint32_t	color;
-	uint8_t		*pix;
-	int			y_pos;
+	mlx_texture_t	*texture;
+	uint32_t		color;
+	uint8_t			*pix;
+	int				y_pos;
 
-	// set E W N or S texture
-	// 
+	/*
+		calculate texture coordinate
+		x coordinate on the texture
+      	int texX = int(wallX * double(texWidth));
+      	if(side == 0 && rayDirX > 0) texX = texWidth - texX - 1;
+      	if(side == 1 && rayDirY < 0) texX = texWidth - texX - 1; 
+	*/
+	// set E W N S texture
+	// modify alpha channel (divide channels by 2) to make walls on north face be darker?
 }
 
 int	ft_putpixel(mlx_image_t *img, float x, float y, int32_t color)

@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 20:11:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/18 15:18:18 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:39:17 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,30 +114,24 @@ t_ray_data    wall_height(t_ray_data *ray, t_player *player)
 {
     int line_height;
 
-    //Calculate distance projected on camera direction
     if (ray->side == 0)
        ray->wall_dist = (ray->map_coord.x_coord - player->ppos.x_dir 
                         + (1 - ray->step.x_dir) / 2) / ray->x_dir;
     else
         ray->wall_dist = (ray->map_coord.y_coord - player->ppos.y_dir 
                         + (1 - ray->step.y_dir) / 2) / ray->y_dir;
-    
-    //Calculate height of line to draw on screen
     line_height = (int)(WIN_Y / ray->wall_dist);
-    
-    //calculate lowest and highest pixel to fill in current vertical line
     ray->draw_start = -line_height / 2 + WIN_Y / 2;
     if (ray->draw_start < 0)
         ray->draw_start  = 0;
     ray->draw_end = line_height  / 2 + WIN_Y / 2;
     if (ray->draw_end >= WIN_Y)
         ray->draw_end = WIN_Y - 1;
-    // is x or y side -- ?
     if (ray->side == 0)
-        ray->wall_pos.x_coord = player->ppos.y_dir + ray->wall_dist 
+        ray->wall_x = player->ppos.y_dir + ray->wall_dist 
                                 * ray->d_dist.y_dir;
     else
-        ray->wall_pos.x_coord = player->ppos.x_dir + ray->wall_dist 
+        ray->wall_x = player->ppos.x_dir + ray->wall_dist 
                                 * ray->d_dist.x_dir;
-    ray->wall_pos.x_coord -= floor(ray->wall_pos.x_coord);
+    ray->wall_x -= floor(ray->wall_x);
 }
