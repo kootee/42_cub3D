@@ -6,18 +6,20 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/17 20:25:14 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:54:21 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-/* • open, close, read, write,
+/* 
+	Allowed functions:
+	open, close, read, write,
 	printf, malloc, free, perror,
 	strerror, exit, gettimeofday
-	• All functions of the math
-	library (-lm man man 3 math) */
+	All functions of the math
+	library (-lm man man 3 math) 	*/
 
 # include <string.h>
 # include <math.h>
@@ -33,7 +35,7 @@
 # define TEXTURE_SIZE 64
 
 # define PLAYER_SPEED 0.045
-# define ROTATION_SPEED 4
+# define ROT_SPEED 4
 
 typedef enum e_errorcode
 {
@@ -88,29 +90,26 @@ typedef	struct s_ray_data
 {
 	t_vector	d_dist;
     t_vector    step; // direction in which the ray moves
-    t_vector    side_dist; // initial distance for ray to travel
+    t_vector    side_dist; //length of ray from current position to next x or y-side
 	t_coord 	wall_pos;
 	t_coord     map_coord;
-	double		x_dir;
-	double		y_dir;
-	double		side_dist_x;
-	double		side_dist_y;
+	double		x_dir; // replace with vector
+	double		y_dir; // replace with vector
     double  	wall_dist;
 	int     	side;
-    int     	wall_draw_start;
-    int     	wall_draw_end;
-	int			line_height;
+    int     	draw_start;
+    int     	draw_end;
 } t_ray_data;
 
 typedef struct s_cub 
 {
-	struct s_player		*player;
-	struct s_ray_data	*ray;
 	mlx_t				*mlx;
 	mlx_image_t			*mlx_img;
+	mlx_texture_t		*texture_buff[NUM_TEXTURES]; // texture_buffer[n][y * 64 + x]
+	struct s_player		player;
+	struct s_ray_data	ray;
 	t_vector      		camera_plane;
 	char 				**map;
-	int					*texture_buff[NUM_TEXTURES]; // texture_buffer[n][y * 64 + x]
 	int					**pixel_map;
 } t_cub;
 
@@ -119,5 +118,8 @@ void	init_cub(t_cub *cub, char **argv, int argc);
 
 /* Raycasting */
 void    ray_cast(t_cub *cub);
+
+/* Key actions */
+static void	ft_hook(void *param);
 
 #endif

@@ -6,14 +6,17 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:42:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/13 20:03:50 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:27:08 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	draw_to_screen(t_cub * cub)
+void	draw_to_screen(t_cub * cub, t_ray_data *ray, int pixel_column)
 {
+	draw_texture_column(cub, ray, pixel_column);
+	draw_floor_ceiling(cub, ray, pixel_column);
+	
 	/* 	int		len;
 
 	delta_v.axis[X] = end.axis[X] - start.axis[X];
@@ -35,14 +38,14 @@ void	draw_to_screen(t_cub * cub)
 	} */
 }
 
-void    draw_map(t_cub *cub)
+void	draw_texture_column(t_cub *cub, t_ray_data *ray, int pixel_column)
 {
-    t_wall_data wall;
-	int			side;
-    
-    raycast(cub, wall, &side);
-    draw_texture(cub, wall, side);
-	draw_to_screen(cub);
+	uint32_t	color;
+	uint8_t		*pix;
+	int			y_pos;
+
+	// set E W N or S texture
+	// 
 }
 
 int	ft_putpixel(mlx_image_t *img, float x, float y, int32_t color)

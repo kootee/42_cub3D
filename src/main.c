@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/17 19:39:42 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:33:21 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,6 @@ void    terminate_cub(t_cub *cub)
 	mlx_terminate(cub->mlx);
 }
 
-static void	ft_hook(void *param)
-{
-	t_cub	*cub;
-	mlx_t	*mlx_inst;
-
-	cub = param;
-	mlx_inst = cub->mlx;
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(cub->mlx);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT))
-		mlx_close_window(cub->mlx); // implement look left
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT))
-		mlx_close_window(cub->mlx); // implement look right
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_W))
-		mlx_close_window(cub->mlx); // implement move
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_A))
-		mlx_close_window(cub->mlx); // implement move
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_S))
-		mlx_close_window(cub->mlx); // implement move
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_D))
-		mlx_close_window(cub->mlx); // implement move
-}
 // Loops game: raycasting ang image drawing
 void    game_loop(t_cub *cub)
 {

@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/17 19:37:00 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:05:43 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	init_cub(t_cub *cub, char *map_data, int argc)
     add_temp_data(cub);
     load_map(map_data);
     init_player();
+    // initialise structs (ray)
     // start mlx and open window
     cub->mlx = mlx_init(WIN_X, WIN_Y, "cube3D", true);
 	if (cub->mlx == NULL)
