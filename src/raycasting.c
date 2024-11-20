@@ -6,58 +6,27 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 20:11:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/20 14:54:19 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:28:11 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-/* To find the first wall that a ray encounters on its way, 
-you have to let it start at the player's position, 
-and then all the time, check whether or not the ray is inside a wall. 
-If it's inside a wall (hit), then the loop can stop, 
-calculate the distance, and draw the wall with the correct height. */
-
-/* Main structure for the raycasting */
-void    ray_cast(t_cub *cub)
+/* 1: calculate ray position, ray direction and delta distance */
+void    ray_dir_delta_dist(t_cub *cub, t_player *player, int x)
 {
-    int x;
-
-    while(x < WIN_X) // calculate for each vertical line on the screen (along x axis)
-    {
-        ray_direction(cub, &cub->player, x);
-        delta_distance(&cub->ray, &cub->player);
-        step_distance(&cub->ray, &cub->player);
-        digital_differential_analysis(cub, &cub->ray);
-        wall_height(&cub->ray, &cub->player);
-        draw_to_screen(cub, &cub->ray, x);
-        x++;
-    }
-    // raycasting algorithm done
-}
-
-/* 1: calculate ray direction */
-void    ray_direction(t_cub *cub, t_player *player, int x)
-{
-    // calculate ray position and direction
     cub->camera_plane.x = 2 * x /(double)WIN_X - 1;
     cub->ray.dir.x = player->dir.x + player->plane_x 
                     * cub->camera_plane.x;
     cub->ray.dir.y = player->dir.y + player->plane_y 
                     * cub->camera_plane.x;
+    cub->ray.map_coord.x_coord = (int)player->ppos.x;
+    cub->ray.map_coord.y_coord = (int)player->ppos.y;
+    cub->ray.d_dist.x = fabs(1 / cub->ray.dir.x);
+    cub->ray.d_dist.y = fabs(1 / cub->ray.dir.y);
 }
 
-/* 2: calculate delta distance */
-void    delta_distance(t_ray_data *ray, t_player *player)
-{
-    // map coords are the current square of the map the ray is in
-    ray->map_coord.x_coord = (int)player->ppos.x;
-    ray->map_coord.y_coord = (int)player->ppos.y;
-    ray->d_dist.x = fabs(1 / ray->dir.x);
-    ray->d_dist.y = fabs(1 / ray->dir.y);
-}
-
-/* 3: calculate step and initial side distance */
+/* 2: calculate step and initial side distance */
 void    step_distance(t_ray_data *ray, t_player *player)
 {
     if (ray->dir.x < 0)
@@ -86,7 +55,7 @@ void    step_distance(t_ray_data *ray, t_player *player)
     }
 }
 
-/* 4: DDA (digital differential analysis) -> calculate the side length
+/* 3: DDA (digital differential analysis) -> calculate the side length
     Increments the ray with 1 square every time, until a wall is hit. */
 void    digital_differential_analysis(t_cub *cub, t_ray_data *ray)
 {
@@ -108,11 +77,11 @@ void    digital_differential_analysis(t_cub *cub, t_ray_data *ray)
     }
 }
 
-/*  5: calculate wall height. Calculate the distance of the ray to the wall, 
+/*  4: calculate wall height. Calculate the distance of the ray to the wall, 
     so that we can calculate how high the wall has to be drawn after this 
     wall_x represents the position where the wall was hit (it's actually an y-coordinate 
     of the wall if side==1, but it's always the x-coordinate of the texture.) */
-t_ray_data    wall_height(t_ray_data *ray, t_player *player)
+void    wall_height(t_ray_data *ray, t_player *player)
 {
     if (ray->side == 0)
        ray->wall_dist = (ray->map_coord.x_coord - player->ppos.x 
@@ -133,4 +102,24 @@ t_ray_data    wall_height(t_ray_data *ray, t_player *player)
     else
         ray->wall_x = player->ppos.x + ray->wall_dist * ray->d_dist.x;
     ray->wall_x -= floor(ray->wall_x);
+}
+
+/*  To find the first wall that a ray encounters on its way, 
+    you have to let it start at the player's position, and then all the time, 
+    check whether or not the ray has hit a wall. When a wall is encountered, 
+    calculate the distance, and draw the wall with the correct height.  */
+void    ray_cast(t_cub *cub)
+{
+    int x;
+
+    x = 0;
+    while(x < WIN_X) // calculate for each vertical column on the screen (along x axis)
+    {
+        ray_dir_delta_dist(cub, &cub->player, x);
+        step_distance(&cub->ray, &cub->player);
+        digital_differential_analysis(cub, &cub->ray);
+        wall_height(&cub->ray, &cub->player);
+        draw_to_screen(cub, &cub->ray, x);
+        x++;
+    }
 }

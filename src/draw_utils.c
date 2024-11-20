@@ -6,24 +6,20 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:47:41 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/20 15:48:08 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:30:27 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	ft_putpixel(mlx_image_t *img, float x, float y, int32_t color)
+int	get_endian(void)
 {
-	int	pixel;
-	int	alpha;
+	int		endian;
+	int16_t	x;
 
-	alpha = 0xFF;
-	if (x > WIN_X || y > WIN_X \
-		|| x < 0 || y < 0)
-		return (-1);
-	pixel = ((int)y * WIN_X * 4) + ((int)x * 4);
-	set_pixel_color(&img->pixels[pixel], color, alpha);
-	return (0);
+	x = 0x0001;
+	endian = (*((int8_t *)(&x)) == 0x01);
+	return (endian);
 }
 
 void	set_pixel_color(uint8_t *pixel_buffer, int color, int alpha)
@@ -42,4 +38,18 @@ void	set_pixel_color(uint8_t *pixel_buffer, int color, int alpha)
 		pixel_buffer[B] = color;
 		pixel_buffer[A] = alpha;
 	}
+}
+
+int	ft_putpixel(mlx_image_t *img, float x, float y, int32_t color)
+{
+	int	pixel;
+	int	alpha;
+
+	alpha = 0xFF;
+	if (x > WIN_X || y > WIN_X \
+		|| x < 0 || y < 0)
+		return (-1);
+	pixel = ((int)y * WIN_X * 4) + ((int)x * 4);
+	set_pixel_color(&img->pixels[pixel], color, alpha);
+	return (0);
 }

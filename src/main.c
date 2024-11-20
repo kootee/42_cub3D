@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/18 17:01:41 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:36:39 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 void    terminate_cub(t_cub *cub)
 {
     // free all allocated memory and clean mlx
+	int i = -1;
+	while (cub->map[++i] != NULL)
+		free(cub->map[i]);
+	free(cub->map[i]);
+	free(cub->map);
     mlx_delete_image(cub->mlx, cub->mlx_img);
 	mlx_terminate(cub->mlx);
 }
@@ -23,7 +28,7 @@ void    game_loop(t_cub *cub)
 {
     mlx_loop_hook(cub->mlx, ft_hook, &cub);
 	mlx_loop(cub->mlx);
-    ray_cast(&cub);
+    ray_cast(cub);
 }
 
 int	main(int argc, char **argv)

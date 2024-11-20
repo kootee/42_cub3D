@@ -1,8 +1,9 @@
 # Variables
 NAME	= cub3D
 CC		= cc
-CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -ffast-math -0fast
+CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -ffast-math -Ofast
 DBFLAGS = -g
+LDFLAGS = -mmacosx-version-min=11.7
 LIBMLX	= MLX42
 LIBFT	= libft
 debug	?= 0
@@ -18,48 +19,54 @@ MLX_BUILD_DIR = $(MLX_DIR)/build
 MLX_REPO_URL = https://github.com/codam-coding-college/MLX42.git
 
 SOURCES = src/main.c \
-			src/color_functions.c \
 			src/draw_utils.c \
 			src/draw.c \
 			src/error_handling.c \
-			src/fdf_utils.c \
-			src/map_projection_utils.c \
-			src/map_utils.c \
-			src/parse_map_file.c \
-			src/projection_matrices.c \
-			src/wire_functions.c
+			src/init_game.c \
+			src/key_actions.c \
+			src/parse_map.c \
+			src/raycasting.c
 
-OBJECTS = $(SOURCES:.cpp=.o)
+BUILD_DIR = build
+OBJECTS = $(SOURCES:src/%.c=$(BUILD_DIR)/%.o)
 INCLUDES = -I ./include -I $(LIBMLX)/include/MLX42 -I ./libft/include
 LIBS = $(LIBMLX)/build/libmlx42.a -ldl -lglfw \
 		-L"/Users/$(USER)/.brew/opt/glfw/lib/" -pthread -lm \
 		-L$(LIBFT) -lft
 
-all: libs $(NAME)
+all: $(BUILD_DIR) libs $(NAME)
 
-libs: $(MLX_DIR)
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+libs: $(MLX_BUILD_DIR)
 	@${MAKE} -C libft
 
 # Clone and build MLX42
 $(MLX_DIR):
-	git clone $(MLX_REPO_URL)
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		echo "Cloning MLX42 repository..."; \
+		git clone $(MLX_REPO_URL); \
+	else \
+		echo "MLX42 directory already exists, skipping clone."; \
+	fi
 
 $(MLX_BUILD_DIR): $(MLX_DIR)
 	cd $(MLX_DIR) && cmake -B build
 	cd $(MLX_DIR) && cmake --build build -j4
 
 $(NAME): $(OBJECTS)
-	$(CC) $(OBJECTS) $(LIBS) -o $(NAME) $(INCLUDES)
+	$(CC) $(OBJECTS) $(LIBS) -o $(NAME) $(INCLUDES) $(LDFLAGS)
 
 # Compile source files into object files
-%.o: %.c
+$(BUILD_DIR)/%.o: src/%.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES) && printf "Compiling: $(notdir $<)\n"
 
 clean:
 	rm -f $(OBJECTS)
-	rm -rf $(MLX_BUILD_DIR)
 
 fclean: clean
 	rm -f $(NAME)
+	rm -rf $(MLX_BUILD_DIR) $(BUILD_DIR)
 
 .PHONY: clean fclean all libs

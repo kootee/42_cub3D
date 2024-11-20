@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:42:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/20 16:12:58 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:30:57 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	draw_floor_ceiling(t_cub *cub, t_ray_data *ray, int x_coord)
 
 
 	// calculate x coordinate for texture
-set_texture_coords(t_cub *cub, mlx_texture_t *texture)
+void	set_texture_coords(t_cub *cub, mlx_texture_t *texture)
 {
 	cub->tex_data.tex_x = (int)(cub->ray.wall_x * (double)texture->width);
 	if (cub->ray.side == 0 && cub->ray.dir.x > 0)

@@ -6,46 +6,42 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/20 16:14:04 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:55:27 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-// add temp 5x5 map
-void    add_temp_data(t_cub *cub)
+
+void    init_game(t_cub * cub)
 {
+    // initialise structs and variables
+    // THIS IS TEMP DATA, CHANGE LATER
+    cub->ceiling_color = MAGENTA;
+    cub->floor_color = LIGHTBLUE;
+}
+
+void    load_map(t_cub *cub)
+{
+    // implement
+    // check map
+    // load data to map variable (type char **map)
     cub->map = ft_calloc(6, sizeof(char *));
     cub->map[0] = ft_strdup("11111");
     cub->map[1] = ft_strdup("10001");
     cub->map[2] = ft_strdup("10P01");
     cub->map[3] = ft_strdup("10001");
     cub->map[4] = ft_strdup("11111");
-    cub->map[5] = NULL;
-
-    cub->ceiling_color = MAGENTA;
-    cub->floor_color = LIGHTBLUE;
-}
-
-void    init_game(t_cub * cub)
-{
-    // initialise structs etc
-}
-
-void    load_map(char *map_data)
-{
-    // implement
-    // check map
-    // load data to map variable   
+    cub->map[5] = NULL; 
 }
 
 // add player data: location in map, ray direction
 void    init_player(t_cub *cub)
 {
     // THIS IS TEMP DATA, CHANGE LATER
-    cub->player.ppos.x_dir = 3;
-    cub->player.ppos.y_dir = 3;
-    cub->player.dir.x_dir = -1;
-    cub->player.dir.y_dir = 0;
+    cub->player.ppos.x = 3;
+    cub->player.ppos.y = 3;
+    cub->player.dir.x = -1;
+    cub->player.dir.y = 0;
     cub->player.plane_x = 0;
     cub->player.plane_y = 0.66;
 }
@@ -66,21 +62,21 @@ void  load_textures(t_cub *cub)
       handle_error(ERROR_TEXTURE);
 }
 
-void	init_cub(t_cub *cub, char *map_data, int argc)
+void	init_cub(t_cub *cub, char **argv, int argc)
 {
   if (argc != 2)
 		handle_error(ERROR_CMD_COUNT_ERROR);
-    cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", true);
+  cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", true);
 	if (cub->mlx == NULL)
 		handle_error(mlx_errno);
-    cub->mlx_img = mlx_new_image(cub->mlx, WIN_X, WIN_Y);
+  cub->mlx_img = mlx_new_image(cub->mlx, WIN_X, WIN_Y);
 	if (cub->mlx_img == NULL)
 		error_terminate_mlx(cub, mlx_errno);
   if (mlx_image_to_window(cub->mlx, cub->mlx_img, 0, 0) < 0)
 		error_terminate_mlx(cub, mlx_errno);
-  add_temp_data(cub); // THIS IS A TEMP MAP, REMOVE LATER
+  parse_map(argv[1]); // IMPLEMENT
   init_game(cub);
   init_player(cub);
-  load_map(map_data);
+  load_map(cub);
   load_textures(cub);
 }

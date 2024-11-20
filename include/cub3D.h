@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/20 16:13:26 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:27:42 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,20 +141,24 @@ typedef struct s_cub
 	uint32_t			floor_color;
 } t_cub;
 
-/* Functions */
+/* Initialise cube3D */
 void	init_cub(t_cub *cub, char **argv, int argc);
 
 /* Raycasting */
 void    ray_cast(t_cub *cub);
 
 /* Key actions */
-static void	ft_hook(void *param);
+void	ft_hook(void *param);
+
+/* Draw functions */
+void	draw_to_screen(t_cub * cub, t_ray_data *ray, int x_to_draw);
+int		ft_putpixel(mlx_image_t *img, float x, float y, int32_t color);
+
+/* Parse map */
+void    parse_map(char *map_file_path);
 
 /* Error handling */
 void	handle_error(int errno);
 void	error_terminate_mlx(t_cub *cub, int errno);
-
-/* Draw functions */
-int	ft_putpixel(mlx_image_t *img, float x, float y, int32_t color);
 
 #endif

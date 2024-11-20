@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:32:43 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/18 16:02:04 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:14:41 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void    left_key(t_cub *cub)
     double  old_dirX;
     double  old_planeX;
     
-    old_dirX = cub->player.dir.x_dir;
-    cub->player.dir.x_dir = cub->player.dir.x_dir * cos(ROT_SPEED)
-                            - cub->player.dir.y_dir *  sin(ROT_SPEED);
-    cub->player.dir.y_dir = old_dirX * sin(ROT_SPEED) + cub->player.dir.y_dir
+    old_dirX = cub->player.dir.x;
+    cub->player.dir.x = cub->player.dir.x * cos(ROT_SPEED)
+                            - cub->player.dir.y *  sin(ROT_SPEED);
+    cub->player.dir.y = old_dirX * sin(ROT_SPEED) + cub->player.dir.y
                             *cos(ROT_SPEED);
-    old_planeX = cub->camera_plane.x_dir;
-    cub->camera_plane.x_dir = cub->camera_plane.x_dir * cos(ROT_SPEED) 
-                            - cub->camera_plane.y_dir * sin(ROT_SPEED);
-    cub->camera_plane.y_dir = old_planeX * sin(ROT_SPEED) 
-                            + cub->camera_plane.y_dir * cos(ROT_SPEED);
+    old_planeX = cub->camera_plane.x;
+    cub->camera_plane.x = cub->camera_plane.x * cos(ROT_SPEED) 
+                            - cub->camera_plane.y * sin(ROT_SPEED);
+    cub->camera_plane.y = old_planeX * sin(ROT_SPEED) 
+                            + cub->camera_plane.y * cos(ROT_SPEED);
 }
 
 void    right_key(t_cub *cub)
@@ -34,16 +34,16 @@ void    right_key(t_cub *cub)
     double  old_dirX;
     double  old_planeX;
     
-    old_dirX = cub->player.dir.x_dir;
-    cub->player.dir.x_dir = cub->player.dir.x_dir * cos(-ROT_SPEED)
-                            - cub->player.dir.y_dir *  sin(-ROT_SPEED);
-    cub->player.dir.y_dir = old_dirX * sin(-ROT_SPEED) + cub->player.dir.y_dir
+    old_dirX = cub->player.dir.x;
+    cub->player.dir.x = cub->player.dir.x * cos(-ROT_SPEED)
+                            - cub->player.dir.y *  sin(-ROT_SPEED);
+    cub->player.dir.y = old_dirX * sin(-ROT_SPEED) + cub->player.dir.y
                             *cos(-ROT_SPEED);
-    old_planeX = cub->camera_plane.x_dir;
-    cub->camera_plane.x_dir = cub->camera_plane.x_dir * cos(-ROT_SPEED) 
-                            - cub->camera_plane.y_dir * sin(-ROT_SPEED);
-    cub->camera_plane.y_dir = old_planeX * sin(-ROT_SPEED) 
-                            + cub->camera_plane.y_dir * cos(-ROT_SPEED);
+    old_planeX = cub->camera_plane.x;
+    cub->camera_plane.x = cub->camera_plane.x * cos(-ROT_SPEED) 
+                            - cub->camera_plane.y * sin(-ROT_SPEED);
+    cub->camera_plane.y = old_planeX * sin(-ROT_SPEED) 
+                            + cub->camera_plane.y * cos(-ROT_SPEED);
 }
 
 void    w_key(t_cub *cub)
@@ -51,14 +51,12 @@ void    w_key(t_cub *cub)
     double next_x;
     double next_y;
     
-    next_x = (int)(cub->player.ppos.x_dir + cub->player.dir.x_dir);
-    next_y = (int)(cub->player.ppos.y_dir + cub->player.dir.y_dir);
-    if (cub->map[(int)(next_x * PLAYER_SPEED)]
-                [(int)(cub->player.ppos.y_dir)] == '0')
-        cub->player.ppos.x_dir += cub->player.dir.x_dir * PLAYER_SPEED;
-    if (cub->map[(int)(cub->player.ppos.x_dir)]
-                [(int)(next_y * PLAYER_SPEED)] == '0')
-        cub->player.ppos.y_dir += cub->player.dir.y_dir * PLAYER_SPEED;
+    next_x = (cub->player.ppos.x + cub->player.dir.x) * PLAYER_SPEED;
+    next_y = (cub->player.ppos.y + cub->player.dir.y) * PLAYER_SPEED;
+    if (cub->map[(int)round(next_x)][(int)round(cub->player.ppos.y)] == '0')
+        cub->player.ppos.x = next_x;
+    if (cub->map[(int)round(cub->player.ppos.x)][(int)round(next_y)] == '0')
+        cub->player.ppos.y = next_y;
 }
 
 void    s_key(t_cub *cub)
@@ -66,17 +64,41 @@ void    s_key(t_cub *cub)
     double prev_x;
     double prev_y;
     
-    prev_x = (int)(cub->player.ppos.x_dir - cub->player.dir.x_dir);
-    prev_y = (int)(cub->player.ppos.y_dir - cub->player.dir.y_dir);
-    if (cub->map[(int)(prev_x * PLAYER_SPEED)]
-                [(int)(cub->player.ppos.y_dir)] == '0')
-        cub->player.ppos.x_dir += cub->player.dir.x_dir * PLAYER_SPEED;
-    if (cub->map[(int)(cub->player.ppos.x_dir)]
-                [(int)(prev_y * PLAYER_SPEED)] == '0')
-        cub->player.ppos.y_dir += cub->player.dir.y_dir * PLAYER_SPEED;
+    prev_x = (cub->player.ppos.x - cub->player.dir.x) * PLAYER_SPEED;
+    prev_y = (cub->player.ppos.y - cub->player.dir.y) * PLAYER_SPEED;
+    if (cub->map[(int)round(prev_x)][(int)round(cub->player.ppos.y)] == '0')
+        cub->player.ppos.x = prev_x;
+    if (cub->map[(int)round(cub->player.ppos.x)][(int)round(prev_y)] == '0')
+        cub->player.ppos.y = prev_y;
 }
 
-static void	ft_hook(void *param)
+void    a_key(t_cub *cub)
+{
+    double left_x;
+    double left_y;
+    
+    left_x = (cub->player.ppos.x - cub->camera_plane.x) * PLAYER_SPEED;
+    left_y = (cub->player.ppos.y - cub->camera_plane.y) * PLAYER_SPEED;
+    if (cub->map[(int)round(left_x)][(int)round(cub->player.ppos.y)] == '0')
+        cub->player.ppos.x = left_x;
+    if (cub->map[(int)round(cub->player.ppos.x)][(int)round(left_y)] == '0')
+        cub->player.ppos.y = left_y;
+}
+
+void    d_key(t_cub *cub)
+{
+    double right_x;
+    double right_y;
+    
+    right_x = (cub->player.ppos.x + cub->camera_plane.x) * PLAYER_SPEED;
+    right_y = (cub->player.ppos.y + cub->camera_plane.y) * PLAYER_SPEED;
+    if (cub->map[(int)round(right_x)][(int)round(cub->player.ppos.y)] == '0')
+        cub->player.ppos.x = right_x;
+    if (cub->map[(int)round(cub->player.ppos.x)][(int)round(right_y)] == '0')
+        cub->player.ppos.y = right_y;
+}
+
+void	ft_hook(void *param)
 {
 	t_cub	*cub;
 	mlx_t	*mlx_inst;
