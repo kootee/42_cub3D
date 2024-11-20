@@ -31,7 +31,7 @@ BUILD_DIR = build
 OBJECTS = $(SOURCES:src/%.c=$(BUILD_DIR)/%.o)
 INCLUDES = -I ./include -I $(LIBMLX)/include/MLX42 -I ./libft/include
 LIBS = $(LIBMLX)/build/libmlx42.a -ldl -lglfw \
-		-L"/Users/$(USER)/.brew/opt/glfw/lib/" -pthread -lm \
+		-L"/usr/local/opt/glfw/lib/" -pthread -lm \
 		-L$(LIBFT) -lft
 
 all: $(BUILD_DIR) libs $(NAME)
@@ -68,5 +68,7 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	rm -rf $(MLX_BUILD_DIR) $(BUILD_DIR)
+
+re: clean all
 
 .PHONY: clean fclean all libs
