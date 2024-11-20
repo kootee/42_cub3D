@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/18 17:17:23 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:14:04 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void    add_temp_data(t_cub *cub)
     cub->map[3] = ft_strdup("10001");
     cub->map[4] = ft_strdup("11111");
     cub->map[5] = NULL;
+
+    cub->ceiling_color = MAGENTA;
+    cub->floor_color = LIGHTBLUE;
 }
 
 void    init_game(t_cub * cub)

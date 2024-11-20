@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/20 15:27:10 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:13:26 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@
 # define NUM_TEXTURES 4
 # define TEXTURE_X 64
 # define TEXTURE_Y 64
+
+# define BLACK		0x000000
+# define WHITE		0xffffff
+# define MAGENTA	0xff0099
+# define LIGHTBLUE	0x87cefa
+# define ORANGE		0xffc100
+# define DARKORANGE	0xd75000
+# define GREEN		0x00ff2e
 
 # define PLAYER_SPEED 0.045
 # define ROT_SPEED 4
@@ -65,7 +73,6 @@ typedef enum s_rgb_values
 	B,
 	A
 }	t_rgb_values;
-
 
 typedef struct s_vector
 {
@@ -130,6 +137,8 @@ typedef struct s_cub
 	t_vector      		camera_plane;
 	char 				**map;
 	int					**pixel_map;
+	uint32_t			ceiling_color;
+	uint32_t			floor_color;
 } t_cub;
 
 /* Functions */
@@ -144,5 +153,8 @@ static void	ft_hook(void *param);
 /* Error handling */
 void	handle_error(int errno);
 void	error_terminate_mlx(t_cub *cub, int errno);
+
+/* Draw functions */
+int	ft_putpixel(mlx_image_t *img, float x, float y, int32_t color);
 
 #endif
