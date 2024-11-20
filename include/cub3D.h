@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/18 17:37:21 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:27:10 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ typedef enum s_rgb_values
 
 typedef struct s_vector
 {
-	double	x_dir;
-	double	y_dir;
+	double	x;
+	double	y;
 } t_vector;
 
 typedef struct s_coord
@@ -94,13 +94,13 @@ typedef	struct s_ray_data
     t_vector    step; // direction in which the ray moves
     t_vector    side_dist; //length of ray from current position to next x or y-side
 	t_coord     map_coord;
-	double		x_dir; // replace with vector
-	double		y_dir; // replace with vector
+	t_vector	dir;
     double  	wall_dist;
 	double		wall_x;
 	int     	side;
     int     	draw_start;
     int     	draw_end;
+	int			line_height;
 } t_ray_data;
 
 typedef struct s_textures 
@@ -111,12 +111,20 @@ typedef struct s_textures
 	mlx_texture_t	*west;
 } t_textures;
 
+typedef struct s_tex_data
+{
+	int			tex_x;
+	int			tex_y;
+	double		pos;
+} t_tex_data;
+
 typedef struct s_cub 
 {
 	mlx_t				*mlx;
 	mlx_image_t			*mlx_img;
 	mlx_texture_t		*texture_buff[NUM_TEXTURES]; // texture_buffer[n][y * 64 + x]
 	struct s_textures	textures;
+	struct s_tex_data	tex_data;
 	struct s_player		player;
 	struct s_ray_data	ray;
 	t_vector      		camera_plane;
