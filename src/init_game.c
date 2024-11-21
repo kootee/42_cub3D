@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/21 16:26:09 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:42:35 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void    init_player(t_cub *cub)
 
 void    init_cub(t_cub * cub)
 {
-    // initialise structs and variables
-    cub = malloc(sizeof(t_cub));
     init_player(cub);
     load_map(cub);
     // THIS IS TEMP DATA, CHANGE LATER

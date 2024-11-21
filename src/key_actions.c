@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:32:43 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/21 16:07:21 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:37:22 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	ft_key_hook(void *param)
 	mlx_t	*mlx_inst;
     char    **map;
 
-	cub = param;
+	cub = (t_cub *)param;
 	mlx_inst = cub->mlx;
     map = cub->map;
     print_map(map);

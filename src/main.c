@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/21 16:20:18 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:41:36 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,24 @@ void	ft_game_hook(void *param)
 {
 	t_cub	*cub;
 
-	cub = param;
+	cub = (t_cub *)param;
     ray_cast(cub);
 	mlx_image_to_window(cub->mlx, cub->mlx_img, 0, 0);
 }
 
 void    game_loop(t_cub *cub)
 {
-    mlx_loop_hook(cub->mlx, ft_key_hook, &cub);
-    mlx_loop_hook(cub->mlx, ft_game_hook, &cub);
+    mlx_loop_hook(cub->mlx, &ft_key_hook, cub);
+    mlx_loop_hook(cub->mlx, &ft_game_hook, cub);
 	mlx_loop(cub->mlx);
 }
 
 int	main(int argc, char **argv)
 {
-    t_cub   *cub;
+    t_cub   cub;
     
-	cub = NULL;
-	init_game(cub, argv, argc);
-    game_loop(cub);
-    terminate_cub(cub);
+	init_game(&cub, argv, argc);
+    game_loop(&cub);
+    terminate_cub(&cub);
 	return (EXIT_SUCCESS);
 }
