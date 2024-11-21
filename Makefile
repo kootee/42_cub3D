@@ -3,7 +3,7 @@ NAME	= cub3D
 CC		= cc
 CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -ffast-math -Ofast
 DBFLAGS = -g
-#LDFLAGS = -mmacosx-version-min=11.7
+LDFLAGS = -mmacosx-version-min=11.7
 LIBMLX	= MLX42
 LIBFT	= libft
 debug	?= 0
@@ -31,9 +31,10 @@ BUILD_DIR = build
 OBJECTS = $(SOURCES:src/%.c=$(BUILD_DIR)/%.o)
 INCLUDES = -I ./include -I $(LIBMLX)/include/MLX42 -I ./libft/include
 LIBS = $(LIBMLX)/build/libmlx42.a -ldl -lglfw \
-		-L"/Users/${USER}/.brew/opt/glfw/lib/" -pthread -lm \
+		-L"/usr/local/opt/glfw/lib/" -pthread -lm \
 		-L$(LIBFT) -lft
 
+#-L"/Users/${USER}/.brew/opt/glfw/lib/" -pthread -lm \
 #-L"/usr/local/opt/glfw/lib/" -pthread -lm
 
 all: $(BUILD_DIR) libs $(NAME)
@@ -58,9 +59,7 @@ $(MLX_BUILD_DIR): $(MLX_DIR)
 	cd $(MLX_DIR) && cmake --build build -j4
 
 $(NAME): $(OBJECTS)
-	$(CC) $(OBJECTS) $(LIBS) -o $(NAME) $(INCLUDES) 
-	
-#$(LDFLAGS)
+	$(CC) $(OBJECTS) $(LIBS) -o $(NAME) $(INCLUDES) $(LDFLAGS)
 
 # Compile source files into object files
 $(BUILD_DIR)/%.o: src/%.c

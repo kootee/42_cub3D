@@ -6,11 +6,12 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:32:43 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/21 13:48:51 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:07:21 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include <stdio.h>
 
 void    left_key(t_cub *cub)
 {
@@ -98,13 +99,24 @@ void    d_key(t_cub *cub)
         cub->player.ppos.y = right_y;
 }
 
-void	ft_hook(void *param)
+void print_map(char **map)
+{
+    for (int i = 0; map[i] != NULL; i++)
+    {
+        printf("%s\n", map[i]);
+    }
+}
+
+void	ft_key_hook(void *param)
 {
 	t_cub	*cub;
 	mlx_t	*mlx_inst;
+    char    **map;
 
 	cub = param;
 	mlx_inst = cub->mlx;
+    map = cub->map;
+    print_map(map);
 	if (mlx_is_key_down(mlx_inst, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx_inst);
 	if (mlx_is_key_down(mlx_inst, MLX_KEY_LEFT))

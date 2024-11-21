@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/20 19:27:42 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:15:41 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,14 +141,15 @@ typedef struct s_cub
 	uint32_t			floor_color;
 } t_cub;
 
-/* Initialise cube3D */
-void	init_cub(t_cub *cub, char **argv, int argc);
+/* Initialise game */
+void	init_game(t_cub *cub, char **argv, int argc);
 
 /* Raycasting */
 void    ray_cast(t_cub *cub);
 
-/* Key actions */
-void	ft_hook(void *param);
+/* Hooks */
+void	ft_key_hook(void *param);
+void	ft_game_loop_hook(void *param);
 
 /* Draw functions */
 void	draw_to_screen(t_cub * cub, t_ray_data *ray, int x_to_draw);
