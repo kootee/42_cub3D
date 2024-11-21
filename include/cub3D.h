@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/21 16:15:41 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:25:46 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,14 +129,12 @@ typedef struct s_cub
 {
 	mlx_t				*mlx;
 	mlx_image_t			*mlx_img;
-	mlx_texture_t		*texture_buff[NUM_TEXTURES]; // texture_buffer[n][y * 64 + x]
 	struct s_textures	textures;
 	struct s_tex_data	tex_data;
 	struct s_player		player;
 	struct s_ray_data	ray;
-	t_vector      		camera_plane;
+	struct s_vector		camera_plane;
 	char 				**map;
-	int					**pixel_map;
 	uint32_t			ceiling_color;
 	uint32_t			floor_color;
 } t_cub;

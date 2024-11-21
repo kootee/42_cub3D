@@ -6,23 +6,15 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/21 16:15:23 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:26:09 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-#include <stdio.h>
-#include <errno.h>
-#include <string.h>
-#include <unistd.h>
-
-void    init_cub(t_cub * cub)
-{
-    // initialise structs and variables
-    // THIS IS TEMP DATA, CHANGE LATER
-    cub->ceiling_color = MAGENTA;
-    cub->floor_color = LIGHTBLUE;
-}
+#include <stdio.h> // Remove later
+#include <errno.h> // Remove later
+#include <string.h> // Remove later
+#include <unistd.h> // Remove later
 
 void    load_map(t_cub *cub)
 {
@@ -54,6 +46,17 @@ void    init_player(t_cub *cub)
     cub->player.plane_y = 0.66;
 }
 
+void    init_cub(t_cub * cub)
+{
+    // initialise structs and variables
+    cub = malloc(sizeof(t_cub));
+    init_player(cub);
+    load_map(cub);
+    // THIS IS TEMP DATA, CHANGE LATER
+    cub->ceiling_color = MAGENTA;
+    cub->floor_color = LIGHTBLUE;
+}
+
 void  load_textures(t_cub *cub)
 {
     cub->textures.north = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/north.png");
@@ -75,9 +78,7 @@ void	init_game(t_cub *cub, char **argv, int argc)
   if (argc != 2)
 		handle_error(ERROR_CMD_COUNT_ERROR);
   parse_map(argv[1]); // IMPLEMENT
-  load_map(cub);
   init_cub(cub);
-  init_player(cub);
   load_textures(cub);
   cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", true);
 	if (cub->mlx == NULL)

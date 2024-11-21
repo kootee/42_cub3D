@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/21 16:15:53 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:20:18 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	main(int argc, char **argv)
 {
     t_cub   *cub;
     
+	cub = NULL;
 	init_game(cub, argv, argc);
     game_loop(cub);
     terminate_cub(cub);
