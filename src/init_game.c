@@ -6,11 +6,15 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/20 18:55:27 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:42:08 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
 
 void    init_game(t_cub * cub)
 {
@@ -46,20 +50,52 @@ void    init_player(t_cub *cub)
     cub->player.plane_y = 0.66;
 }
 
-void  load_textures(t_cub *cub)
+void check_file_exists(const char *filepath) {
+    if (access(filepath, F_OK) != 0) {
+        fprintf(stderr, "Error: File %s does not exist. Errno: %d, %s\n", filepath, errno, strerror(errno));
+        printf("File does not exist");
+        exit(1);
+    }
+}
+
+void load_textures(t_cub *cub)
 {
-    cub->textures.north = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/north.png");
-    if (cub->textures.north == NULL)
-      handle_error(ERROR_TEXTURE);
-    cub->textures.south = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/south.png");
-    if (cub->textures.south == NULL)
-      handle_error(ERROR_TEXTURE);
-    cub->textures.east = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/east.png");
-    if (cub->textures.east == NULL)
-      handle_error(ERROR_TEXTURE);
-    cub->textures.west = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/west.png");
-    if (cub->textures.west == NULL)
-      handle_error(ERROR_TEXTURE);
+    const char *north_path = "/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/north.png";
+    const char *south_path = "/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/south.png";
+    const char *east_path = "/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/east.png";
+    const char *west_path = "/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/west.png";
+
+    check_file_exists(north_path);
+    cub->textures.north = mlx_load_png(north_path);
+    if (cub->textures.north == NULL) {
+        fprintf(stderr, "Failed to load texture: %s\n", north_path);
+        printf("Failed to load north texture");
+        exit(1);
+    }
+
+    check_file_exists(south_path);
+    cub->textures.south = mlx_load_png(south_path);
+    if (cub->textures.south == NULL) {
+        fprintf(stderr, "Failed to load texture: %s\n", south_path);
+        printf("Failed to load south texture");
+        exit(1);
+    }
+
+    check_file_exists(east_path);
+    cub->textures.east = mlx_load_png(east_path);
+    if (cub->textures.east == NULL) {
+        fprintf(stderr, "Failed to load texture: %s\n", east_path);
+        printf("Failed to load east texture");
+        exit(1);
+    }
+
+    check_file_exists(west_path);
+    cub->textures.west = mlx_load_png(west_path);
+    if (cub->textures.west == NULL) {
+        fprintf(stderr, "Failed to load texture: %s\n", west_path);
+        printf("Failed to load west texture");
+        exit(1);        file /Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/north.png
+    }
 }
 
 void	init_cub(t_cub *cub, char **argv, int argc)
