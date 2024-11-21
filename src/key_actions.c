@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:32:43 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/20 19:14:41 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:48:51 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,18 +105,18 @@ void	ft_hook(void *param)
 
 	cub = param;
 	mlx_inst = cub->mlx;
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(cub->mlx);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(mlx_inst, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx_inst);
+	if (mlx_is_key_down(mlx_inst, MLX_KEY_LEFT))
 		left_key(cub);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(mlx_inst, MLX_KEY_RIGHT))
 		right_key(cub);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_W))
+	if (mlx_is_key_down(mlx_inst, MLX_KEY_W))
 		w_key(cub);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_A))
+	if (mlx_is_key_down(mlx_inst, MLX_KEY_A))
 		a_key(cub);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_S))
+	if (mlx_is_key_down(mlx_inst, MLX_KEY_S))
 		s_key(cub);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_D))
+	if (mlx_is_key_down(mlx_inst, MLX_KEY_D))
 		d_key(cub);
 }

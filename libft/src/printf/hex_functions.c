@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 10:46:14 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/04/23 15:57:05 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:48:25 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static int	check_hexlength(unsigned long n)
 	i = 0;
 	if (!n)
 		i = 1;
-	if (n < 0)
-		i++;
 	while (n)
 	{
 		n /= 16;

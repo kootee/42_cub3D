@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/21 14:42:08 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:44:12 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ void check_file_exists(const char *filepath) {
 
 void load_textures(t_cub *cub)
 {
-    const char *north_path = "/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/north.png";
-    const char *south_path = "/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/south.png";
-    const char *east_path = "/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/east.png";
-    const char *west_path = "/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/west.png";
+    const char *north_path = "/home/ktoivola/Projects/cub3D/textures/north.png";
+    const char *south_path = "/home/ktoivola/Projects/cub3D/textures/north.png";
+    const char *east_path = "/home/ktoivola/Projects/cub3D/textures/north.png";
+    const char *west_path = "/home/ktoivola/Projects/cub3D/textures/north.png";
 
     check_file_exists(north_path);
     cub->textures.north = mlx_load_png(north_path);
@@ -94,7 +94,7 @@ void load_textures(t_cub *cub)
     if (cub->textures.west == NULL) {
         fprintf(stderr, "Failed to load texture: %s\n", west_path);
         printf("Failed to load west texture");
-        exit(1);        file /Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/north.png
+        exit(1);
     }
 }
 
