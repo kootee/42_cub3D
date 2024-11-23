@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 14:57:30 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 15:10:04 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,15 @@ void    load_map(t_cub *cub)
     // implement
     // check map
     // load data to map variable (type char **map)
-    cub->map = ft_calloc(10, sizeof(char *));
-    cub->map[0] = ft_strdup("1111111111");
-    cub->map[1] = ft_strdup("1000000001");
-    cub->map[2] = ft_strdup("1000000001");
-    cub->map[3] = ft_strdup("1000000001");
-    cub->map[4] = ft_strdup("1000000001");
-    cub->map[5] = ft_strdup("1000000001");
-    cub->map[6] = ft_strdup("1000000001");
-    cub->map[7] = ft_strdup("1000000001");
-    cub->map[8] = ft_strdup("1000000001");
-    cub->map[9] = ft_strdup("1111111111");
-    cub->map[10] = NULL; 
-    cub->map_height = 10;
-    cub->map_width = 10;
+    cub->map = ft_calloc(6, sizeof(char *));
+    cub->map[0] = ft_strdup("11111");
+    cub->map[1] = ft_strdup("10001");
+    cub->map[2] = ft_strdup("10001");
+    cub->map[3] = ft_strdup("10001");
+    cub->map[4] = ft_strdup("11111");
+    cub->map[5] = NULL; 
+    cub->map_height = 5;
+    cub->map_width = 5;
     for (int i = 0; cub->map[i] != NULL; i++)
     {
         printf("%s\n", cub->map[i]);

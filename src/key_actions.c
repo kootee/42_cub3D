@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:32:43 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 14:09:35 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 15:13:21 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void    right_key(t_cub *cub)
     
     old_dirX = cub->player.dir.x;
     cub->player.dir.x = cub->player.dir.x * cos(ROT_SPEED)
-                            - cub->player.dir.y *  sin(ROT_SPEED);
+                            - cub->player.dir.y * sin(ROT_SPEED);
     cub->player.dir.y = old_dirX * sin(ROT_SPEED) + cub->player.dir.y
                             *cos(ROT_SPEED);
-    old_planeX = cub->camera_plane.x;
-    cub->camera_plane.x = cub->camera_plane.x * cos(ROT_SPEED) 
-                            - cub->camera_plane.y * sin(ROT_SPEED);
-    cub->camera_plane.y = old_planeX * sin(ROT_SPEED) 
-                            + cub->camera_plane.y * cos(ROT_SPEED);
+    old_planeX = cub->player.plane_x;
+    cub->player.plane_x = cub->player.plane_x * cos(ROT_SPEED) 
+                            - cub->player.plane_y * sin(ROT_SPEED);
+    cub->player.plane_y = old_planeX * sin(ROT_SPEED) 
+                            + cub->player.plane_y * cos(ROT_SPEED);
 }
 
 void    left_key(t_cub *cub)
@@ -40,14 +40,14 @@ void    left_key(t_cub *cub)
     
     old_dirX = cub->player.dir.x;
     cub->player.dir.x = cub->player.dir.x * cos(-ROT_SPEED)
-                            - cub->player.dir.y *  sin(-ROT_SPEED);
+                            - cub->player.dir.y * sin(-ROT_SPEED);
     cub->player.dir.y = old_dirX * sin(-ROT_SPEED) + cub->player.dir.y
                             *cos(-ROT_SPEED);
-    old_planeX = cub->camera_plane.x;
-    cub->camera_plane.x = cub->camera_plane.x * cos(-ROT_SPEED) 
-                            - cub->camera_plane.y * sin(-ROT_SPEED);
-    cub->camera_plane.y = old_planeX * sin(-ROT_SPEED) 
-                            + cub->camera_plane.y * cos(-ROT_SPEED);
+    old_planeX = cub->player.plane_x;
+    cub->player.plane_x = cub->player.plane_x * cos(-ROT_SPEED) 
+                            - cub->player.plane_y * sin(-ROT_SPEED);
+    cub->player.plane_y = old_planeX * sin(-ROT_SPEED) 
+                            + cub->player.plane_y * cos(-ROT_SPEED);
 }
 
 void    w_key(t_cub *cub)
