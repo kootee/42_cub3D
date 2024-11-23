@@ -6,13 +6,11 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:26:02 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 14:26:12 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 14:43:49 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-
 
 void	draw_minimap_square(t_cub *cub ,t_vector map_pt, size_t size, uint32_t color)
 {
@@ -67,8 +65,8 @@ void draw_player(t_cub *cub)
     draw_minimap_square(cub, (t_vector){player_x - 10 / 2, \
 										player_y - 10 / 2}, \
 										10, GREEN);
-    ray_end_x = player_x + (cub->player.dir.x * 30);
-    ray_end_y = player_y + (cub->player.dir.y * 30);
+    ray_end_x = player_x + (cub->player.dir.x * 10);
+    ray_end_y = player_y + (cub->player.dir.y * 10);
     draw_line(cub, (t_vector){player_x, player_y}, (t_vector){ray_end_x, ray_end_y}, RED);
 }
 

@@ -24,6 +24,7 @@ SOURCES = src/main.c \
 			src/error_handling.c \
 			src/init_game.c \
 			src/key_actions.c \
+			src/minimap.c \
 			src/parse_map.c \
 			src/raycasting.c
 

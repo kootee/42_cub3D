@@ -6,13 +6,13 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 20:11:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 10:33:40 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 14:52:49 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-/* 1: calculate ray position, ray direction and delta distance */
+/* 1: calculate ray position, ray direction and delta distance of x and y */
 void    ray_dir_delta_dist(t_cub *cub, t_player player, int x)
 {
     cub->camera_plane.x = 2 * x /(double)WIN_X - 1;

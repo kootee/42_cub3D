@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:42:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 10:21:16 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 14:55:21 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	draw_texture_column(t_cub *cub, t_ray_data *ray, int x)
 {
 	mlx_texture_t	*texture;
 	uint32_t		color;
-	uint8_t			*curr_pixel;
+	// uint8_t			*curr_pixel;
 	int				y;
 	double			step;
 
@@ -71,15 +71,16 @@ void	draw_texture_column(t_cub *cub, t_ray_data *ray, int x)
 	y = ray->draw_start;
 	while (y < ray->draw_end)
 	{
-		cub->tex_data.tex_y = (int)(cub->tex_data.pos) % texture->height;
+		/* cub->tex_data.tex_y = (int)(cub->tex_data.pos) % texture->height;
 		curr_pixel = (uint8_t *)(texture->pixels \
 					+ (cub->tex_data.tex_y * texture->width * texture->bytes_per_pixel) \
 					+ (cub->tex_data.tex_x * texture->bytes_per_pixel));
-		color = *(uint32_t*)curr_pixel;
+		color = *(uint32_t*)curr_pixel; */
+		color = GREEN;
 		if (ray->side == 1)
 			color = (color >> 1) & 8355711;
 		ft_putpixel(cub->mlx_img, x, y, color);
-		cub->tex_data.pos += step;
+		// cub->tex_data.pos += step;
 		y++;
 	}
 }
@@ -89,6 +90,6 @@ void	draw_to_screen(t_cub * cub, t_ray_data *ray, int x_to_draw)
 	if (ray->draw_end > 0)
 	{
 		draw_floor_ceiling(cub, ray, x_to_draw);
-		// draw_texture_column(cub, ray, x_to_draw);
+		draw_texture_column(cub, ray, x_to_draw);
 	}
 }
