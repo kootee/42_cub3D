@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:32:43 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/21 16:37:22 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 10:43:36 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void    left_key(t_cub *cub)
 {
+    printf("left key pressed\n");
     double  old_dirX;
     double  old_planeX;
     
@@ -32,6 +33,8 @@ void    left_key(t_cub *cub)
 
 void    right_key(t_cub *cub)
 {
+    printf("right key pressed\n");
+
     double  old_dirX;
     double  old_planeX;
     
@@ -49,86 +52,60 @@ void    right_key(t_cub *cub)
 
 void    w_key(t_cub *cub)
 {
+    printf("w key pressed\n");
+
     double next_x;
     double next_y;
     
-    next_x = (cub->player.ppos.x + cub->player.dir.x) * PLAYER_SPEED;
-    next_y = (cub->player.ppos.y + cub->player.dir.y) * PLAYER_SPEED;
-    if (cub->map[(int)round(next_x)][(int)round(cub->player.ppos.y)] == '0')
+    next_x = cub->player.ppos.x + cub->player.dir.x * PLAYER_SPEED;
+    next_y = cub->player.ppos.y + cub->player.dir.y * PLAYER_SPEED;
+    if (cub->map[(int)(next_x)][(int)(cub->player.ppos.y)] == '0')
         cub->player.ppos.x = next_x;
-    if (cub->map[(int)round(cub->player.ppos.x)][(int)round(next_y)] == '0')
+    if (cub->map[(int)(cub->player.ppos.x)][(int)(next_y)] == '0')
         cub->player.ppos.y = next_y;
 }
 
 void    s_key(t_cub *cub)
 {
+    printf("s key pressed\n");
+
     double prev_x;
     double prev_y;
     
-    prev_x = (cub->player.ppos.x - cub->player.dir.x) * PLAYER_SPEED;
-    prev_y = (cub->player.ppos.y - cub->player.dir.y) * PLAYER_SPEED;
-    if (cub->map[(int)round(prev_x)][(int)round(cub->player.ppos.y)] == '0')
+    prev_x = cub->player.ppos.x - cub->player.dir.x * PLAYER_SPEED;
+    prev_y = cub->player.ppos.y - cub->player.dir.y * PLAYER_SPEED;
+    if (cub->map[(int)(prev_x)][(int)(cub->player.ppos.y)] == '0')
         cub->player.ppos.x = prev_x;
-    if (cub->map[(int)round(cub->player.ppos.x)][(int)round(prev_y)] == '0')
+    if (cub->map[(int)(cub->player.ppos.x)][(int)(prev_y)] == '0')
         cub->player.ppos.y = prev_y;
 }
 
 void    a_key(t_cub *cub)
 {
+    printf("a key pressed\n");
+
     double left_x;
     double left_y;
     
-    left_x = (cub->player.ppos.x - cub->camera_plane.x) * PLAYER_SPEED;
-    left_y = (cub->player.ppos.y - cub->camera_plane.y) * PLAYER_SPEED;
-    if (cub->map[(int)round(left_x)][(int)round(cub->player.ppos.y)] == '0')
+    left_x = cub->player.ppos.x - cub->camera_plane.x * PLAYER_SPEED;
+    left_y = cub->player.ppos.y - cub->camera_plane.y * PLAYER_SPEED;
+    if (cub->map[(int)(left_x)][(int)(cub->player.ppos.y)] == '0')
         cub->player.ppos.x = left_x;
-    if (cub->map[(int)round(cub->player.ppos.x)][(int)round(left_y)] == '0')
+    if (cub->map[(int)(cub->player.ppos.x)][(int)(left_y)] == '0')
         cub->player.ppos.y = left_y;
 }
 
 void    d_key(t_cub *cub)
 {
+    printf("d key pressed\n");
+
     double right_x;
     double right_y;
     
-    right_x = (cub->player.ppos.x + cub->camera_plane.x) * PLAYER_SPEED;
-    right_y = (cub->player.ppos.y + cub->camera_plane.y) * PLAYER_SPEED;
-    if (cub->map[(int)round(right_x)][(int)round(cub->player.ppos.y)] == '0')
+    right_x = cub->player.ppos.x + cub->camera_plane.x * PLAYER_SPEED;
+    right_y = cub->player.ppos.y + cub->camera_plane.y * PLAYER_SPEED;
+    if (cub->map[(int)(right_x)][(int)(cub->player.ppos.y)] == '0')
         cub->player.ppos.x = right_x;
-    if (cub->map[(int)round(cub->player.ppos.x)][(int)round(right_y)] == '0')
+    if (cub->map[(int)(cub->player.ppos.x)][(int)(right_y)] == '0')
         cub->player.ppos.y = right_y;
-}
-
-void print_map(char **map)
-{
-    for (int i = 0; map[i] != NULL; i++)
-    {
-        printf("%s\n", map[i]);
-    }
-}
-
-void	ft_key_hook(void *param)
-{
-	t_cub	*cub;
-	mlx_t	*mlx_inst;
-    char    **map;
-
-	cub = (t_cub *)param;
-	mlx_inst = cub->mlx;
-    map = cub->map;
-    print_map(map);
-	if (mlx_is_key_down(mlx_inst, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx_inst);
-	if (mlx_is_key_down(mlx_inst, MLX_KEY_LEFT))
-		left_key(cub);
-	if (mlx_is_key_down(mlx_inst, MLX_KEY_RIGHT))
-		right_key(cub);
-	if (mlx_is_key_down(mlx_inst, MLX_KEY_W))
-		w_key(cub);
-	if (mlx_is_key_down(mlx_inst, MLX_KEY_A))
-		a_key(cub);
-	if (mlx_is_key_down(mlx_inst, MLX_KEY_S))
-		s_key(cub);
-	if (mlx_is_key_down(mlx_inst, MLX_KEY_D))
-		d_key(cub);
 }

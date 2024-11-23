@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:42:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/20 18:30:57 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 10:21:16 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,17 @@ void	draw_floor_ceiling(t_cub *cub, t_ray_data *ray, int x_coord)
 
 
 	// calculate x coordinate for texture
-void	set_texture_coords(t_cub *cub, mlx_texture_t *texture)
+void	set_texture_coords(t_cub *cub, mlx_texture_t *texture, double *step)
 {
 	cub->tex_data.tex_x = (int)(cub->ray.wall_x * (double)texture->width);
-	if (cub->ray.side == 0 && cub->ray.dir.x > 0)
+	if (cub->ray.side == 0 && cub->ray.dir.x < 0)
 		cub->tex_data.tex_x = texture->width - cub->tex_data.tex_x - 1;
-	if (cub->ray.side == 1 && cub->ray.dir.y < 0)
+	if (cub->ray.side == 1 && cub->ray.dir.y > 0)
 		cub->tex_data.tex_x = texture->width - cub->tex_data.tex_x - 1;
+	*step = (double)(1.0 * texture->height / cub->ray.line_height);
+	cub->tex_data.pos = (cub->ray.draw_start - WIN_Y \
+						/ 2 + cub->ray.line_height) * (*step);
+	
 }
 
 	/* The value of texY is calculated by increasing by a precomputed 
@@ -63,16 +67,14 @@ void	draw_texture_column(t_cub *cub, t_ray_data *ray, int x)
 	double			step;
 
 	texture = set_texture(cub);
-	set_texture_coords(cub, texture);
-	step = 1.0 * texture->height / ray->line_height;
+	set_texture_coords(cub, texture, &step);
 	y = ray->draw_start;
-	cub->tex_data.pos = (ray->draw_start - WIN_Y / 2 + ray->line_height) * step;
 	while (y < ray->draw_end)
 	{
 		cub->tex_data.tex_y = (int)(cub->tex_data.pos) % texture->height;
-		curr_pixel = texture->pixels \
-					+ (cub->tex_data.tex_y * texture->width) \
-					+ (cub->tex_data.tex_x * texture->bytes_per_pixel);
+		curr_pixel = (uint8_t *)(texture->pixels \
+					+ (cub->tex_data.tex_y * texture->width * texture->bytes_per_pixel) \
+					+ (cub->tex_data.tex_x * texture->bytes_per_pixel));
 		color = *(uint32_t*)curr_pixel;
 		if (ray->side == 1)
 			color = (color >> 1) & 8355711;
@@ -87,6 +89,6 @@ void	draw_to_screen(t_cub * cub, t_ray_data *ray, int x_to_draw)
 	if (ray->draw_end > 0)
 	{
 		draw_floor_ceiling(cub, ray, x_to_draw);
-		draw_texture_column(cub, ray, x_to_draw);
+		// draw_texture_column(cub, ray, x_to_draw);
 	}
 }

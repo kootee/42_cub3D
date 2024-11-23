@@ -6,22 +6,22 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 20:11:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/20 19:28:11 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 10:33:40 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 /* 1: calculate ray position, ray direction and delta distance */
-void    ray_dir_delta_dist(t_cub *cub, t_player *player, int x)
+void    ray_dir_delta_dist(t_cub *cub, t_player player, int x)
 {
     cub->camera_plane.x = 2 * x /(double)WIN_X - 1;
-    cub->ray.dir.x = player->dir.x + player->plane_x 
+    cub->ray.dir.x = player.dir.x + player.plane_x 
                     * cub->camera_plane.x;
-    cub->ray.dir.y = player->dir.y + player->plane_y 
+    cub->ray.dir.y = player.dir.y + player.plane_y 
                     * cub->camera_plane.x;
-    cub->ray.map_coord.x_coord = (int)player->ppos.x;
-    cub->ray.map_coord.y_coord = (int)player->ppos.y;
+    cub->ray.map_coord.x_coord = (int)player.ppos.x;
+    cub->ray.map_coord.y_coord = (int)player.ppos.y;
     cub->ray.d_dist.x = fabs(1 / cub->ray.dir.x);
     cub->ray.d_dist.y = fabs(1 / cub->ray.dir.y);
 }
@@ -115,7 +115,7 @@ void    ray_cast(t_cub *cub)
     x = 0;
     while(x < WIN_X) // calculate for each vertical column on the screen (along x axis)
     {
-        ray_dir_delta_dist(cub, &cub->player, x);
+        ray_dir_delta_dist(cub, cub->player, x);
         step_distance(&cub->ray, &cub->player);
         digital_differential_analysis(cub, &cub->ray);
         wall_height(&cub->ray, &cub->player);

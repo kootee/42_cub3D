@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/21 16:25:46 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 10:55:18 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include "MLX42.h"
 # include "libft.h"
 
-# define WIN_X	640
+# define WIN_X	480
 # define WIN_Y	480
 # define WIN_MARGIN 50
 # define NUM_TEXTURES 4
@@ -135,6 +135,8 @@ typedef struct s_cub
 	struct s_ray_data	ray;
 	struct s_vector		camera_plane;
 	char 				**map;
+	size_t				map_height;
+	size_t				map_width;
 	uint32_t			ceiling_color;
 	uint32_t			floor_color;
 } t_cub;
@@ -145,16 +147,20 @@ void	init_game(t_cub *cub, char **argv, int argc);
 /* Raycasting */
 void    ray_cast(t_cub *cub);
 
-/* Hooks */
-void	ft_key_hook(void *param);
-void	ft_game_loop_hook(void *param);
-
 /* Draw functions */
 void	draw_to_screen(t_cub * cub, t_ray_data *ray, int x_to_draw);
 int		ft_putpixel(mlx_image_t *img, float x, float y, int32_t color);
 
 /* Parse map */
-void    parse_map(char *map_file_path);
+void    parse_map(t_cub *cub, char *map_file_path);
+
+/* Key actions */
+void    left_key(t_cub *cub);
+void    right_key(t_cub *cub);
+void    a_key(t_cub *cub);
+void    s_key(t_cub *cub);
+void    w_key(t_cub *cub);
+void    d_key(t_cub *cub);
 
 /* Error handling */
 void	handle_error(int errno);

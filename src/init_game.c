@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/21 16:42:35 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 10:51:09 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void    load_map(t_cub *cub)
     cub->map[3] = ft_strdup("10001");
     cub->map[4] = ft_strdup("11111");
     cub->map[5] = NULL; 
+    cub->map_height = 5;
+    cub->map_width = 5;
     for (int i = 0; cub->map[i] != NULL; i++)
     {
         printf("%s\n", cub->map[i]);
@@ -73,17 +75,20 @@ void  load_textures(t_cub *cub)
 
 void	init_game(t_cub *cub, char **argv, int argc)
 {
-  if (argc != 2)
-		handle_error(ERROR_CMD_COUNT_ERROR);
-  parse_map(argv[1]); // IMPLEMENT
-  init_cub(cub);
-  load_textures(cub);
-  cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", true);
-	if (cub->mlx == NULL)
-		handle_error(mlx_errno);
-  cub->mlx_img = mlx_new_image(cub->mlx, WIN_X, WIN_Y);
-	if (cub->mlx_img == NULL)
-		error_terminate_mlx(cub, mlx_errno);
-  if (mlx_image_to_window(cub->mlx, cub->mlx_img, 0, 0) < 0)
-		error_terminate_mlx(cub, mlx_errno);
+  if (argc == 2)
+  {
+    parse_map(cub, argv[1]); // IMPLEMENT --> function is in parse_map.c
+    init_cub(cub);
+    load_textures(cub);
+    cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", true);
+    if (cub->mlx == NULL)
+      handle_error(mlx_errno);
+    cub->mlx_img = mlx_new_image(cub->mlx, WIN_X, WIN_Y);
+    if (cub->mlx_img == NULL)
+      error_terminate_mlx(cub, mlx_errno);
+    if (mlx_image_to_window(cub->mlx, cub->mlx_img, 0, 0) < 0)
+      error_terminate_mlx(cub, mlx_errno);
+  }
+  else
+    handle_error(ERROR_CMD_COUNT_ERROR);
 }
