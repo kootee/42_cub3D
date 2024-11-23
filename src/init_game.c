@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 10:51:09 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 14:20:09 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    load_map(t_cub *cub)
     cub->map = ft_calloc(6, sizeof(char *));
     cub->map[0] = ft_strdup("11111");
     cub->map[1] = ft_strdup("10001");
-    cub->map[2] = ft_strdup("10P01");
+    cub->map[2] = ft_strdup("10001");
     cub->map[3] = ft_strdup("10001");
     cub->map[4] = ft_strdup("11111");
     cub->map[5] = NULL; 
@@ -42,10 +42,10 @@ void    init_player(t_cub *cub)
     // THIS IS TEMP DATA, CHANGE LATER
     cub->player.ppos.x = 3;
     cub->player.ppos.y = 3;
-    cub->player.dir.x = -1;
-    cub->player.dir.y = 0;
-    cub->player.plane_x = 0;
-    cub->player.plane_y = 0.66;
+    cub->player.dir.x = 0;
+    cub->player.dir.y = -1;
+    cub->player.plane_x = 0.66;
+    cub->player.plane_y = 0.0;
 }
 
 void    init_cub(t_cub * cub)

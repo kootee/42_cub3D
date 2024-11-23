@@ -6,16 +6,16 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:32:43 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 10:43:36 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 14:09:35 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include <stdio.h>
 
-void    left_key(t_cub *cub)
+void    right_key(t_cub *cub)
 {
-    printf("left key pressed\n");
+    printf("right key pressed\n");
     double  old_dirX;
     double  old_planeX;
     
@@ -31,9 +31,9 @@ void    left_key(t_cub *cub)
                             + cub->camera_plane.y * cos(ROT_SPEED);
 }
 
-void    right_key(t_cub *cub)
+void    left_key(t_cub *cub)
 {
-    printf("right key pressed\n");
+    printf("left key pressed\n");
 
     double  old_dirX;
     double  old_planeX;
@@ -59,10 +59,18 @@ void    w_key(t_cub *cub)
     
     next_x = cub->player.ppos.x + cub->player.dir.x * PLAYER_SPEED;
     next_y = cub->player.ppos.y + cub->player.dir.y * PLAYER_SPEED;
+    
+    printf("Next position: (%f, %f)\n", next_x, next_y);
+    printf("Map value at next_x: %c\n", cub->map[(int)next_x][(int)cub->player.ppos.y]);
+    printf("Map value at next_y: %c\n", cub->map[(int)cub->player.ppos.x][(int)next_y]);
+
     if (cub->map[(int)(next_x)][(int)(cub->player.ppos.y)] == '0')
         cub->player.ppos.x = next_x;
     if (cub->map[(int)(cub->player.ppos.x)][(int)(next_y)] == '0')
         cub->player.ppos.y = next_y;
+
+    printf("Updated position: (%f, %f)\n", cub->player.ppos.x, cub->player.ppos.y);
+
 }
 
 void    s_key(t_cub *cub)

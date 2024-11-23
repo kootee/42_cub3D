@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 10:55:18 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/23 14:26:35 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define NUM_TEXTURES 4
 # define TEXTURE_X 64
 # define TEXTURE_Y 64
+# define MINIMAP_TILE_SIZE 15
 
 # define BLACK		0x000000
 # define WHITE		0xffffff
@@ -42,9 +43,11 @@
 # define ORANGE		0xffc100
 # define DARKORANGE	0xd75000
 # define GREEN		0x00ff2e
+# define RED		0xFF0000
+
 
 # define PLAYER_SPEED 0.045
-# define ROT_SPEED 4
+# define ROT_SPEED 0.045
 
 typedef enum e_errorcode
 {
@@ -143,6 +146,9 @@ typedef struct s_cub
 
 /* Initialise game */
 void	init_game(t_cub *cub, char **argv, int argc);
+
+/* Minimap */
+void	draw_minimap(t_cub *cub);
 
 /* Raycasting */
 void    ray_cast(t_cub *cub);
