@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:42:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/24 18:28:16 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:51:30 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,15 @@ mlx_texture_t	*set_texture_data(t_cub *cub, double *step)
 	
 	texture = set_texture(cub);
 	*step = (double)(1.0 * texture->height / cub->ray.line_height);
-	cub->tex_data.tex_x = (int)(cub->ray.wall_x * (double)texture->width);
+	cub->tex_data.tex_x = (int)(cub->ray.wall_x * texture->width);
 	if (cub->ray.side == 0 && cub->ray.dir.x < 0)
 		cub->tex_data.tex_x = texture->width - cub->tex_data.tex_x - 1;
 	if (cub->ray.side == 1 && cub->ray.dir.y > 0)
 		cub->tex_data.tex_x = texture->width - cub->tex_data.tex_x - 1;
-	cub->tex_data.pos = (cub->ray.draw_start - WIN_Y / 2 \
-						 + cub->ray.line_height) * (*step);	
+	if (cub->ray.draw_start < 0)
+		cub->tex_data.pos = (cub->ray.draw_start * -1.0) * (*step);
+	else
+		cub->tex_data.pos = 0;
 	return (texture);
 }
 

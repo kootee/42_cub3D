@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 20:11:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/24 17:47:47 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:51:25 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ void    wall_height(t_ray_data *ray, t_player *player)
     if (ray->draw_end >= WIN_Y)
         ray->draw_end = WIN_Y - 1;
     if (ray->side == 0)
-        ray->wall_x = player->ppos.y + ray->wall_dist * ray->d_dist.y;
+        ray->wall_x = player->ppos.y + ray->wall_dist * ray->dir.y;
     else
-        ray->wall_x = player->ppos.x + ray->wall_dist * ray->d_dist.x;
+        ray->wall_x = player->ppos.x + ray->wall_dist * ray->dir.x;
     ray->wall_x -= floor(ray->wall_x);
 }
 
