@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 14:26:35 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:23:11 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,5 +171,8 @@ void    d_key(t_cub *cub);
 /* Error handling */
 void	handle_error(int errno);
 void	error_terminate_mlx(t_cub *cub, int errno);
+
+/* Draw utils */
+uint32_t	get_pixel_color(uint8_t *pixel_buffer, int shade);
 
 #endif

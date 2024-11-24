@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 20:11:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 14:52:49 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:47:47 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,15 @@ void    digital_differential_analysis(t_cub *cub, t_ray_data *ray)
 void    wall_height(t_ray_data *ray, t_player *player)
 {
     if (ray->side == 0)
+    {
        ray->wall_dist = (ray->map_coord.x_coord - player->ppos.x 
                         + (1 - ray->step.x) / 2) / ray->dir.x;
+    }
     else
+    {
         ray->wall_dist = (ray->map_coord.y_coord - player->ppos.y 
                         + (1 - ray->step.y) / 2) / ray->dir.y;
+    }
     ray->line_height = (int)(WIN_Y / ray->wall_dist);
     ray->draw_start = -ray->line_height / 2 + WIN_Y / 2;
     if (ray->draw_start < 0)
@@ -96,7 +100,6 @@ void    wall_height(t_ray_data *ray, t_player *player)
     ray->draw_end = ray->line_height  / 2 + WIN_Y / 2;
     if (ray->draw_end >= WIN_Y)
         ray->draw_end = WIN_Y - 1;
-    // calculate value of wall_x - position where the wall was hit
     if (ray->side == 0)
         ray->wall_x = player->ppos.y + ray->wall_dist * ray->d_dist.y;
     else

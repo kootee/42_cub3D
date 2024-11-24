@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:47:41 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/20 18:30:27 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:23:53 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,30 @@ int	get_endian(void)
 	return (endian);
 }
 
+uint32_t	get_pixel_color(uint8_t *pixel_buffer, int shade)
+{
+	uint32_t	color;
+
+	if (get_endian() == 0)
+	{
+        color = (pixel_buffer[R] << 24) | \
+				(pixel_buffer[G] << 16) | \
+				(pixel_buffer[B] << 8) | \
+				pixel_buffer[A];
+	}
+	else
+	{
+        color = (pixel_buffer[A] << 24) | \
+				(pixel_buffer[B] << 16) | \
+				(pixel_buffer[G] << 8) | \
+				pixel_buffer[R];
+	}
+	if (shade == 1)
+		color = (color >> 1) & 8355711;
+	return (color);
+}
+
+// The color is 
 void	set_pixel_color(uint8_t *pixel_buffer, int color, int alpha)
 {
 	if (get_endian() == 0)
