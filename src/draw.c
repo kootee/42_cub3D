@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:42:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/25 16:55:24 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:37:53 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ mlx_texture_t	*set_texture_data(t_cub *cub, double *step)
 		cub->tex_data.tex_x = texture->width - cub->tex_data.tex_x - 1;
 	if (cub->ray.side == 1 && cub->ray.dir.y > 0)
 		cub->tex_data.tex_x = texture->width - cub->tex_data.tex_x - 1;
-	if (cub->ray.draw_start < 0)
-		cub->tex_data.pos = (cub->ray.draw_start * -1.0) * (*step);
-	else
-		cub->tex_data.pos = 0;
+
+	cub->tex_data.pos = (cub->ray.draw_start - WIN_Y / \
+						2 + cub->ray.line_height / 2) * (*step);
 	return (texture);
 }
 
@@ -75,8 +74,8 @@ void	draw_texture_column(t_cub *cub, t_ray_data *ray, int x)
 	{
 		cub->tex_data.tex_y = (int)(cub->tex_data.pos) % texture->height;
 		curr_pixel = texture->pixels + \
-					((cub->tex_data.tex_y * texture->width + 
-					cub->tex_data.tex_x)) * texture->bytes_per_pixel;
+					((cub->tex_data.tex_y * texture->width * texture->bytes_per_pixel) + 
+					(cub->tex_data.tex_x * texture->bytes_per_pixel));
 		ft_putpixel(cub->mlx_img, x, y, get_pixel_color(curr_pixel));
 		cub->tex_data.pos += step;
 		y++;

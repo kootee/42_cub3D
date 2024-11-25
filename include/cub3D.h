@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/25 16:56:54 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:58:59 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define MAGENTA	0xff0099ff
 # define LIGHTBLUE	0x87cefaff
 # define ORANGE		0xffc100ff
-# define DARKORANGE	0xd75000ce
+# define DARKORANGE	0xd75000ff
 # define GREEN		0x00ff2eff
 # define RED		0xFF0000ff
 
