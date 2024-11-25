@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:32:43 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 15:13:21 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:58:16 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ void    a_key(t_cub *cub)
     double left_x;
     double left_y;
     
-    left_x = cub->player.ppos.x - cub->camera_plane.x * PLAYER_SPEED;
-    left_y = cub->player.ppos.y - cub->camera_plane.y * PLAYER_SPEED;
+    left_x = cub->player.ppos.x - cub->player.plane_x * PLAYER_SPEED;
+    left_y = cub->player.ppos.y - cub->player.plane_y * PLAYER_SPEED;
     if (cub->map[(int)(left_x)][(int)(cub->player.ppos.y)] == '0')
         cub->player.ppos.x = left_x;
     if (cub->map[(int)(cub->player.ppos.x)][(int)(left_y)] == '0')
@@ -110,8 +110,8 @@ void    d_key(t_cub *cub)
     double right_x;
     double right_y;
     
-    right_x = cub->player.ppos.x + cub->camera_plane.x * PLAYER_SPEED;
-    right_y = cub->player.ppos.y + cub->camera_plane.y * PLAYER_SPEED;
+    right_x = cub->player.ppos.x + cub->player.plane_x * PLAYER_SPEED;
+    right_y = cub->player.ppos.y + cub->player.plane_y * PLAYER_SPEED;
     if (cub->map[(int)(right_x)][(int)(cub->player.ppos.y)] == '0')
         cub->player.ppos.x = right_x;
     if (cub->map[(int)(cub->player.ppos.x)][(int)(right_y)] == '0')
