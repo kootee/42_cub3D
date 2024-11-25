@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:42:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/24 18:51:30 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:55:24 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ mlx_texture_t	*set_texture_data(t_cub *cub, double *step)
 	return (texture);
 }
 
-
 /*	1.	The value of tex_y is calculated by increasing by a precomputed 
 		step size (step). This is possible because this is constant in 
 		the vertical stripe for each pixel. 
@@ -78,7 +77,7 @@ void	draw_texture_column(t_cub *cub, t_ray_data *ray, int x)
 		curr_pixel = texture->pixels + \
 					((cub->tex_data.tex_y * texture->width + 
 					cub->tex_data.tex_x)) * texture->bytes_per_pixel;
-		ft_putpixel(cub->mlx_img, x, y, get_pixel_color(curr_pixel, ray->side));
+		ft_putpixel(cub->mlx_img, x, y, get_pixel_color(curr_pixel));
 		cub->tex_data.pos += step;
 		y++;
 	}

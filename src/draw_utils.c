@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:47:41 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/24 18:37:36 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:54:42 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,24 @@ int	get_endian(void)
 	return (endian);
 }
 
-uint32_t	get_pixel_color(uint8_t *pixel_buffer, int shade)
+uint32_t	get_pixel_color(uint8_t *pixel_buffer)
 {
 	uint32_t	color;
 
 	if (get_endian() == 0)
 	{
-        color = (pixel_buffer[R] << 24) | \
-				(pixel_buffer[G] << 16) | \
-				(pixel_buffer[B] << 8) | \
-				pixel_buffer[A];
+        color = (pixel_buffer[A] << 24) | 
+				(pixel_buffer[B] << 16) | 
+				(pixel_buffer[G] << 8) |
+				pixel_buffer[R];
 	}
 	else
 	{
-        color = (pixel_buffer[A] << 24) | \
-				(pixel_buffer[B] << 16) | \
-				(pixel_buffer[G] << 8) | \
-				pixel_buffer[R];
+        color = (pixel_buffer[R] << 24) | 
+				(pixel_buffer[G] << 16) | 
+				(pixel_buffer[B] << 8) |
+				pixel_buffer[A];
 	}
-	if (shade == 1)
-		color = (color >> 1) & 8355711;
 	return (color);
 }
 
@@ -50,16 +48,16 @@ void	set_pixel_color(uint8_t *pixel_buffer, int color, int alpha)
 {
 	if (get_endian() == 0)
 	{
-		pixel_buffer[R] = color;
-		pixel_buffer[G] = color >> 8;
-		pixel_buffer[B] = color >> 16;
+		pixel_buffer[R] = color >> 8;
+		pixel_buffer[G] = color >> 16;
+		pixel_buffer[B] = color >> 24;
 		pixel_buffer[A] = alpha;
 	}
 	else
 	{
-		pixel_buffer[R] = color >> 16;
-		pixel_buffer[G] = color >> 8;
-		pixel_buffer[B] = color;
+		pixel_buffer[R] = color >> 24;
+		pixel_buffer[G] = color >> 16;
+		pixel_buffer[B] = color >> 8;
 		pixel_buffer[A] = alpha;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/24 18:23:11 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:56:54 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@
 # define TEXTURE_Y 64
 # define MINIMAP_TILE_SIZE 15
 
-# define BLACK		0x000000
-# define WHITE		0xffffff
-# define MAGENTA	0xff0099
-# define LIGHTBLUE	0x87cefa
-# define ORANGE		0xffc100
-# define DARKORANGE	0xd75000
-# define GREEN		0x00ff2e
-# define RED		0xFF0000
+# define BLACK		0x000000ff
+# define WHITE		0xffffffff
+# define MAGENTA	0xff0099ff
+# define LIGHTBLUE	0x87cefaff
+# define ORANGE		0xffc100ff
+# define DARKORANGE	0xd75000ce
+# define GREEN		0x00ff2eff
+# define RED		0xFF0000ff
 
 
 # define PLAYER_SPEED 0.045
@@ -173,6 +173,6 @@ void	handle_error(int errno);
 void	error_terminate_mlx(t_cub *cub, int errno);
 
 /* Draw utils */
-uint32_t	get_pixel_color(uint8_t *pixel_buffer, int shade);
+uint32_t	get_pixel_color(uint8_t *pixel_buffer);
 
 #endif

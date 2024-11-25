@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 15:10:04 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:29:47 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,16 @@ void    init_cub(t_cub * cub)
 
 void  load_textures(t_cub *cub)
 {
-    cub->textures.north = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/north.png");
+    cub->textures.north = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/2/north.png");
     if (cub->textures.north == NULL)
       handle_error(ERROR_TEXTURE);
-    cub->textures.south = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/south.png");
+    cub->textures.south = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/2/south.png");
     if (cub->textures.south == NULL)
       handle_error(ERROR_TEXTURE);
-    cub->textures.east = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/east.png");
+    cub->textures.east = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/2/east.png");
     if (cub->textures.east == NULL)
       handle_error(ERROR_TEXTURE);
-    cub->textures.west = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/west.png");
+    cub->textures.west = mlx_load_png("/Users/katjatoivola/Desktop/DOCS/Hive/Projects/cub3D/textures/2/west.png");
     if (cub->textures.west == NULL)
       handle_error(ERROR_TEXTURE);
 }
