@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:47:41 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/25 16:54:42 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:42:39 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_putpixel(mlx_image_t *img, float x, float y, int32_t color)
 	int	pixel;
 	int	alpha;
 
-	alpha = 0xFF;
+	alpha = 0xFF; // could be changed here
 	if (x > WIN_X || y > WIN_X \
 		|| x < 0 || y < 0)
 		return (-1);

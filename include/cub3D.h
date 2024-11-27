@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/25 16:58:59 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:56:10 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@
 # define DARKORANGE	0xd75000ff
 # define GREEN		0x00ff2eff
 # define RED		0xFF0000ff
-
 
 # define PLAYER_SPEED 0.045
 # define ROT_SPEED 0.045
