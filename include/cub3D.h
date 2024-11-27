@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/27 14:56:10 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:49:17 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include "MLX42.h"
 # include "libft.h"
 
-# define WIN_X	480
-# define WIN_Y	480
+# define WIN_X	1600
+# define WIN_Y	1200
 # define WIN_MARGIN 50
 # define NUM_TEXTURES 4
 # define TEXTURE_X 64

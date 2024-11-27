@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:26:02 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 14:43:49 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:15:05 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,45 @@
 
 void	draw_minimap_square(t_cub *cub ,t_vector map_pt, size_t size, uint32_t color)
 {
-	for (size_t y = map_pt.y; y <= (map_pt.y + size); y++)
+	size_t	y;
+	size_t	x;
+
+	y = map_pt.y;
+	x + map_pt.x;	
+	while (y <= (map_pt.y + size))
 	{
-		for (size_t x = map_pt.x; x <= (map_pt.x + size); x++)
+		while (x <= (map_pt.x + size))
 		{
-			if (y == (map_pt.y + size) || x == (map_pt.x + size) || \
-				y == map_pt.y || x == map_pt.x)
+			if (y == (map_pt.y + size) \
+				|| x == (map_pt.x + size) \
+				|| y == map_pt.y \
+				|| x == map_pt.x) 
 				ft_putpixel(cub->mlx_img, x, y, BLACK);
-			else	ft_putpixel(cub->mlx_img, x, y, color);
+			else	
+				ft_putpixel(cub->mlx_img, x, y, color);
+			x++;
 		}
+		y++;
 	}
 }
 
 void draw_line(t_cub *cub, t_vector start, t_vector end, uint32_t color)
 {
-    int dx = fabs(end.x - start.x);
-    int dy = fabs(end.y - start.y);
-    int step_x = start.x < end.x ? 1 : -1;
-    int step_y = start.y < end.y ? 1 : -1;
-    int err = dx - dy;
+    int dx;
+    int dy;
+    int step_x;
+    int step_y;
+    int err;
 
+	dx = fabs(end.x - start.x);
+	dy = fabs(end.y - start.y);
+	step_x = 1;
+	step_y = 1;
+	if (start.x > end.x)
+		step_x = -1;
+	if (start.y > end.y)
+		step_y = -1;
+	err = dx - dy;
     while (true)
     {
         ft_putpixel(cub->mlx_img, start.x, start.y, color);
@@ -70,7 +89,7 @@ void draw_player(t_cub *cub)
     draw_line(cub, (t_vector){player_x, player_y}, (t_vector){ray_end_x, ray_end_y}, RED);
 }
 
-uint32_t	set_minimap_color(t_cub *cub, t_vector *pt)
+/* uint32_t	set_minimap_color(t_cub *cub, t_vector *pt)
 {
 	uint32_t	color;
 	int x;
@@ -84,7 +103,7 @@ uint32_t	set_minimap_color(t_cub *cub, t_vector *pt)
 	else if (cub->map[y][x] == '0')
 		color = DARKORANGE;
 	return (color);
-}
+} */
 
 void	draw_minimap(t_cub *cub)
 {
@@ -98,6 +117,12 @@ void	draw_minimap(t_cub *cub)
 		{
 			map_pt.y = pt.y * MINIMAP_TILE_SIZE;
 			map_pt.x = pt.x * MINIMAP_TILE_SIZE;
+			if (cub->map[(int)pt.y][(int)pt.x] == '1')
+				color = ORANGE;
+			else if (cub->map[(int)pt.y][(int)pt.x] == '0')
+				color = DARKORANGE;
+			else
+				color = WHITE;
 			color = set_minimap_color(cub, &pt);
 			draw_minimap_square(cub, map_pt, MINIMAP_TILE_SIZE, color);
 		}
