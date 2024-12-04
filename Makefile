@@ -26,7 +26,8 @@ SOURCES = src/main.c \
 			src/key_actions.c \
 			src/minimap.c \
 			src/parse_map.c \
-			src/raycasting.c
+			src/raycasting.c \
+			src/input_validation.c
 
 BUILD_DIR = build
 OBJECTS = $(SOURCES:src/%.c=$(BUILD_DIR)/%.o)

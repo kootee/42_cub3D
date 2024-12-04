@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/27 14:56:10 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:43:06 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdbool.h>
+# include <stdio.h>
 # include "MLX42.h"
 # include "libft.h"
 
@@ -157,6 +158,7 @@ void	draw_to_screen(t_cub * cub, t_ray_data *ray, int x_to_draw);
 int		ft_putpixel(mlx_image_t *img, float x, float y, int32_t color);
 
 /* Parse map */
+int validate_arguments(int argc, char **argv);
 void    parse_map(t_cub *cub, char *map_file_path);
 
 /* Key actions */

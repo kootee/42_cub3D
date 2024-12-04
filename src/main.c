@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 14:25:53 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:37:58 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ void    game_loop(t_cub *cub)
 int	main(int argc, char **argv)
 {
     t_cub   cub;
-    
+    if (validate_arguments(argc, argv) == 1)
+    {
+        return EXIT_FAILURE;
+    }
 	init_game(&cub, argv, argc);
     game_loop(&cub);
     terminate_cub(&cub);

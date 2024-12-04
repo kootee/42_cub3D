@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/26 14:49:05 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:37:49 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,16 @@ void    init_cub(t_cub * cub)
 
 void  load_textures(t_cub *cub)
 {
-    cub->textures.north = mlx_load_png("/home/ktoivola/Projects/cub3D/textures/2/north.png");
+    cub->textures.north = mlx_load_png("north.png");
     if (cub->textures.north == NULL)
       handle_error(ERROR_TEXTURE);
-    cub->textures.south = mlx_load_png("/home/ktoivola/Projects/cub3D/textures/2/south.png");
+    cub->textures.south = mlx_load_png("south.png");
     if (cub->textures.south == NULL)
       handle_error(ERROR_TEXTURE);
-    cub->textures.east = mlx_load_png("/home/ktoivola/Projects/cub3D/textures/2/east.png");
+    cub->textures.east = mlx_load_png("east.png");
     if (cub->textures.east == NULL)
       handle_error(ERROR_TEXTURE);
-    cub->textures.west = mlx_load_png("/home/ktoivola/Projects/cub3D/textures/2/west.png");
+    cub->textures.west = mlx_load_png("west.png");
     if (cub->textures.west == NULL)
       handle_error(ERROR_TEXTURE);
 }
