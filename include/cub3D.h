@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/12/04 15:43:06 by psitkin          ###   ########.fr       */
+/*   Updated: 2024/12/05 14:37:15 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,22 @@ int		ft_putpixel(mlx_image_t *img, float x, float y, int32_t color);
 
 /* Parse map */
 int validate_arguments(int argc, char **argv);
-void    parse_map(t_cub *cub, char *map_file_path);
+char	**read_cub_file(const char *filepath);
+void	validate_map_section(char **lines);
+void	init_cub_structure(t_cub *cub, char **file_content);
+void	parse_textures(t_cub *cub, char **file_content);
+char	*get_texture_path(char *line);
+void	parse_colors(t_cub *cub, char **file_content);
+void free_components(char **components);
+int count_components(char *line);
+
+uint32_t	parse_color(char *line);
+void parse_map(t_cub *cub, char *map_file);
+size_t get_map_width(t_cub *cub);
+void	validate_map(char **map, size_t map_height);
+int		check_borders(char **map, size_t map_height);
+int		check_valid_characters(char **map);
+int		is_line_wall(char *line);
 
 /* Key actions */
 void    left_key(t_cub *cub);
