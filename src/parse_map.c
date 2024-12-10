@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:50:00 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/12/06 22:10:28 by psitkin          ###   ########.fr       */
+/*   Updated: 2024/12/10 16:07:55 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,21 @@ void parse_map(t_cub *cub, char *map_file)
     cub->map_width = get_map_width(cub);
 	validate_map(cub->map, cub->map_height);
 }
+
+char *trim_newline(char *line)
+{
+    size_t len;
+
+    if (!line)
+        return (NULL);
+
+    len = ft_strlen(line);
+    if (len > 0 && line[len - 1] == '\n') // Если последний символ - это '\n'
+        line[len - 1] = '\0';            // Удаляем его, заменяя на null-терминатор
+
+    return (line);
+}
+
 int is_line_wall(char *line)
 {
     size_t i;
@@ -257,6 +272,9 @@ int is_line_wall(char *line)
         return (0);
     }
 
+    // Удаляем символ новой строки
+    line = trim_newline(line);
+
     printf("is_line_wall: processing line: '%s'\n", line);
 
     i = 0;
@@ -265,13 +283,12 @@ int is_line_wall(char *line)
         if (line[i] != '1' && line[i] != ' ')
         {
             printf("is_line_wall: invalid character '%c' at index %zu\n", line[i], i);
-            return (0); // Invalid character found
+            return (0); // Найден некорректный символ
         }
         i++;
     }
-    return (1); // Line is valid
+    return (1); // Линия валидна
 }
-
 
 
 int check_borders(char **map, size_t map_height)
@@ -279,20 +296,22 @@ int check_borders(char **map, size_t map_height)
     size_t i;
 
     // Проверяем верхнюю и нижнюю границы
-    if (!is_line_wall(map[0]) || !is_line_wall(map[map_height - 1]))
+    if (!is_line_wall(trim_newline(map[0])) || !is_line_wall(trim_newline(map[map_height - 1])))
         return (0);
 
     // Проверяем левую и правую границы для каждой строки
     i = 1;
-
     while (i < map_height - 1)
     {
-        if (map[i][0] != '1' || map[i][ft_strlen(map[i]) - 1] != '1')
-            return (0);
+        char *line = trim_newline(map[i]);
+        size_t len = ft_strlen(line);
+        if (len == 0 || line[0] != '1' || line[len - 1] != '1')
+            return (0); // Линия должна начинаться и заканчиваться на '1'
         i++;
     }
     return (1);
 }
+
 
 int check_valid_characters(char **map)
 {
@@ -314,9 +333,6 @@ int check_valid_characters(char **map)
     return (1);
 }
 
-
-
-
 void validate_map(char **map, size_t map_height)
 {
     size_t i;
@@ -327,17 +343,19 @@ void validate_map(char **map, size_t map_height)
     i = 0;
     while (i < map_height)
     {
+        map[i] = trim_newline(map[i]); // Удаляем символ новой строки
         if (!map[i] || ft_strlen(map[i]) == 0)
             handle_error(ERROR_INVALID_MAP_DIM);
         i++;
     }
 
-    // Additional checks for valid map content
+    // Проверяем границы
     if (!check_borders(map, map_height))
         handle_error(ERROR_INVALID_MAP_PTS);
 
+    // Проверяем валидные символы
     if (!check_valid_characters(map))
         handle_error(ERROR_INVALID_MAP);
-	
 }
+
 
