@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:50:00 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/12/10 16:07:55 by psitkin          ###   ########.fr       */
+/*   Updated: 2024/12/11 17:16:47 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,6 @@ char *trim_newline(char *line)
 
     return (line);
 }
-
 int is_line_wall(char *line)
 {
     size_t i;
@@ -272,15 +271,13 @@ int is_line_wall(char *line)
         return (0);
     }
 
-    // Удаляем символ новой строки
-    line = trim_newline(line);
-
+    line = trim_newline(line); // Удаляем символ новой строки
     printf("is_line_wall: processing line: '%s'\n", line);
 
     i = 0;
     while (line[i])
     {
-        if (line[i] != '1' && line[i] != ' ')
+        if (!ft_strchr("01NSEW ", line[i])) // Допустимые символы карты
         {
             printf("is_line_wall: invalid character '%c' at index %zu\n", line[i], i);
             return (0); // Найден некорректный символ
@@ -305,9 +302,38 @@ int check_borders(char **map, size_t map_height)
     {
         char *line = trim_newline(map[i]);
         size_t len = ft_strlen(line);
+
+        // Линия должна начинаться и заканчиваться на '1'
         if (len == 0 || line[0] != '1' || line[len - 1] != '1')
-            return (0); // Линия должна начинаться и заканчиваться на '1'
+            return (0);
+
         i++;
+    }
+    return (1);
+}
+
+int check_player_position(char **map)
+{
+    size_t i, j;
+    int player_count = 0;
+
+    i = 0;
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j])
+        {
+            if (ft_strchr("NSEW", map[i][j])) // Главный персонаж
+                player_count++;
+            j++;
+        }
+        i++;
+    }
+
+    if (player_count != 1) // Проверяем, что персонаж ровно один
+    {
+        printf("check_player_position: found %d players\n", player_count);
+        return (0);
     }
     return (1);
 }
@@ -353,9 +379,14 @@ void validate_map(char **map, size_t map_height)
     if (!check_borders(map, map_height))
         handle_error(ERROR_INVALID_MAP_PTS);
 
-    // Проверяем валидные символы
+    // Проверяем допустимые символы
     if (!check_valid_characters(map))
         handle_error(ERROR_INVALID_MAP);
+
+    // Проверяем позицию игрока
+    if (!check_player_position(map))
+        handle_error(ERROR_INVALID_PLAYER_POSITION);
 }
+
 
 

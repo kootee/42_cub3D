@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:45:01 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/18 17:00:41 by ktoivola         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:18:48 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	handle_error(int errno)
 		ft_putstr_fd("Error: Invalid file name\n", STDERR_FILENO);
 	else if (errno == ERROR_TEXTURE)
 		ft_putstr_fd("Error: Failed to load texture\n", STDERR_FILENO);
+	else if (errno == ERROR_INVALID_PLAYER_POSITION)
+		ft_putstr_fd("Error: Invalid player position\n", STDERR_FILENO);	
     // free allocated memory
 	exit (errno);
 }

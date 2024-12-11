@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/12/05 14:37:15 by psitkin          ###   ########.fr       */
+/*   Updated: 2024/12/11 17:19:24 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ typedef enum e_errorcode
 	ERROR_OPEN_ERROR = 204,
 	ERROR_INVALID_FILE_NAME = 205,
 	ERROR_INVALID_MAP = 206,
-	ERROR_TEXTURE = 207
+	ERROR_TEXTURE = 207,
+	ERROR_INVALID_PLAYER_POSITION = 208
 }	t_errorcode;
 
 typedef enum e_cardinal_direction
