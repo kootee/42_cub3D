@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/12/04 15:37:49 by psitkin          ###   ########.fr       */
+/*   Updated: 2024/12/28 17:55:10 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,29 +73,15 @@ void    init_cub(t_cub * cub)
       handle_error(ERROR_TEXTURE);
 } */
 
-void  load_textures(t_cub *cub)
-{
-    cub->textures.north = mlx_load_png("north.png");
-    if (cub->textures.north == NULL)
-      handle_error(ERROR_TEXTURE);
-    cub->textures.south = mlx_load_png("south.png");
-    if (cub->textures.south == NULL)
-      handle_error(ERROR_TEXTURE);
-    cub->textures.east = mlx_load_png("east.png");
-    if (cub->textures.east == NULL)
-      handle_error(ERROR_TEXTURE);
-    cub->textures.west = mlx_load_png("west.png");
-    if (cub->textures.west == NULL)
-      handle_error(ERROR_TEXTURE);
-}
+
 
 void	init_game(t_cub *cub, char **argv, int argc)
 {
   if (argc == 2)
   {
+    load_textures(cub);
     parse_map(cub, argv[1]); // IMPLEMENT --> function is in parse_map.c
     init_cub(cub);
-    load_textures(cub);
     cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", true);
     if (cub->mlx == NULL)
       handle_error(mlx_errno);

@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/12/11 17:19:24 by psitkin          ###   ########.fr       */
+/*   Updated: 2024/12/28 17:52:33 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define TEXTURE_X 64
 # define TEXTURE_Y 64
 # define MINIMAP_TILE_SIZE 15
+#define MAX_FILE_SIZE 1048576
+//# define M_PI_2 1.5707963267948966 // π/2
 
 # define BLACK		0x000000ff
 # define WHITE		0xffffffff
@@ -114,13 +116,17 @@ typedef	struct s_ray_data
 	int			line_height;
 } t_ray_data;
 
-typedef struct s_textures 
-{
-	mlx_texture_t	*north;
-	mlx_texture_t	*south;
-	mlx_texture_t	*east;
-	mlx_texture_t	*west;
+typedef struct s_textures {
+    char *north_path;          // Путь к текстуре "North"
+    char *south_path;          // Путь к текстуре "South"
+    char *west_path;           // Путь к текстуре "West"
+    char *east_path;           // Путь к текстуре "East"
+    mlx_texture_t *north;      // Загруженная текстура "North"
+    mlx_texture_t *south;      // Загруженная текстура "South"
+    mlx_texture_t *west;       // Загруженная текстура "West"
+    mlx_texture_t *east;       // Загруженная текстура "East"
 } t_textures;
+
 
 typedef struct s_tex_data
 {
@@ -158,20 +164,37 @@ void    ray_cast(t_cub *cub);
 void	draw_to_screen(t_cub * cub, t_ray_data *ray, int x_to_draw);
 int		ft_putpixel(mlx_image_t *img, float x, float y, int32_t color);
 
+/* Struct init*/
+
+void	init_main_struct(t_cub *cub);
+int	handle_arguments(int argc, char **argv);
+int	create_file(t_cub *cub, const char *filename);
+int	is_map_valid(t_cub *cub);
+/*Load textures */
+void load_textures(t_cub *cub);
+void free_textures(t_cub *cub);
+void free_texture_paths(t_textures *textures);
+//void free_textures(t_cub *cub);
+void parse_texture(char *line, t_cub *cub);
+int parse_cub_file(t_cub *cub, char **lines);
+void copy_map(char **lines, t_cub *cub);
+
+
+
+
 /* Parse map */
 int validate_arguments(int argc, char **argv);
-char	**read_cub_file(const char *filepath);
-void	validate_map_section(char **lines);
-void	init_cub_structure(t_cub *cub, char **file_content);
-void	parse_textures(t_cub *cub, char **file_content);
-char	*get_texture_path(char *line);
-void	parse_colors(t_cub *cub, char **file_content);
-void free_components(char **components);
-int count_components(char *line);
+//void	validate_map_section(char **lines);
+//void	init_cub_structure(t_cub *cub, char **file_content);
+//void	parse_textures(t_cub *cub, char **file_content);
+//char	*get_texture_path(char *line);
+//void	parse_colors(t_cub *cub, char **file_content);
+//void free_components(char **components);
+//int count_components(char *line);
 
-uint32_t	parse_color(char *line);
+//uint32_t	parse_color(char *line);
 void parse_map(t_cub *cub, char *map_file);
-size_t get_map_width(t_cub *cub);
+//size_t get_map_width(t_cub *cub);
 void	validate_map(char **map, size_t map_height);
 int		check_borders(char **map, size_t map_height);
 int		check_valid_characters(char **map);

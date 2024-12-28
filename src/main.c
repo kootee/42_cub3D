@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/12/04 15:37:58 by psitkin          ###   ########.fr       */
+/*   Updated: 2024/12/28 15:57:11 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,24 @@ void    game_loop(t_cub *cub)
 
 int	main(int argc, char **argv)
 {
-    t_cub   cub;
-    if (validate_arguments(argc, argv) == 1)
-    {
-        return EXIT_FAILURE;
-    }
+	t_cub cub;
+
+	init_main_struct(&cub);
+	if (handle_arguments(argc, argv) == 1)
+	{
+		return (1);
+	}
+	if (create_file(&cub, argv[1]) == 1)
+	{
+		return (1);
+	}
+	if (is_map_valid(&cub) == 1)
+	{
+		return (1);
+	}
 	init_game(&cub, argv, argc);
     game_loop(&cub);
     terminate_cub(&cub);
 	return (EXIT_SUCCESS);
 }
+

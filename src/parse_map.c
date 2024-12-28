@@ -6,16 +6,12 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:50:00 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/12/11 17:16:47 by psitkin          ###   ########.fr       */
+/*   Updated: 2024/12/28 17:26:53 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-char	**read_cub_file(const char *filepath);
-void	validate_map_section(char **lines);
-void	init_cub_structure(t_cub *cub, char **file_content);
-void	parse_textures(t_cub *cub, char **file_content);
 void	parse_colors(t_cub *cub, char **file_content);
 uint32_t	parse_color(char *line);
 char	*get_texture_path(char *line);
@@ -34,183 +30,10 @@ int		is_line_wall(char *line);
 //     // IMPLEMENT
 // }
 
-char	**read_cub_file(const char *filepath)
-{
-	int		fd;
-	char	*line;
-	char	**lines;
-	int		line_count = 0;
 
-	fd = open(filepath, O_RDONLY);
-	if (fd == -1)
-		handle_error(ERROR_OPEN_ERROR);
 
-	lines = ft_calloc(1024, sizeof(char *)); // Массив для строк
-	if (!lines)
-		handle_error(ERROR_MALLOC_FAIL);
 
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		lines[line_count++] = line; // Сохраняем каждую строку
-		if (line_count >= 1024) // Проверяем переполнение
-			handle_error(ERROR_INVALID_MAP_DIM);
-	}
-	close(fd);
-	return (lines); // Возвращаем массив строк
-}
 
-void	validate_map_section(char **lines)
-{
-	int i = 0;
-
-	while (lines[i])
-	{
-		// Пропускаем пустые строки
-		if (ft_strlen(lines[i]) == 0)
-		{
-			i++;
-			continue;
-		}
-
-		// Проверяем первую букву строки
-		if (ft_strncmp(lines[i], "NO ", 3) == 0 ||
-			ft_strncmp(lines[i], "SO ", 3) == 0 ||
-			ft_strncmp(lines[i], "WE ", 3) == 0 ||
-			ft_strncmp(lines[i], "EA ", 3) == 0)
-		{
-			// Проверка текстур...
-		}
-		else if (lines[i][0] == 'F' || lines[i][0] == 'C')
-		{
-			// Проверка цветов...
-		}
-		else
-		{
-			// Проверка карты...
-		}
-		i++;
-	}
-}
-
-void	init_cub_structure(t_cub *cub, char **file_content)
-{
-	ft_bzero(cub, sizeof(t_cub)); // Обнуляем все поля структуры
-
-	// Инициализируем MLX
-	cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", true);
-	if (!cub->mlx)
-		handle_error(ERROR_MALLOC_FAIL);
-
-	// Парсим текстуры
-	parse_textures(cub, file_content);
-
-	// Парсим цвета
-	parse_colors(cub, file_content);
-
-	// Парсим карту
-	parse_map(cub, *file_content);
-}
-void	parse_textures(t_cub *cub, char **file_content)
-{
-	int i = 0;
-
-	while (file_content[i])
-	{
-		if (ft_strncmp(file_content[i], "NO ", 3) == 0)
-			cub->textures.north = mlx_load_png(get_texture_path(file_content[i]));
-		else if (ft_strncmp(file_content[i], "SO ", 3) == 0)
-			cub->textures.south = mlx_load_png(get_texture_path(file_content[i]));
-		else if (ft_strncmp(file_content[i], "WE ", 3) == 0)
-			cub->textures.west = mlx_load_png(get_texture_path(file_content[i]));
-		else if (ft_strncmp(file_content[i], "EA ", 3) == 0)
-			cub->textures.east = mlx_load_png(get_texture_path(file_content[i]));
-		i++;
-	}
-
-	// Проверяем, что все текстуры загружены
-	if (!cub->textures.north || !cub->textures.south ||
-		!cub->textures.west || !cub->textures.east)
-		handle_error(ERROR_TEXTURE);
-}
-
-// Вспомогательная функция для получения пути к текстуре
-char	*get_texture_path(char *line)
-{
-	char	*path;
-
-	// Пропускаем ключевое слово (например, "NO ")
-	path = ft_strchr(line, ' ') + 1;
-	if (!path || ft_strlen(path) == 0)
-		handle_error(ERROR_TEXTURE);
-	return (ft_strdup(path));
-}
-
-void	parse_colors(t_cub *cub, char **file_content)
-{
-	int i = 0;
-
-	while (file_content[i])
-	{
-		if (file_content[i][0] == 'F') // Пол
-			cub->floor_color = parse_color(file_content[i] + 2);
-		else if (file_content[i][0] == 'C') // Потолок
-			cub->ceiling_color = parse_color(file_content[i] + 2);
-		i++;
-	}
-}
-
-void free_components(char **components)
-{
-    size_t i = 0;
-    while (components[i])
-    {
-        free(components[i]); // Free each string in the array
-        i++;
-    }
-    free(components); // Free the array itself
-}
-
-int count_components(char *line)
-{
-    int count = 1; // Start with 1 as the first component exists before the first comma
-    while (*line)
-    {
-        if (*line == ',')
-            count++;
-        line++;
-    }
-    return count;
-}
-
-// Функция для парсинга RGB-цвета
-uint32_t	parse_color(char *line)
-{
-	int		rgb[3];
-	char	**components;
-
-	components = ft_split(line, ',');
-	if (!components || count_components(*components) != 3)
-		handle_error(ERROR_INVALID_MAP_PTS);
-
-	// Преобразуем компоненты цвета и проверяем диапазон
-	rgb[0] = ft_atoi(components[0]); // R
-	if (rgb[0] < 0 || rgb[0] > 255)
-		handle_error(ERROR_INVALID_MAP_PTS);
-
-	rgb[1] = ft_atoi(components[1]); // G
-	if (rgb[1] < 0 || rgb[1] > 255)
-		handle_error(ERROR_INVALID_MAP_PTS);
-
-	rgb[2] = ft_atoi(components[2]); // B
-	if (rgb[2] < 0 || rgb[2] > 255)
-		handle_error(ERROR_INVALID_MAP_PTS);
-
-	// Освобождаем память
-	free_components(components);
-
-	// Формируем 32-битный цвет
-	return (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 0xFF);
-}
 
 size_t get_map_width(t_cub *cub)
 {
@@ -238,7 +61,9 @@ void parse_map(t_cub *cub, char *map_file)
             map_lines[map_height++] = line;
 
         if (map_height >= 1000)
+        {
             handle_error(ERROR_INVALID_MAP_DIM);
+        }
     }
     close(fd);
 
@@ -371,7 +196,9 @@ void validate_map(char **map, size_t map_height)
     {
         map[i] = trim_newline(map[i]); // Удаляем символ новой строки
         if (!map[i] || ft_strlen(map[i]) == 0)
+        {
             handle_error(ERROR_INVALID_MAP_DIM);
+        }
         i++;
     }
 
