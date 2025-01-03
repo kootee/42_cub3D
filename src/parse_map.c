@@ -6,13 +6,13 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:50:00 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/12/28 17:26:53 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/03 21:17:35 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	parse_colors(t_cub *cub, char **file_content);
+void	parse_colors_trash(t_cub *cub, char **file_content);
 uint32_t	parse_color(char *line);
 char	*get_texture_path(char *line);
 void parse_map(t_cub *cub, char *map_file);

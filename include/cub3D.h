@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/12/28 17:52:33 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/03 21:19:10 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,9 @@ void load_textures(t_cub *cub);
 void free_textures(t_cub *cub);
 void free_texture_paths(t_textures *textures);
 //void free_textures(t_cub *cub);
-void parse_texture(char *line, t_cub *cub);
+void parse_textures(char *line, t_cub *cub);
+void parse_colors(char *line, uint32_t *color);
+void free_array(char **array);
 int parse_cub_file(t_cub *cub, char **lines);
 void copy_map(char **lines, t_cub *cub);
 
