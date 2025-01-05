@@ -96,12 +96,41 @@ int	validate_player_position(t_cub *cub)
 		{
 			if (is_player_char(cub->map[i][j]))
 			{
-				cub->player.ppos.x = j + 0.5;
-				cub->player.ppos.y = i + 0.5;
-				cub->player.p_angle = (cub->map[i][j] == 'N') ? -M_PI_2 :
-									  (cub->map[i][j] == 'S') ? M_PI_2 :
-									  (cub->map[i][j] == 'E') ? 0 :
-									  M_PI;
+				cub->player.ppos.x = j;
+				cub->player.ppos.y = i;
+				if(cub->map[i][j] == 'N')
+				{
+					cub->player.dir.x = 0.0;
+					cub->player.dir.y = -1.0;
+					cub->player.plane_x = 0.66;
+					cub->player.plane_y = 0.0;
+				}
+				if(cub->map[i][j] == 'S')
+				{
+					cub->player.dir.x = 0.0;
+					cub->player.dir.y = 1.0;
+					cub->player.plane_x = -0.66;
+					cub->player.plane_y = 0.0;
+				}
+				if(cub->map[i][j] == 'E')
+				{
+					cub->player.dir.x = 1.0;
+					cub->player.dir.y = 0.0;
+					cub->player.plane_x = 0.0;
+					cub->player.plane_y = 0.66;
+				}
+				if(cub->map[i][j] == 'W')
+				{
+					cub->player.dir.x = -1.0;
+					cub->player.dir.y = 0.0;
+					cub->player.plane_x = 0.0;
+					cub->player.plane_y = -0.66;
+				}
+
+				// cub->player.p_angle = (cub->map[i][j] == 'N') ? -M_PI_2 :
+				// 					  (cub->map[i][j] == 'S') ? M_PI_2 :
+				// 					  (cub->map[i][j] == 'E') ? 0 :
+				// 					  M_PI;
 				player_count++;
 			}
 			j++;

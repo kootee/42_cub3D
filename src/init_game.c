@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/03 20:26:14 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/05 22:46:56 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,17 @@ void    init_cub(t_cub * cub)
 
 
 
-void	init_game(t_cub *cub, char **argv, int argc)
+void	init_game(t_cub *cub) //, char **argv, int argc)
 {
-  if (argc == 2)
-  {
+  // if (argc == 2)
+  // {
+    printf("xxxx\n");
+    
+      printf("%zu\n", cub->map_width);
+
     load_textures(cub);
-    parse_map(cub, argv[1]); // IMPLEMENT --> function is in parse_map.c
-    init_cub(cub);
+    //parse_map(cub, argv[1]); // IMPLEMENT --> function is in parse_map.c
+    //init_cub(cub);
     cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", true);
     if (cub->mlx == NULL)
       handle_error(mlx_errno);
@@ -90,7 +94,7 @@ void	init_game(t_cub *cub, char **argv, int argc)
       error_terminate_mlx(cub, mlx_errno);
     if (mlx_image_to_window(cub->mlx, cub->mlx_img, 0, 0) < 0)
       error_terminate_mlx(cub, mlx_errno);
-  }
-  else
-    handle_error(ERROR_CMD_COUNT_ERROR);
+  // }
+  // else
+  //   handle_error(ERROR_CMD_COUNT_ERROR);
 }

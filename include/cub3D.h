@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/03 21:19:10 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/05 22:08:31 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ typedef struct s_cub
 } t_cub;
 
 /* Initialise game */
-void	init_game(t_cub *cub, char **argv, int argc);
+void	init_game(t_cub *cub); //, char **argv, int argc);
 
 /* Minimap */
 void	draw_minimap(t_cub *cub);

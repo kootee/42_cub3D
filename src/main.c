@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/12/28 15:57:11 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/05 22:09:46 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	main(int argc, char **argv)
 	{
 		return (1);
 	}
-	init_game(&cub, argv, argc);
+	init_game(&cub); // argv, argc);
     game_loop(&cub);
     terminate_cub(&cub);
 	return (EXIT_SUCCESS);
