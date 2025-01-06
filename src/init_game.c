@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:07:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/05 22:46:56 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/06 01:26:14 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,13 @@ void	init_game(t_cub *cub) //, char **argv, int argc)
   // {
     printf("xxxx\n");
     
-      printf("%zu\n", cub->map_width);
+    printf("map_width: %zu\n", cub->map_width);
+    printf("player.ppos.x: %f\n", cub->player.ppos.x);
+    printf("player.ppos.y: %f\n", cub->player.ppos.y);
+    printf("player.dir.x: %f\n", cub->player.dir.x);
+    printf("player.dir.y: %f\n", cub->player.dir.y);
+    printf("player.plane_x: %f\n", cub->player.plane_x);
+    printf("player.plane_y: %f\n", cub->player.plane_y);
 
     load_textures(cub);
     //parse_map(cub, argv[1]); // IMPLEMENT --> function is in parse_map.c

@@ -22,23 +22,8 @@ static char	*read_file_contents(const char *filename)
 	close(fd);
 	return (file_contents);
 }
-#include <stdlib.h>
 
-void free_array(char **array)
-{
-    int i = 0;
 
-    if (!array) // Проверяем, что массив не NULL
-        return;
-
-    while (array[i]) // Освобождаем каждую строку в массиве
-    {
-        free(array[i]);
-        i++;
-    }
-
-    free(array); // Освобождаем сам массив указателей
-}
 
 int create_file(t_cub *cub, const char *filename)
 {

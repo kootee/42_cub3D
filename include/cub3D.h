@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/05 22:08:31 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/06 02:00:31 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,11 @@ void parse_colors(char *line, uint32_t *color);
 void free_array(char **array);
 int parse_cub_file(t_cub *cub, char **lines);
 void copy_map(char **lines, t_cub *cub);
+void free_all_resources(t_cub *cub);
+
+int check_valid_characters(char **map, int row, int col);
+void calculate_map_width(t_cub *cub);
+int count_players(char **map, int *player_count, int row, int col, t_cub *cub);
 
 
 
@@ -199,7 +204,6 @@ void parse_map(t_cub *cub, char *map_file);
 //size_t get_map_width(t_cub *cub);
 void	validate_map(char **map, size_t map_height);
 int		check_borders(char **map, size_t map_height);
-int		check_valid_characters(char **map);
 int		is_line_wall(char *line);
 
 /* Key actions */

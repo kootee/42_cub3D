@@ -108,7 +108,12 @@ int parse_cub_file(t_cub *cub, char **lines)
         }
         else if (lines[i][0] == '1') // Начало карты
         {
-            copy_map(&lines[i], cub); // Копируем карту
+            copy_map(&lines[i], cub);       // Копируем карту
+            calculate_map_width(cub);       // Рассчитываем ширину карты
+            if (is_map_valid(cub))          // Проверяем валидность карты
+                return (1);
+
+            
             break;
         }
         else
