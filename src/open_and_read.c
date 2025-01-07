@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   open_and_read.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/07 23:37:42 by psitkin           #+#    #+#             */
+/*   Updated: 2025/01/07 23:37:57 by psitkin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 static char	*read_file_contents(const char *filename)
@@ -23,25 +35,22 @@ static char	*read_file_contents(const char *filename)
 	return (file_contents);
 }
 
-
-
-int create_file(t_cub *cub, const char *filename)
+int	create_file(t_cub *cub, const char *filename)
 {
-    char *file_contents = read_file_contents(filename);
-    if (!file_contents)
-        return (1);
+	char	*file_contents;
+	char	**lines;
 
-    char **lines = ft_split(file_contents, '\n');
-    free(file_contents);
-
-    if (!lines || parse_cub_file(cub, lines))
-    {
-        fprintf(stderr, "Error\nFailed to parse .cub file.\n");
-        free_array(lines);
-        return (1);
-    }
-
-    free_array(lines);
-    return (0);
+	file_contents = read_file_contents(filename);
+	if (!file_contents)
+		return (1);
+	lines = ft_split(file_contents, '\n');
+	free(file_contents);
+	if (!lines || parse_cub_file(cub, lines))
+	{
+		fprintf(stderr, "Error\nFailed to parse .cub file.\n");
+		free_array(lines);
+		return (1);
+	}
+	free_array(lines);
+	return (0);
 }
-
