@@ -71,7 +71,7 @@ $(NAME): $(OBJECTS)
 
 # Compile source files into object files
 $(BUILD_DIR)/%.o: src/%.c
-	@$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES) && printf "Compiling: $(notdir $<)\n"
+	$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES) && printf "Compiling: $(notdir $<)\n"
 
 clean:
 	rm -rf $(BUILD_DIR)
