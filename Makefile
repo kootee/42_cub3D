@@ -25,8 +25,15 @@ SOURCES = src/main.c \
 			src/init_game.c \
 			src/key_actions.c \
 			src/minimap.c \
-			src/parse_map.c \
-			src/raycasting.c
+			src/raycasting.c \
+			src/input_validation.c \
+			src/struct_init.c \
+			src/handle_args.c \
+			src/open_and_read.c \
+			src/valid_map_content.c \
+			src/load_textures.c \
+			src/parse_all.c \
+			src/free.c \
 
 BUILD_DIR = build
 OBJECTS = $(SOURCES:src/%.c=$(BUILD_DIR)/%.o)
