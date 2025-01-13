@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 20:11:12 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/24 18:51:25 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:50:31 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void    digital_differential_analysis(t_cub *cub, t_ray_data *ray)
             ray->side_dist.y += ray->d_dist.y;
             ray->map_coord.y_coord += ray->step.y;
             ray->side = 1;
-        } if (cub->map[ray->map_coord.x_coord][ray->map_coord.y_coord] == '1') // a wall is hit
+        } if (cub->map[ray->map_coord.y_coord][ray->map_coord.x_coord] == '1') // a wall is hit
             break;
     }
 }

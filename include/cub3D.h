@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/06 02:00:31 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/13 16:21:17 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define TEXTURE_X 64
 # define TEXTURE_Y 64
 # define MINIMAP_TILE_SIZE 15
-#define MAX_FILE_SIZE 1048576
+# define MAX_FILE_SIZE 1048576
 //# define M_PI_2 1.5707963267948966 // π/2
 
 # define BLACK		0x000000ff
@@ -213,6 +213,8 @@ void    a_key(t_cub *cub);
 void    s_key(t_cub *cub);
 void    w_key(t_cub *cub);
 void    d_key(t_cub *cub);
+
+bool	is_not_wall(char c);
 
 /* Error handling */
 void	handle_error(int errno);
