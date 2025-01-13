@@ -6,24 +6,12 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/13 14:47:20 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:19:11 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include <stdio.h>
-
-void    terminate_cub(t_cub *cub)
-{
-    // free all allocated memory and clean mlx
-	int i = -1;
-	while (cub->map[++i] != NULL)
-		free(cub->map[i]);
-	free(cub->map[i]);
-	free(cub->map);
-    mlx_delete_image(cub->mlx, cub->mlx_img);
-	mlx_terminate(cub->mlx);
-}
 
 void	ft_game_hook(void *param)
 {
@@ -85,7 +73,7 @@ int	main(int argc, char **argv)
 	}
 	init_game(&cub);
     game_loop(&cub);
-    terminate_cub(&cub);
+    free_all_resources(&cub);
 	return (EXIT_SUCCESS);
 }
 
