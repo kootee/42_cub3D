@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:26:02 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/23 14:43:49 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:58:14 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,17 @@ void draw_player(t_cub *cub)
 uint32_t	set_minimap_color(t_cub *cub, t_vector *pt)
 {
 	uint32_t	color;
-	int x;
-	int y;
+	char		tile;
+	int 		x;
+	int 		y;
 
 	x = pt->x;
 	y = pt->y;
 	color = WHITE;
-	if (cub->map[y][x] == '1')
+	tile = cub->map[y][x];
+	if (tile == '1')
 		color = ORANGE;
-	else if (cub->map[y][x] == '0')
+	else if (tile == '0' || tile == 'N' || tile == 'S' || tile == 'W' || tile == 'E')
 		color = DARKORANGE;
 	return (color);
 }
