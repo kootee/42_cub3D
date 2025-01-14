@@ -6,20 +6,12 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/14 14:09:02 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:46:47 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-
-/* 
-	Allowed functions:
-	open, close, read, write,
-	printf, malloc, free, perror,
-	strerror, exit, gettimeofday
-	All functions of the math
-	library (-lm man man 3 math) 	*/
 
 # include <string.h>
 # include <math.h>
@@ -29,14 +21,15 @@
 # include "MLX42.h"
 # include "libft.h"
 
-# define WIN_X	480
-# define WIN_Y	480
+# define WIN_X	1080
+# define WIN_Y	1080
 # define WIN_MARGIN 50
 # define NUM_TEXTURES 4
 # define TEXTURE_X 64
 # define TEXTURE_Y 64
 # define MINIMAP_TILE_SIZE 15
 # define MAX_FILE_SIZE 1048576
+# define ALPHA 0xFF
 //# define M_PI_2 1.5707963267948966 // π/2
 
 # define BLACK		0x000000ff
@@ -93,41 +86,43 @@ typedef struct s_coord
 	int	y_coord;
 } t_coord;
 
+/* plane_x and plane_y are the player plane vectors */
 typedef struct s_player 
 {
 	struct	s_vector	ppos;
 	struct	s_vector	dir;
-	double	p_angle;
-	double	plane_x;	// player plane
-	double	plane_y;
+	double				p_angle;
+	double				plane_x;
+	double				plane_y;
 } t_player;
 
+/*	step: direction in which the ray moves
+	side_dist: length of ray from current position to next x or y-side */
 typedef	struct s_ray_data
 {
 	t_vector	d_dist;
-    t_vector    step; // direction in which the ray moves
-    t_vector    side_dist; //length of ray from current position to next x or y-side
+	t_vector    step;
+	t_vector    side_dist;
 	t_coord     map_coord;
 	t_vector	dir;
-    double  	wall_dist;
+	double  	wall_dist;
 	double		wall_x;
 	int     	side;
-    int     	draw_start;
-    int     	draw_end;
+	int     	draw_start;
+	int     	draw_end;
 	int			line_height;
 } t_ray_data;
 
 typedef struct s_textures {
-    char *north_path;          // Путь к текстуре "North"
-    char *south_path;          // Путь к текстуре "South"
-    char *west_path;           // Путь к текстуре "West"
-    char *east_path;           // Путь к текстуре "East"
-    mlx_texture_t *north;      // Загруженная текстура "North"
-    mlx_texture_t *south;      // Загруженная текстура "South"
-    mlx_texture_t *west;       // Загруженная текстура "West"
-    mlx_texture_t *east;       // Загруженная текстура "East"
+	char *north_path;
+	char *south_path;
+	char *west_path;
+	char *east_path;
+	mlx_texture_t *north;
+	mlx_texture_t *south;
+	mlx_texture_t *west;
+	mlx_texture_t *east;
 } t_textures;
-
 
 typedef struct s_tex_data
 {
@@ -140,55 +135,49 @@ typedef struct s_cub
 {
 	mlx_t				*mlx;
 	mlx_image_t			*mlx_img;
+	char 				**map;
 	struct s_textures	textures;
 	struct s_tex_data	tex_data;
 	struct s_player		player;
 	struct s_ray_data	ray;
 	struct s_vector		camera_plane;
-	char 				**map;
 	size_t				map_height;
 	size_t				map_width;
 	uint32_t			ceiling_color;
 	uint32_t			floor_color;
 } t_cub;
 
-/* Initialise game */
-void	init_game(t_cub *cub); //, char **argv, int argc);
-
 /* Minimap */
 void	draw_minimap(t_cub *cub);
 
 /* Raycasting */
-void    ray_cast(t_cub *cub);
+void	ray_cast(t_cub *cub);
 
 /* Draw functions */
 void	draw_to_screen(t_cub * cub, t_ray_data *ray, int x_to_draw);
 int		ft_putpixel(mlx_image_t *img, float x, float y, int32_t color);
 
 /* Struct init*/
-
 void	init_main_struct(t_cub *cub);
-int	handle_arguments(int argc, char **argv);
-int	create_file(t_cub *cub, const char *filename);
-int	is_map_valid(t_cub *cub);
+int		handle_arguments(int argc, char **argv);
+int		create_file(t_cub *cub, const char *filename);
+int		is_map_valid(t_cub *cub);
+
 /*Load textures */
-void load_textures(t_cub *cub);
-void free_textures(t_cub *cub);
-void free_texture_paths(t_textures *textures);
-//void free_textures(t_cub *cub);
-void parse_textures(char *line, t_cub *cub);
-void parse_colors(char *line, uint32_t *color);
-void free_array(char **array);
-int parse_cub_file(t_cub *cub, char **lines);
-void copy_map(char **lines, t_cub *cub);
-void free_all_resources(t_cub *cub);
+void	load_textures(t_cub *cub);
+void	free_textures(t_cub *cub);
+void	free_texture_paths(t_textures *textures);
 
-int check_valid_characters(char **map, int row, int col);
-void calculate_map_width(t_cub *cub);
-int count_players(char **map, int *player_count, int row, int col, t_cub *cub);
+void	parse_textures(char *line, t_cub *cub);
+void	parse_colors(char *line, uint32_t *color);
+void	free_array(char **array);
+int		parse_cub_file(t_cub *cub, char **lines);
+void	copy_map(char **lines, t_cub *cub);
+void	free_all_resources(t_cub *cub);
 
-
-
+int		check_valid_characters(char **map, int row, int col);
+void	calculate_map_width(t_cub *cub);
+int		count_players(char **map, int *player_count, int row, int col, t_cub *cub);
 
 /* Parse map */
 int validate_arguments(int argc, char **argv);
@@ -208,13 +197,12 @@ int		check_borders(char **map, size_t map_height);
 int		is_line_wall(char *line);
 
 /* Key actions */
-void    left_key(t_cub *cub);
-void    right_key(t_cub *cub);
-void    a_key(t_cub *cub);
-void    s_key(t_cub *cub);
-void    w_key(t_cub *cub);
-void    d_key(t_cub *cub);
-
+void	left_key(t_cub *cub);
+void	right_key(t_cub *cub);
+void	a_key(t_cub *cub);
+void	s_key(t_cub *cub);
+void	w_key(t_cub *cub);
+void	d_key(t_cub *cub);
 bool	is_not_wall(char c);
 
 /* Error handling */

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_args.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/14 14:34:01 by ktoivola          #+#    #+#             */
+/*   Updated: 2025/01/14 14:34:04 by ktoivola         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
-static int	check_valid_file_path(const char *filename)
+/* static int	check_valid_file_path(const char *filename)
 {
 	if (strncmp(filename, "maps/", 5) != 0)
 	{
@@ -8,7 +20,7 @@ static int	check_valid_file_path(const char *filename)
 		return (1);
 	}
 	return (0);
-}
+} */
 
 static int	check_file_format(const char *filename)
 {
@@ -27,7 +39,7 @@ int	handle_arguments(int argc, char **argv)
 		fprintf(stderr, "Error\nWrong number of arguments. Usage: ./cub3d <map_file>\n");
 		return (1);
 	}
-	if (check_valid_file_path(argv[1]) || check_file_format(argv[1]))
+	if (check_file_format(argv[1]))
 		return (1);
 	return (0);
 }

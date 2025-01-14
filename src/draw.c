@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:42:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/14 14:19:19 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:41:05 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	draw_floor_ceiling(t_cub *cub, t_ray_data *ray, int x_coord)
 		ft_putpixel(cub->mlx_img, x_coord, y_coord++, cub->floor_color);
 }
 
-// calculate x coordinate for texture
+/* Calculate x coordinate for texture */
 mlx_texture_t	*set_texture_data(t_cub *cub, double *step)
 {
 	mlx_texture_t	*texture;
-	
+
 	texture = set_texture(cub);
 	*step = 1.0 * texture->height / cub->ray.line_height;
 	cub->tex_data.tex_x = (int)(cub->ray.wall_x * texture->width);
@@ -53,13 +53,10 @@ mlx_texture_t	*set_texture_data(t_cub *cub, double *step)
 	return (texture);
 }
 
-/*	1.	The value of tex_y is calculated by increasing by a precomputed 
-		step size (step). This is possible because this is constant in 
-		the vertical stripe for each pixel. 
+/*	1.	The value of tex_y is calculated by increasing by step size (step).
 	2.	The step size tells how much to increase in the texture coordinates 
-		(in floating point) for every pixel in vertical screen coordinates. 
-	3.	It then casts the floating point value to integer to select 
-		the actual texture pixel. */
+		(in float) for every pixel in vertical screen coordinates. 
+	3.	Float value is cast to int to select the actual texture pixel. */
 void	draw_texture_column(t_cub *cub, t_ray_data *ray, int x)
 {
 	mlx_texture_t	*texture;
@@ -72,16 +69,16 @@ void	draw_texture_column(t_cub *cub, t_ray_data *ray, int x)
 	while (y < ray->draw_end)
 	{
 		cub->tex_data.tex_y = (int)(cub->tex_data.pos) % texture->height;
-		curr_pixel = texture->pixels + \
-					((cub->tex_data.tex_y * texture->width * texture->bytes_per_pixel) + 
-					(cub->tex_data.tex_x * texture->bytes_per_pixel));
+		curr_pixel = texture->pixels + ((cub->tex_data.tex_y \
+					* texture->width * texture->bytes_per_pixel) \
+					+ (cub->tex_data.tex_x * texture->bytes_per_pixel));
 		ft_putpixel(cub->mlx_img, x, y, get_pixel_color(curr_pixel));
 		cub->tex_data.pos += step;
 		y++;
 	}
 }
 
-void	draw_to_screen(t_cub * cub, t_ray_data *ray, int x_to_draw)
+void	draw_to_screen(t_cub *cub, t_ray_data *ray, int x_to_draw)
 {
 	if (ray->draw_end > 0)
 	{
