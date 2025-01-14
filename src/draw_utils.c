@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:47:41 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/27 14:42:39 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:43:23 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,21 @@ uint32_t	get_pixel_color(uint8_t *pixel_buffer)
 
 	if (get_endian() == 0)
 	{
-        color = (pixel_buffer[A] << 24) | 
-				(pixel_buffer[B] << 16) | 
-				(pixel_buffer[G] << 8) |
+		color = (pixel_buffer[A] << 24) | \
+				(pixel_buffer[B] << 16) | \
+				(pixel_buffer[G] << 8) | \
 				pixel_buffer[R];
 	}
 	else
 	{
-        color = (pixel_buffer[R] << 24) | 
-				(pixel_buffer[G] << 16) | 
-				(pixel_buffer[B] << 8) |
+		color = (pixel_buffer[R] << 24) | \
+				(pixel_buffer[G] << 16) | \
+				(pixel_buffer[B] << 8) | \
 				pixel_buffer[A];
 	}
 	return (color);
 }
 
-// The color is 
 void	set_pixel_color(uint8_t *pixel_buffer, int color, int alpha)
 {
 	if (get_endian() == 0)
@@ -67,7 +66,7 @@ int	ft_putpixel(mlx_image_t *img, float x, float y, int32_t color)
 	int	pixel;
 	int	alpha;
 
-	alpha = 0xFF; // could be changed here
+	alpha = ALPHA;
 	if (x > WIN_X || y > WIN_X \
 		|| x < 0 || y < 0)
 		return (-1);
