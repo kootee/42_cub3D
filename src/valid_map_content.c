@@ -136,7 +136,7 @@ int	check_valid_characters(char **map, int row, int col)
 
 	cell = map[row][col];
 	if (cell != '0' && cell != '1' && cell != 'N' && cell != 'S'
-		&& cell != 'E' && cell != 'W' && cell != ' ')
+		&& cell != 'E' && cell != 'W' && cell != ' ' && cell != '\t')
 	{
 		fprintf(stderr, "Error: Invalid character '%c' at row %d, col %d.\n", cell, row, col);
 		return (1);
