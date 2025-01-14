@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 23:37:42 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/07 23:37:57 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/14 15:45:31 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	create_file(t_cub *cub, const char *filename)
 		free_array(lines);
 		return (1);
 	}
+	
 	free_array(lines);
 	return (0);
 }
