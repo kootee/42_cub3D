@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_all.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/07 20:26:58 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/14 14:11:30 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	parse_colors(char *line, uint32_t *color)
 	if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2])
 	{
 		free_array(rgb_values);
-		handle_error(ERROR_INVALID_FILE_NAME);
+		handle_error(ERROR_INVALID_RGB_VAL);
 	}
 	r = ft_atoi(rgb_values[0]);
 	g = ft_atoi(rgb_values[1]);
@@ -31,9 +31,9 @@ void	parse_colors(char *line, uint32_t *color)
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
 		free_array(rgb_values);
-		handle_error(ERROR_INVALID_FILE_NAME);
+		handle_error(ERROR_INVALID_RGB_VAL);
 	}
-	*color = (r << 16) | (g << 8) | b;
+	*color = (r << 24) | (g << 16) | b << 8;
 	free_array(rgb_values);
 }
 

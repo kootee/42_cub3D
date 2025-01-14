@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:42:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2024/11/25 17:42:03 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:19:19 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	draw_floor_ceiling(t_cub *cub, t_ray_data *ray, int x_coord)
 
 	y_coord = 0;
 	while (y_coord < ray->draw_start && y_coord < WIN_Y)
-		ft_putpixel(cub->mlx_img, x_coord, y_coord++, cub->floor_color);
+		ft_putpixel(cub->mlx_img, x_coord, y_coord++, cub->ceiling_color);
 	y_coord = ray->draw_end;
 	while (y_coord < WIN_Y)
-		ft_putpixel(cub->mlx_img, x_coord, y_coord++, cub->ceiling_color);
+		ft_putpixel(cub->mlx_img, x_coord, y_coord++, cub->floor_color);
 }
 
 // calculate x coordinate for texture

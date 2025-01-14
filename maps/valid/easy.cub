@@ -2,8 +2,9 @@ NO ./textures/north.png
 SO ./textures/south.png
 WE ./textures/west.png
 EA ./textures/east.png
-F 250, 0 ,0
-C 250, 0, 250
+
+F 0, 0, 255
+C 52, 235, 158
 
 1111111111111111
 1000000001111111
