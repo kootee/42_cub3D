@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/13 16:21:17 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:09:02 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ typedef enum e_errorcode
 	ERROR_INVALID_FILE_NAME = 205,
 	ERROR_INVALID_MAP = 206,
 	ERROR_TEXTURE = 207,
-	ERROR_INVALID_PLAYER_POSITION = 208
+	ERROR_INVALID_PLAYER_POSITION = 208,
+	ERROR_INVALID_RGB_VAL = 209
 }	t_errorcode;
 
 typedef enum e_cardinal_direction

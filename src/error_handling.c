@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:45:01 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/07 20:06:09 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/14 14:11:12 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	handle_error(int errno)
 		ft_putstr_fd("Error: Failed to load texture\n", STDERR_FILENO);
 	else if (errno == ERROR_INVALID_PLAYER_POSITION)
 		ft_putstr_fd("Error: Invalid player position\n", STDERR_FILENO);
+	else if (errno == ERROR_INVALID_RGB_VAL)
+		ft_putstr_fd("Error: Invalid RGB value\n", STDERR_FILENO);
 	exit (errno);
 }
 
