@@ -52,5 +52,6 @@ void	create_file(t_cub *cub, const char *filename)
 		free_array(lines);
 		handle_error(1);
 	}
+	
 	free_array(lines);
 }
