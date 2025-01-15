@@ -6,66 +6,71 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:26:02 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/14 15:54:56 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:05:37 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	draw_tile(t_cub *cub, t_vector map_pt, size_t size, uint32_t color)
+void	draw_square(t_cub *cub ,t_vector map_pt, size_t size, uint32_t color)
 {
-	size_t y;
-	size_t x;
-
-	y = map_pt.y;
-	x = map_pt.x;	
-	while (y <= (map_pt.y + size))
+	for (size_t y = map_pt.y; y <= (map_pt.y + size); y++)
 	{
-		while (x <= (map_pt.x + size))
+		for (size_t x = map_pt.x; x <= (map_pt.x + size); x++)
 		{
 			if (y == (map_pt.y + size) || x == (map_pt.x + size) || \
 				y == map_pt.y || x == map_pt.x)
 				ft_putpixel(cub->mlx_img, x, y, BLACK);
-			else 
+			else
 				ft_putpixel(cub->mlx_img, x, y, color);
-			x++;
 		}
-		y++;
 	}
 }
 
-void draw_line(t_cub *cub, t_vector start, t_vector end, uint32_t color)
+static void	set_minimap_step(t_coord *step, t_vector start, t_vector end)
 {
-	int dx;
-	int dy;
-	int err;
-	
-	int step_x = start.x < end.x ? 1 : -1;
-	int step_y = start.y < end.y ? 1 : -1;
+	if (start.x < end.x)
+		step->x_coord = 1;
+	else
+		step->x_coord = -1;
+	if (start.y < end.y)
+		step->y_coord = 1;
+	else
+		step->y_coord = -1;
+}
 
-	dx = fabs(end.x - start.x);
-	dy = fabs(end.y - start.y);
-	err = dx - dy;
+void	draw_line(t_cub *cub, t_vector start, t_vector end, uint32_t color)
+{
+	int err;
+	t_coord	d;
+	t_coord step;
+	
+	d.x_coord = fabs(end.x - start.x);
+	d.y_coord = fabs(end.y - start.y);
+	err = d.x_coord - d.y_coord;
+	set_minimap_step(&step, start, end);
+	//step.x_coord = start.x < end.x ? 1 : -1;
+	//step.y_coord = start.y < end.y ? 1 : -1;
 	while (true)
 	{
 		ft_putpixel(cub->mlx_img, start.x, start.y, color);
 		if (start.x == end.x && start.y == end.y)
-			break;
+			break ;
 		int e2 = err * 2;
-		if (e2 > -dy)
+		if (e2 > -d.y_coord)
 		{
-			err -= dy;
-			start.x += step_x;
+			err -= d.y_coord;
+			start.x += step.x_coord;
 		}
-		if (e2 < dx)
+		if (e2 < d.x_coord)
 		{
-			err += dx;
-			start.y += step_y;
+			err += d.x_coord;
+			start.y += step.y_coord;
 		}
 	}
 }
 
-void draw_player(t_cub *cub)
+void	draw_player(t_cub *cub)
 {
 	int player_x;
 	int player_y; 
@@ -74,30 +79,11 @@ void draw_player(t_cub *cub)
 	
 	player_x = (int)(cub->player.ppos.x * MINIMAP_TILE_SIZE);
 	player_y = (int)(cub->player.ppos.y * MINIMAP_TILE_SIZE);
-	draw_tile(cub, (t_vector){player_x - 10 / 2, \
-										player_y - 10 / 2}, \
+	draw_square(cub, (t_vector){player_x - 10 / 2, player_y - 10 / 2}, \
 										10, GREEN);
 	ray_end_x = player_x + (cub->player.dir.x * 10);
 	ray_end_y = player_y + (cub->player.dir.y * 10);
 	draw_line(cub, (t_vector){player_x, player_y}, (t_vector){ray_end_x, ray_end_y}, RED);
-}
-
-uint32_t	set_minimap_color(t_cub *cub, t_vector *pt)
-{
-	uint32_t	color;
-	char		tile;
-	int 		x;
-	int 		y;
-
-	x = pt->x;
-	y = pt->y;
-	color = WHITE;
-	tile = cub->map[y][x];
-	if (tile == '1')
-		color = ORANGE;
-	else if (tile == '0' || tile == 'N' || tile == 'S' || tile == 'W' || tile == 'E')
-		color = DARKORANGE;
-	return (color);
 }
 
 void	draw_minimap(t_cub *cub)
@@ -113,7 +99,7 @@ void	draw_minimap(t_cub *cub)
 			map_pt.y = pt.y * MINIMAP_TILE_SIZE;
 			map_pt.x = pt.x * MINIMAP_TILE_SIZE;
 			color = set_minimap_color(cub, &pt);
-			draw_tile(cub, map_pt, MINIMAP_TILE_SIZE, color);
+			draw_square(cub, map_pt, MINIMAP_TILE_SIZE, color);
 		}
 	}
 	draw_player(cub);

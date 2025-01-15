@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/15 15:33:37 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/15 15:54:23 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,9 @@ void	draw_minimap(t_cub *cub);
 void	ray_cast(t_cub *cub);
 
 /* Draw functions */
-void	draw_to_screen(t_cub * cub, t_ray_data *ray, int x_to_draw);
-int		ft_putpixel(mlx_image_t *img, float x, float y, int32_t color);
+void		draw_to_screen(t_cub * cub, t_ray_data *ray, int x_to_draw);
+int			ft_putpixel(mlx_image_t *img, float x, float y, int32_t color);
+uint32_t	set_minimap_color(t_cub *cub, t_vector *pt);
 
 /* Struct init*/
 void	init_main_struct(t_cub *cub);
