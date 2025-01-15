@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/14 15:46:47 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/15 13:56:54 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,8 @@ bool	is_not_wall(char c);
 void	handle_error(int errno);
 void	error_terminate_mlx(t_cub *cub, int errno);
 
-/* Draw utils */
+/* Cub utils */
 uint32_t	get_pixel_color(uint8_t *pixel_buffer);
+bool		is_texture_coordinate(char *str);
 
 #endif

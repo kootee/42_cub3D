@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/14 14:11:30 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/15 13:59:24 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,18 +99,15 @@ int	parse_cub_file(t_cub *cub, char **lines)
 	i = 0;
 	while (lines[i])
 	{
-		if (strncmp(lines[i], "NO ", 3) == 0
-			|| strncmp(lines[i], "SO ", 3) == 0
-			||strncmp(lines[i], "WE ", 3) == 0
-			|| strncmp(lines[i], "EA ", 3) == 0)
+		if (is_texture_coordinate(lines[i]))
 		{
 			parse_textures(lines[i], cub);
 		}
-		else if (strncmp(lines[i], "F ", 2) == 0)
+		else if (strncmp(lines[i], "F ", 2) == 0 && !cub->floor_color)
 		{
 			parse_colors(lines[i], &cub->floor_color);
 		}
-		else if (strncmp(lines[i], "C ", 2) == 0)
+		else if (strncmp(lines[i], "C ", 2) == 0 && !cub->floor_color)
 		{
 			parse_colors(lines[i], &cub->ceiling_color);
 		}
