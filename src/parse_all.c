@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/15 13:59:24 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/15 14:02:43 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	parse_cub_file(t_cub *cub, char **lines)
 		{
 			parse_colors(lines[i], &cub->floor_color);
 		}
-		else if (strncmp(lines[i], "C ", 2) == 0 && !cub->floor_color)
+		else if (strncmp(lines[i], "C ", 2) == 0 && !cub->ceiling_color)
 		{
 			parse_colors(lines[i], &cub->ceiling_color);
 		}
