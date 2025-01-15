@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/15 14:02:43 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/15 14:10:42 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,31 +42,25 @@ void	parse_textures(char *line, t_cub *cub)
 	if (strncmp(line, "NO ", 3) == 0)
 	{
 		cub->textures.north_path = ft_strdup(line + 3);
-		if (!cub->textures.north_path)
-			handle_error(ERROR_MALLOC_FAIL);
+		check_texture(cub->textures.north_path, cub);
 	}
 	else if (strncmp(line, "SO ", 3) == 0)
 	{
 		cub->textures.south_path = ft_strdup(line + 3);
-		if (!cub->textures.south_path)
-			handle_error(ERROR_MALLOC_FAIL);
+		check_texture(cub->textures.south_path, cub);
 	}
 	else if (strncmp(line, "WE ", 3) == 0)
 	{
 		cub->textures.west_path = ft_strdup(line + 3);
-		if (!cub->textures.west_path)
-			handle_error(ERROR_MALLOC_FAIL);
+		check_texture(cub->textures.west_path, cub);
 	}
 	else if (strncmp(line, "EA ", 3) == 0)
 	{
 		cub->textures.east_path = ft_strdup(line + 3);
-		if (!cub->textures.east_path)
-			handle_error(ERROR_MALLOC_FAIL);
+		check_texture(cub->textures.east_path, cub);
 	}
 	else
-	{
 		handle_error(ERROR_INVALID_FILE_NAME);
-	}
 }
 
 void	copy_map(char **lines, t_cub *cub)
@@ -100,17 +94,11 @@ int	parse_cub_file(t_cub *cub, char **lines)
 	while (lines[i])
 	{
 		if (is_texture_coordinate(lines[i]))
-		{
 			parse_textures(lines[i], cub);
-		}
 		else if (strncmp(lines[i], "F ", 2) == 0 && !cub->floor_color)
-		{
 			parse_colors(lines[i], &cub->floor_color);
-		}
 		else if (strncmp(lines[i], "C ", 2) == 0 && !cub->ceiling_color)
-		{
 			parse_colors(lines[i], &cub->ceiling_color);
-		}
 		else if (lines[i][0] == '1')
 		{
 			copy_map(&lines[i], cub);
@@ -120,9 +108,7 @@ int	parse_cub_file(t_cub *cub, char **lines)
 			break ;
 		}
 		else
-		{
 			handle_error(ERROR_INVALID_FILE_NAME);
-		}
 		i++;
 	}
 	return (0);

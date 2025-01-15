@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:45:01 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/14 14:11:12 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/15 14:09:01 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ void	handle_error(int errno)
 
 void	error_terminate_mlx(t_cub *cub, int errno)
 {
-	mlx_terminate(cub->mlx);
+	free_all_resources(cub);
 	handle_error(errno);
 }
