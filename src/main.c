@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/14 14:36:19 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/15 15:14:29 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,9 @@ int	main(int argc, char **argv)
 	t_cub	cub;
 
 	init_main_struct(&cub);
-	if (handle_arguments(argc, argv) == 1)
-	{
-		return (1);
-	}
-	if (create_file(&cub, argv[1]) == 1)
-	{
-		return (1);
-	}
-	if (is_map_valid(&cub) == 1)
-	{
-		return (1);
-	}
+	handle_arguments(argc, argv);
+	create_file(&cub, argv[1]);
+	is_map_valid(&cub);
 	init_game(&cub);
 	game_loop(&cub);
 	free_all_resources(&cub);

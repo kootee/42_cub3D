@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/15 14:09:55 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/15 15:33:37 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ typedef enum e_errorcode
 	ERROR_INVALID_MAP = 206,
 	ERROR_TEXTURE = 207,
 	ERROR_INVALID_PLAYER_POSITION = 208,
-	ERROR_INVALID_RGB_VAL = 209
+	ERROR_INVALID_RGB_VAL = 209,
+	ERROR_INVALID_PLAYER = 210,
+	ERROR_UNCLOSED_MAP = 211
 }	t_errorcode;
 
 typedef enum e_cardinal_direction
@@ -145,6 +147,7 @@ typedef struct s_cub
 	size_t				map_width;
 	uint32_t			ceiling_color;
 	uint32_t			floor_color;
+	char				**map_file_lines;
 } t_cub;
 
 /* Minimap */
@@ -159,9 +162,9 @@ int		ft_putpixel(mlx_image_t *img, float x, float y, int32_t color);
 
 /* Struct init*/
 void	init_main_struct(t_cub *cub);
-int		handle_arguments(int argc, char **argv);
-int		create_file(t_cub *cub, const char *filename);
-int		is_map_valid(t_cub *cub);
+void	handle_arguments(int argc, char **argv);
+void	create_file(t_cub *cub, const char *filename);
+void	is_map_valid(t_cub *cub);
 
 /*Load textures */
 void	load_textures(t_cub *cub);
@@ -169,7 +172,6 @@ void	free_textures(t_cub *cub);
 void	free_texture_paths(t_textures *textures);
 
 void	parse_textures(char *line, t_cub *cub);
-void	parse_colors(char *line, uint32_t *color);
 void	free_array(char **array);
 int		parse_cub_file(t_cub *cub, char **lines);
 void	copy_map(char **lines, t_cub *cub);
@@ -180,7 +182,7 @@ void	calculate_map_width(t_cub *cub);
 int		count_players(char **map, int *player_count, int row, int col, t_cub *cub);
 
 /* Parse map */
-int validate_arguments(int argc, char **argv);
+int 	validate_arguments(int argc, char **argv);
 //void	validate_map_section(char **lines);
 //void	init_cub_structure(t_cub *cub, char **file_content);
 //void	parse_textures(t_cub *cub, char **file_content);
@@ -190,7 +192,7 @@ int validate_arguments(int argc, char **argv);
 //int count_components(char *line);
 
 //uint32_t	parse_color(char *line);
-void parse_map(t_cub *cub, char *map_file);
+void 	parse_map(t_cub *cub, char *map_file);
 //size_t get_map_width(t_cub *cub);
 void	validate_map(char **map, size_t map_height);
 int		check_borders(char **map, size_t map_height);

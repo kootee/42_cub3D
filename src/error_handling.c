@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:45:01 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/15 14:09:01 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/15 15:12:02 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handle_error(int errno)
 	else if (errno == ERROR_INVALID_MAP_DIM)
 		ft_putstr_fd("Error: Invalid map dimensions\n", STDERR_FILENO);
 	else if (errno == ERROR_INVALID_MAP_PTS)
-		ft_putstr_fd("Error: Invalid map points\n", STDERR_FILENO);
+		ft_putstr_fd("Error: Invalid map values\n", STDERR_FILENO);
 	else if (errno == ERROR_MALLOC_FAIL)
 		ft_putstr_fd("Error: Malloc fail\n", STDERR_FILENO);
 	else if (errno == ERROR_INVALID_FILE_NAME)
@@ -32,8 +32,12 @@ void	handle_error(int errno)
 		ft_putstr_fd("Error: Failed to load texture\n", STDERR_FILENO);
 	else if (errno == ERROR_INVALID_PLAYER_POSITION)
 		ft_putstr_fd("Error: Invalid player position\n", STDERR_FILENO);
+	else if (errno == ERROR_INVALID_PLAYER)
+		ft_putstr_fd("Error: Invalid player\n", STDERR_FILENO);
 	else if (errno == ERROR_INVALID_RGB_VAL)
 		ft_putstr_fd("Error: Invalid RGB value\n", STDERR_FILENO);
+	else if (errno == ERROR_UNCLOSED_MAP)
+		ft_putstr_fd("Error: Map is not closed\n", STDERR_FILENO);
 	exit (errno);
 }
 
