@@ -243,27 +243,22 @@ int	check_map_closure(char **map, int row, int col)
 			!is_valid_position(map, row, col - 1) || map[row][col - 1] == ' ' ||
 			!is_valid_position(map, row, col + 1) || map[row][col + 1] == ' ')
 		{
-			fprintf(stderr, "Error: Map is not closed at row %d, col %d.\n", row, col);
+			fprintf(stderr, "Row %d, col %d\n", row, col);
 			return (1);
 		}
 	}
 	return (0);
 }
 
-int	is_map_valid(t_cub *cub)
+void	is_map_valid(t_cub *cub)
 {
 	int	row;
 	int	col;
 	int	p_count;
 
 	p_count = 0;
-	if (!cub->map || !cub->map[0])
-	{
-		fprintf(stderr, "Error: Map is empty.\n");
-		return (1);
-	}
-	if (check_empty_lines(cub->map))
-		return (1);
+	if (!cub->map || !cub->map[0] || check_empty_lines(cub->map))
+		handle_error(ERROR_INVALID_MAP_PTS);
 	row = 0;
 	while (cub->map[row])
 	{
@@ -271,19 +266,15 @@ int	is_map_valid(t_cub *cub)
 		while (cub->map[row][col])
 		{
 			if (check_valid_characters(cub->map, row, col))
-				return (1);
+				error_terminate_mlx(cub, ERROR_INVALID_PLAYER);
 			if (check_map_closure(cub->map, row, col))
-				return (1);
+				error_terminate_mlx(cub, ERROR_UNCLOSED_MAP);
 			if (count_players(cub->map, &p_count, row, col, cub))
-				return (1);
+				error_terminate_mlx(cub, ERROR_INVALID_PLAYER);
 			col++;
 		}
 		row++;
 	}
 	if (p_count == 0)
-	{
-		fprintf(stderr, "Error: No player found on the map.\n");
-		return (1);
-	}
-	return (0);
+		handle_error(ERROR_INVALID_PLAYER);
 }

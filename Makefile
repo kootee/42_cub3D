@@ -26,7 +26,6 @@ SOURCES = src/main.c \
 			src/key_actions_wasd.c \
 			src/minimap.c \
 			src/raycasting.c \
-			src/input_validation.c \
 			src/struct_init.c \
 			src/handle_args.c \
 			src/open_and_read.c \
@@ -34,6 +33,7 @@ SOURCES = src/main.c \
 			src/load_textures.c \
 			src/parse_all.c \
 			src/free.c \
+			src/cub_utils.c
 
 BUILD_DIR = build
 OBJECTS = $(SOURCES:src/%.c=$(BUILD_DIR)/%.o)

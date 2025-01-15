@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_and_read.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 23:37:42 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/07 23:37:57 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/15 15:34:34 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static char	*read_file_contents(const char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("Error\nFailed to open file");
+		perror("Error: Failed to open file\n");
 		return (NULL);
 	}
 	file_contents = ft_calloc(MAX_FILE_SIZE + 1, sizeof(char));
 	if (!file_contents)
 	{
 		close(fd);
-		fprintf(stderr, "Error\nMemory allocation failed for file reading.\n");
+		fprintf(stderr, "Error: Memory allocation failed for file reading\n");
 		return (NULL);
 	}
 	read(fd, file_contents, MAX_FILE_SIZE);
@@ -35,22 +35,22 @@ static char	*read_file_contents(const char *filename)
 	return (file_contents);
 }
 
-int	create_file(t_cub *cub, const char *filename)
+void	create_file(t_cub *cub, const char *filename)
 {
 	char	*file_contents;
 	char	**lines;
 
 	file_contents = read_file_contents(filename);
 	if (!file_contents)
-		return (1);
+		handle_error(1);
 	lines = ft_split(file_contents, '\n');
 	free(file_contents);
+	cub->map_file_lines = lines;
 	if (!lines || parse_cub_file(cub, lines))
 	{
-		fprintf(stderr, "Error\nFailed to parse .cub file.\n");
+		fprintf(stderr, "Error: Failed to parse .cub file\n");
 		free_array(lines);
-		return (1);
+		handle_error(1);
 	}
 	free_array(lines);
-	return (0);
 }

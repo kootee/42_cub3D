@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:50:00 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/03 21:17:35 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/15 14:56:51 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ void parse_map(t_cub *cub, char *map_file)
 {
     int fd = open(map_file, O_RDONLY);
     if (fd < 0)
+    {
+        printf("2");
         handle_error(ERROR_OPEN_ERROR);
+
+    }
 	
     char *line;
     char **map_lines = malloc(sizeof(char *) * 1000);  // Assume a max of 1000 lines
