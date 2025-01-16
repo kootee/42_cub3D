@@ -53,66 +53,72 @@ static int	is_player_char(char c)
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-int	validate_and_set_player(t_cub *cub, int r, int c, char p_char, int *p_count)
+void	set_player_direction(t_cub *cub, char p_char)
 {
-	*p_count += 1;
-	if (*p_count > 1)
-	{
-		fprintf(stderr, "Error\nMap must have exactly one player.\n");
-		return (1);
-	}
-	cub->player.ppos.x = c;
-	cub->player.ppos.y = r;
-	printf("Player position set: x=%f, y=%f\n", cub->player.ppos.x, cub->player.ppos.y);
 	if (p_char == 'N')
 	{
-		cub->player.dir.x = 0.0;
-		cub->player.dir.y = -1.0;
-		cub->player.plane_x = 0.66;
+		cub->player.dir = (t_vector){0.0, -1.0}, 
+		cub->player.plane_x = 0.66,
 		cub->player.plane_y = 0.0;
 	}
 	else if (p_char == 'S')
 	{
-		cub->player.dir.x = 0.0;
-		cub->player.dir.y = 1.0;
-		cub->player.plane_x = -0.66;
+		cub->player.dir = (t_vector){0.0, 1.0}, 
+		cub->player.plane_x = -0.66,
 		cub->player.plane_y = 0.0;
 	}
 	else if (p_char == 'E')
 	{
-		cub->player.dir.x = 1.0;
-		cub->player.dir.y = 0.0;
-		cub->player.plane_x = 0.0;
+		cub->player.dir = (t_vector){1.0, 0.0},
+		cub->player.plane_x = 0.0,
 		cub->player.plane_y = 0.66;
 	}
 	else if (p_char == 'W')
 	{
-		cub->player.dir.x = -1.0;
-		cub->player.dir.y = 0.0;
-		cub->player.plane_x = 0.0;
+		cub->player.dir = (t_vector){-1.0, 0.0}, 
+		cub->player.plane_x = 0.0, 
 		cub->player.plane_y = -0.66;
 	}
+}
+
+int validate_and_set_player(t_cub *cub, int r, int c, char p_char)
+{
+	static int player_count;
+
+	player_count = 0;
+	player_count++;
+	if (player_count > 1)
+	{
+		fprintf(stderr, "Error\nMap must have exactly one player.\n");
+		return (1);
+	}
+	cub->player.ppos = (t_vector){c + 0.5, r + 0.5};
+	printf("Player position set: x=%f, y=%f\n", cub->player.ppos.x, cub->player.ppos.y);
+	
+	set_player_direction(cub, p_char);
 	return (0);
 }
 
-int	validate_player_position(t_cub *cub)
-{
-	size_t	i;
-	size_t	j;
-	int		p_count;
 
-	p_count = 0;
+
+int validate_player_position(t_cub *cub)
+{
+	size_t i, j;
+	int p_count = 0;
+
 	for (i = 0; i < cub->map_height; i++)
 	{
 		for (j = 0; cub->map[i][j]; j++)
 		{
 			if (is_player_char(cub->map[i][j]))
 			{
-				if (validate_and_set_player(cub, i, j, cub->map[i][j], &p_count))
+				p_count++;
+				if (validate_and_set_player(cub, i, j, cub->map[i][j]))
 					return (1);
 			}
 		}
 	}
+
 	if (p_count != 1)
 	{
 		fprintf(stderr, "Error\nMap must have exactly one player start.\n");
@@ -120,6 +126,7 @@ int	validate_player_position(t_cub *cub)
 	}
 	return (0);
 }
+
 
 int	is_valid_position(char **map, int row, int col)
 {
@@ -218,7 +225,7 @@ void	calculate_map_width(t_cub *cub)
 	if (!cub->map || !cub->map[0])
 	{
 		fprintf(stderr, "Error: Map is empty.\n");
-		return;
+		return ;
 	}
 	row = 0;
 	while (cub->map[row])
@@ -250,36 +257,46 @@ int	check_map_closure(char **map, int row, int col)
 	return (0);
 }
 
-int	is_map_valid(t_cub *cub)
+int	check_map_is_empty(t_cub *cub)
 {
-	int	row;
-	int	col;
-	int	p_count;
-
-	p_count = 0;
 	if (!cub->map || !cub->map[0])
 	{
 		fprintf(stderr, "Error: Map is empty.\n");
 		return (1);
 	}
-	if (check_empty_lines(cub->map))
-		return (1);
+	return (0);
+}
+
+int	validate_map_content(t_cub *cub, int *p_count)
+{
+	int	row;
+	int	col;
+
 	row = 0;
 	while (cub->map[row])
 	{
 		col = 0;
 		while (cub->map[row][col])
 		{
-			if (check_valid_characters(cub->map, row, col))
-				return (1);
-			if (check_map_closure(cub->map, row, col))
-				return (1);
-			if (count_players(cub->map, &p_count, row, col, cub))
+			if (check_valid_characters(cub->map, row, col)
+				||check_map_closure(cub->map, row, col)
+				||count_players(cub->map, p_count, row, col, cub))
 				return (1);
 			col++;
 		}
 		row++;
 	}
+	return (0);
+}
+
+int	is_map_valid(t_cub *cub)
+{
+	int	p_count;
+
+	p_count = 0;
+	if (check_map_is_empty(cub) || check_empty_lines(cub->map)
+		||validate_map_content(cub, &p_count))
+		return (1);
 	if (p_count == 0)
 	{
 		fprintf(stderr, "Error: No player found on the map.\n");
