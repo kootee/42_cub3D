@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_all.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/14 14:11:30 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/16 22:59:48 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ void	parse_textures(char *line, t_cub *cub)
 			handle_error(ERROR_MALLOC_FAIL);
 	}
 	else
-	{
 		handle_error(ERROR_INVALID_FILE_NAME);
-	}
 }
 
 void	copy_map(char **lines, t_cub *cub)
@@ -92,40 +90,30 @@ void	copy_map(char **lines, t_cub *cub)
 	cub->map[i] = NULL;
 }
 
-int	parse_cub_file(t_cub *cub, char **lines)
+int	parse_cub_file(t_cub *cub, char **lin)
 {
 	int	i;
 
 	i = 0;
-	while (lines[i])
+	while (lin[i])
 	{
-		if (strncmp(lines[i], "NO ", 3) == 0
-			|| strncmp(lines[i], "SO ", 3) == 0
-			||strncmp(lines[i], "WE ", 3) == 0
-			|| strncmp(lines[i], "EA ", 3) == 0)
+		if (strncmp(lin[i], "NO ", 3) == 0 || strncmp(lin[i], "SO ", 3) == 0
+			||strncmp(lin[i], "WE ", 3) == 0 || strncmp(lin[i], "EA ", 3) == 0)
+			parse_textures(lin[i], cub);
+		else if (strncmp(lin[i], "F ", 2) == 0)
+			parse_colors(lin[i], &cub->floor_color);
+		else if (strncmp(lin[i], "C ", 2) == 0)
+			parse_colors(lin[i], &cub->ceiling_color);
+		else if (lin[i][0] == '1' || lin[i][0] == ' ')
 		{
-			parse_textures(lines[i], cub);
-		}
-		else if (strncmp(lines[i], "F ", 2) == 0)
-		{
-			parse_colors(lines[i], &cub->floor_color);
-		}
-		else if (strncmp(lines[i], "C ", 2) == 0)
-		{
-			parse_colors(lines[i], &cub->ceiling_color);
-		}
-		else if (lines[i][0] == '1')
-		{
-			copy_map(&lines[i], cub);
+			copy_map(&lin[i], cub);
 			calculate_map_width(cub);
 			if (is_map_valid(cub))
 				return (1);
 			break ;
 		}
 		else
-		{
 			handle_error(ERROR_INVALID_FILE_NAME);
-		}
 		i++;
 	}
 	return (0);
