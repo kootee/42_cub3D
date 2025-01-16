@@ -99,34 +99,39 @@ int validate_and_set_player(t_cub *cub, int r, int c, char p_char)
 	return (0);
 }
 
-
-
-int validate_player_position(t_cub *cub)
+int	process_player(t_cub *cub, int *p_count, size_t i, size_t j)
 {
-	size_t i, j;
-	int p_count = 0;
-
-	for (i = 0; i < cub->map_height; i++)
-	{
-		for (j = 0; cub->map[i][j]; j++)
-		{
-			if (is_player_char(cub->map[i][j]))
-			{
-				p_count++;
-				if (validate_and_set_player(cub, i, j, cub->map[i][j]))
-					return (1);
-			}
-		}
-	}
-
-	if (p_count != 1)
+	(*p_count)++;
+	if (*p_count > 1)
 	{
 		fprintf(stderr, "Error\nMap must have exactly one player start.\n");
 		return (1);
 	}
-	return (0);
+	return (validate_and_set_player(cub, i, j, cub->map[i][j]));
 }
 
+int	validate_player_position(t_cub *cub)
+{
+	size_t	i;
+	size_t	j;
+	int		p_count;
+
+	i = 0;
+	p_count = 0;
+	while (i < cub->map_height)
+	{
+		j = 0;
+		while (cub->map[i][j])
+		{
+			if (is_player_char(cub->map[i][j])
+				&& process_player(cub, &p_count, i, j))
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
 
 int	is_valid_position(char **map, int row, int col)
 {
