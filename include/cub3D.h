@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/15 15:54:23 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:35:35 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ typedef enum e_errorcode
 	ERROR_INVALID_PLAYER_POSITION = 208,
 	ERROR_INVALID_RGB_VAL = 209,
 	ERROR_INVALID_PLAYER = 210,
-	ERROR_UNCLOSED_MAP = 211
+	ERROR_UNCLOSED_MAP = 211,
+	ERROR_INVALID_FILE = 212
 }	t_errorcode;
 
 typedef enum e_cardinal_direction
@@ -174,7 +175,7 @@ void	free_texture_paths(t_textures *textures);
 
 void	parse_textures(char *line, t_cub *cub);
 void	free_array(char **array);
-int		parse_cub_file(t_cub *cub, char **lines);
+void	parse_cub_file(t_cub *cub, char **lines);
 void	copy_map(char **lines, t_cub *cub);
 void	free_all_resources(t_cub *cub);
 
@@ -184,17 +185,7 @@ int		count_players(char **map, int *player_count, int row, int col, t_cub *cub);
 
 /* Parse map */
 int 	validate_arguments(int argc, char **argv);
-//void	validate_map_section(char **lines);
-//void	init_cub_structure(t_cub *cub, char **file_content);
-//void	parse_textures(t_cub *cub, char **file_content);
-//char	*get_texture_path(char *line);
-//void	parse_colors(t_cub *cub, char **file_content);
-//void free_components(char **components);
-//int count_components(char *line);
-
-//uint32_t	parse_color(char *line);
 void 	parse_map(t_cub *cub, char *map_file);
-//size_t get_map_width(t_cub *cub);
 void	validate_map(char **map, size_t map_height);
 int		check_borders(char **map, size_t map_height);
 int		is_line_wall(char *line);
