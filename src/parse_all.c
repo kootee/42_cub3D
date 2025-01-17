@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/17 19:39:56 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/17 20:03:49 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	parse_colors(char *line, uint32_t *color, t_cub *cub)
 	int		b;
 
 	rgb_values = ft_split(line + 2, ',');
-	if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2])
+	if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2] \
+		|| ft_strlen(rgb_values[0]) > 4 || ft_strlen(rgb_values[1]) > 4 \
+		|| ft_strlen(rgb_values[2]) > 4)
 	{
 		free_array(rgb_values);
 		free_array(cub->map_file_lines);
