@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 23:37:42 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/15 15:34:34 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:38:45 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,15 @@ void	create_file(t_cub *cub, const char *filename)
 		handle_error(1);
 	lines = ft_split(file_contents, '\n');
 	free(file_contents);
-	cub->map_file_lines = lines;
-	if (!lines || parse_cub_file(cub, lines))
+	if (!lines)
 	{
-		fprintf(stderr, "Error: Failed to parse .cub file\n");
 		free_array(lines);
-		handle_error(1);
+		error_terminate_mlx(cub, ERROR_MALLOC_FAIL);
 	}
-	
-	free_array(lines);
+	else
+	{
+		cub->map_file_lines = lines;
+		parse_cub_file(cub, lines);
+		free_array(lines);
+	}
 }

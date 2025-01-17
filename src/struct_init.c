@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 23:23:49 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/15 15:35:09 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:05:17 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ static void	init_textures_and_map(t_cub *cub)
 	cub->textures.south = NULL;
 	cub->textures.east = NULL;
 	cub->textures.west = NULL;
+	cub->textures.north_path = NULL;
+	cub->textures.south_path = NULL;
+	cub->textures.east_path = NULL;
+	cub->textures.west_path = NULL;
 }
 
 void	init_main_struct(t_cub *cub)

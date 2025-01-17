@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:45:01 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/15 15:12:02 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:30:44 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handle_error(int errno)
 {
 	if (errno == ERROR_CMD_COUNT_ERROR)
 		ft_putstr_fd("Error: Invalid number of arguments\n", STDERR_FILENO);
-	else if (errno == ERROR_OPEN_ERROR || errno == ERROR_INVALID_FILE_NAME)
+	else if (errno == ERROR_OPEN_ERROR || errno == ERROR_INVALID_FILE)
 		ft_putstr_fd("Error: Invalid file\n", STDERR_FILENO);
 	else if (errno == ERROR_INVALID_MAP)
 		ft_putstr_fd("Error: Invalid map\n", STDERR_FILENO);

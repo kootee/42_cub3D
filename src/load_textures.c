@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:30:29 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/07 20:30:30 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/17 19:10:22 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ void	load_textures(t_cub *cub)
 {
 	cub->textures.north = mlx_load_png(cub->textures.north_path);
 	if (cub->textures.north == NULL)
-		handle_error(ERROR_TEXTURE);
+		error_terminate_mlx(cub, ERROR_TEXTURE);
 	cub->textures.south = mlx_load_png(cub->textures.south_path);
 	if (cub->textures.south == NULL)
-		handle_error(ERROR_TEXTURE);
+		error_terminate_mlx(cub, ERROR_TEXTURE);
 	cub->textures.east = mlx_load_png(cub->textures.east_path);
 	if (cub->textures.east == NULL)
-		handle_error(ERROR_TEXTURE);
+		error_terminate_mlx(cub, ERROR_TEXTURE);
 	cub->textures.west = mlx_load_png(cub->textures.west_path);
 	if (cub->textures.west == NULL)
-		handle_error(ERROR_TEXTURE);
+		error_terminate_mlx(cub, ERROR_TEXTURE);
 }

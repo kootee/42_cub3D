@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/15 15:43:11 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:39:56 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	copy_map(char **lines, t_cub *cub)
 	cub->map[i] = NULL;
 }
 
-int	parse_cub_file(t_cub *cub, char **lines)
+void	parse_cub_file(t_cub *cub, char **lines)
 {
 	int	i;
 
@@ -108,8 +108,10 @@ int	parse_cub_file(t_cub *cub, char **lines)
 			break ;
 		}
 		else
-			handle_error(ERROR_INVALID_FILE_NAME);
+		{
+			free_array(cub->map_file_lines);
+			error_terminate_mlx(cub, ERROR_INVALID_FILE);
+		}
 		i++;
 	}
-	return (0);
 }
