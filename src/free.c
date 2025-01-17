@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:09:25 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/15 15:42:06 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:07:53 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ void	free_all_resources(t_cub *cub)
 	if (cub->map)
 		free_array(cub->map);
 	if (cub->textures.north_path)
+	{
+		printf("freeing %s\n", cub->textures.north_path);
 		free(cub->textures.north_path);
+		printf("freed north path\n");
+	}
 	if (cub->textures.south_path)
 		free(cub->textures.south_path);
 	if (cub->textures.west_path)
