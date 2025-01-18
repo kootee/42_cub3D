@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:47:41 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/18 15:36:04 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:34:40 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	ft_putpixel(mlx_image_t *img, float x, float y, int32_t color)
 uint32_t	set_minimap_color(t_cub *cub, t_vector *pt)
 {
 	uint32_t	color;
-	int x;
-	int y;
+	int			x;
+	int			y;
 
 	x = pt->x;
 	y = pt->y;

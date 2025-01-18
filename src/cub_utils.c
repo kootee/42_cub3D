@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:53:08 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/18 16:30:18 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:36:28 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	skip_rgb_whitespace(char **strs)
 	char	*trimmed_str;
 	int		i;
 	int		j;
-	
+
 	i = 0;
 	while (strs[i])
 	{
 		j = 0;
-		while(strs[i][j] == ' ' || strs[i][j] == '\t' || strs[i][j] == '\r')
+		while (strs[i][j] == ' ' || strs[i][j] == '\t' || strs[i][j] == '\r')
 			j++;
 		trimmed_str = ft_strdup(strs[i] + j);
 		free(strs[i]);
@@ -45,17 +45,17 @@ void	skip_rgb_whitespace(char **strs)
 	}
 }
 
-char *skip_whitespace(char *str)
+char	*skip_whitespace(char *str)
 {
-	char *trimmed_str;
-	int i;
+	char	*trimmed_str;
+	int		i;
 
 	i = 0;
-	while(str[i] == ' ' || str[i] == '\t' || str[i] == '\r')
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\r')
 		i++;
 	trimmed_str = ft_strdup(str + i);
 	free(str);
-	return(trimmed_str);
+	return (trimmed_str);
 }
 
 int	is_valid_map_line(t_cub *cub, char *line)
@@ -65,7 +65,7 @@ int	is_valid_map_line(t_cub *cub, char *line)
 	if (*line == '1' && cub->textures.north_path != NULL \
 	&& cub->textures.south_path != NULL \
 	&& cub->textures.east_path != NULL \
-	&& cub->textures.west_path != NULL
+	&& cub->textures.west_path != NULL \
 	&& cub->colors_set == 2)
 	{
 		return (1);
