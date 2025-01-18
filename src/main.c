@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/15 15:14:29 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:34:19 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	main(int argc, char **argv)
 	handle_arguments(argc, argv);
 	create_file(&cub, argv[1]);
 	is_map_valid(&cub);
+	map_floodfill(&cub);
 	init_game(&cub);
 	game_loop(&cub);
 	free_all_resources(&cub);

@@ -33,6 +33,7 @@ SOURCES = src/main.c \
 			src/load_textures.c \
 			src/parse_all.c \
 			src/free.c \
+			src/parse_map_utils.c \
 			src/cub_utils.c
 
 BUILD_DIR = build

@@ -6,11 +6,28 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/17 19:39:56 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:29:59 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+static void	check_colors(char **rgb_values, t_cub *cub)
+{
+	if (!rgb_values)
+		error_terminate_mlx(cub, ERROR_MALLOC_FAIL);
+	skip_rgb_whitespace(rgb_values);
+	if (!rgb_values[0] \
+	|| !rgb_values[1] \
+	|| !rgb_values[2] \
+	|| (ft_strlen(rgb_values[0]) == 0 || ft_strlen(rgb_values[0]) > 4) \
+	|| (ft_strlen(rgb_values[1]) == 0 || ft_strlen(rgb_values[1]) > 4) \
+	|| (ft_strlen(rgb_values[2]) == 0 || ft_strlen(rgb_values[2]) > 4))
+	{
+		free_array(rgb_values);
+		error_terminate_mlx(cub, ERROR_INVALID_RGB_VAL);
+	}
+}
 
 void	parse_colors(char *line, uint32_t *color, t_cub *cub)
 {
@@ -20,23 +37,18 @@ void	parse_colors(char *line, uint32_t *color, t_cub *cub)
 	int		b;
 
 	rgb_values = ft_split(line + 2, ',');
-	if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2])
-	{
-		free_array(rgb_values);
-		free_array(cub->map_file_lines);
-		error_terminate_mlx(cub, ERROR_INVALID_RGB_VAL);
-	}
+	check_colors(rgb_values, cub);
 	r = ft_atoi(rgb_values[0]);
 	g = ft_atoi(rgb_values[1]);
 	b = ft_atoi(rgb_values[2]);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
 		free_array(rgb_values);
-		free_array(cub->map_file_lines);
 		error_terminate_mlx(cub, ERROR_INVALID_RGB_VAL);
 	}
 	*color = (r << 24) | (g << 16) | b << 8;
 	free_array(rgb_values);
+	cub->colors_set++;
 }
 
 void	parse_textures(char *line, t_cub *cub)
@@ -75,9 +87,7 @@ void	copy_map(char **lines, t_cub *cub)
 	cub->map_height = i;
 	cub->map = malloc(sizeof(char *) * (i + 1));
 	if (!cub->map)
-	{
 		error_terminate_mlx(cub, ERROR_MALLOC_FAIL);
-	}
 	i = 0;
 	while (lines[i])
 	{
@@ -85,6 +95,7 @@ void	copy_map(char **lines, t_cub *cub)
 		i++;
 	}
 	cub->map[i] = NULL;
+	calculate_map_width(cub);
 }
 
 void	parse_cub_file(t_cub *cub, char **lines)
@@ -100,18 +111,14 @@ void	parse_cub_file(t_cub *cub, char **lines)
 			parse_colors(lines[i], &cub->floor_color, cub);
 		else if (strncmp(lines[i], "C ", 2) == 0 && !cub->ceiling_color)
 			parse_colors(lines[i], &cub->ceiling_color, cub);
-		else if (lines[i][0] == '1')
+		else if (is_valid_map_line(cub, lines[i]))
 		{
 			copy_map(&lines[i], cub);
-			calculate_map_width(cub);
 			is_map_valid(cub);
 			break ;
 		}
 		else
-		{
-			free_array(cub->map_file_lines);
 			error_terminate_mlx(cub, ERROR_INVALID_FILE);
-		}
 		i++;
 	}
 }
