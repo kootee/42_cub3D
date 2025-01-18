@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/18 14:39:12 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:29:45 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ typedef struct s_cub
 	uint32_t			ceiling_color;
 	uint32_t			floor_color;
 	char				**map_file_lines;
+	int					colors_set;
 } t_cub;
 
 /* Minimap */
@@ -209,5 +210,6 @@ uint32_t	get_pixel_color(uint8_t *pixel_buffer);
 bool		is_texture_coordinate(char *str);
 void    	check_texture(char *path, t_cub *cub);
 void		skip_rgb_whitespace(char **strs);
-int			is_map_line(char *line);
+int			is_valid_map_line(t_cub *cub, char *line);
+
 #endif

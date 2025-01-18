@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 23:23:49 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/17 19:05:17 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:29:48 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	init_main_struct(t_cub *cub)
 	cub->mlx = NULL;
 	cub->mlx_img = NULL;
 	cub->map_file_lines = NULL;
+	cub->colors_set = 0;
 	init_player_struct(cub);
 	init_ray_struct(cub);
 	init_textures_and_map(cub);

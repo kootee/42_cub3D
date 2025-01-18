@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 23:37:42 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/18 13:30:28 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:01:50 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ static char	*read_file_contents(const char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-	{
 		handle_error(ERROR_OPEN_ERROR);
-	}
 	file_contents = ft_calloc(MAX_FILE_SIZE + 1, sizeof(char));
 	if (!file_contents)
 	{
@@ -30,7 +28,6 @@ static char	*read_file_contents(const char *filename)
 	}
 	read(fd, file_contents, MAX_FILE_SIZE);
 	close(fd);
-	printf("%s\n", file_contents);
 	return (file_contents);
 }
 
@@ -46,13 +43,11 @@ void	create_file(t_cub *cub, const char *filename)
 	free(file_contents);
 	if (!lines)
 	{
-		free_array(lines);
 		error_terminate_mlx(cub, ERROR_MALLOC_FAIL);
 	}
 	else
 	{
 		cub->map_file_lines = lines;
 		parse_cub_file(cub, lines);
-		free_array(lines);
 	}
 }

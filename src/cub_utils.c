@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:53:08 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/18 14:00:49 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:30:18 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,18 @@ char *skip_whitespace(char *str)
 	return(trimmed_str);
 }
 
-int	is_map_line(char *line)
+int	is_valid_map_line(t_cub *cub, char *line)
 {
 	while (*line == ' ' || *line == '\t' || *line == '\r')
 		line++;
-	if (*line == '1')
+	if (*line == '1' && cub->textures.north_path != NULL \
+	&& cub->textures.south_path != NULL \
+	&& cub->textures.east_path != NULL \
+	&& cub->textures.west_path != NULL
+	&& cub->colors_set == 2)
+	{
 		return (1);
+	}
 	else
 		return (0);
 }

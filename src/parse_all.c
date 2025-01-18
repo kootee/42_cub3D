@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/18 15:33:43 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:29:59 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	check_colors(char **rgb_values, t_cub *cub)
 	|| (ft_strlen(rgb_values[2]) == 0 || ft_strlen(rgb_values[2]) > 4))
 	{
 		free_array(rgb_values);
-		free_array(cub->map_file_lines);
 		error_terminate_mlx(cub, ERROR_INVALID_RGB_VAL);
 	}
 }
@@ -45,11 +44,11 @@ void	parse_colors(char *line, uint32_t *color, t_cub *cub)
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
 		free_array(rgb_values);
-		free_array(cub->map_file_lines);
 		error_terminate_mlx(cub, ERROR_INVALID_RGB_VAL);
 	}
 	*color = (r << 24) | (g << 16) | b << 8;
 	free_array(rgb_values);
+	cub->colors_set++;
 }
 
 void	parse_textures(char *line, t_cub *cub)
@@ -112,18 +111,14 @@ void	parse_cub_file(t_cub *cub, char **lines)
 			parse_colors(lines[i], &cub->floor_color, cub);
 		else if (strncmp(lines[i], "C ", 2) == 0 && !cub->ceiling_color)
 			parse_colors(lines[i], &cub->ceiling_color, cub);
-		else if (is_map_line(lines[i]))
+		else if (is_valid_map_line(cub, lines[i]))
 		{
-			printf("%s\n", lines[i]);
 			copy_map(&lines[i], cub);
 			is_map_valid(cub);
 			break ;
 		}
 		else
-		{
-			free_array(cub->map_file_lines);
 			error_terminate_mlx(cub, ERROR_INVALID_FILE);
-		}
 		i++;
 	}
 }

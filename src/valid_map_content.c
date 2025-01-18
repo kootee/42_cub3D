@@ -226,7 +226,6 @@ void	calculate_map_width(t_cub *cub)
 		row++;
 	}
 	cub->map_width = max_width;
-	printf("map max width %zu", max_width);
 }
 
 int	check_map_closure(char **map, int row, int col)
