@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:09:25 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/13 17:18:33 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 15:47:07 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_all_resources(t_cub *cub)
 {
 	if (cub->map)
 		free_array(cub->map);
+	if (cub->map_file_lines)
+		free_array(cub->map_file_lines);
 	if (cub->textures.north_path)
 		free(cub->textures.north_path);
 	if (cub->textures.south_path)
@@ -42,13 +44,14 @@ void	free_array(char **array)
 {
 	int	i;
 
-	i = 0;
 	if (!array)
 		return ;
+	i = 0;
 	while (array[i])
 	{
 		free(array[i]);
 		i++;
 	}
 	free(array);
+	array = NULL;
 }

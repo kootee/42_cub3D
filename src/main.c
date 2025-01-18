@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/16 22:17:37 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/18 17:13:53 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-#include <stdio.h>
 
 void	ft_game_hook(void *param)
 {
@@ -22,7 +21,7 @@ void	ft_game_hook(void *param)
 	draw_minimap(cub);
 }
 
-void	ft_key_hook(void *param)
+static void	ft_key_hook(void *param)
 {
 	t_cub	*cub;
 	mlx_t	*mlx_inst;
@@ -57,21 +56,16 @@ void	game_loop(t_cub *cub)
 int	main(int argc, char **argv)
 {
 	t_cub	cub;
+	t_cub	cub;
 
 	init_main_struct(&cub);
-	if (handle_arguments(argc, argv) == 1)
-	{
-		return (1);
-	}
-	if (create_file(&cub, argv[1]) == 1)
-	{
-		return (1);
-	}
-	if (is_map_valid(&cub) == 1)
-	{
-		return (1);
-	}
+	handle_arguments(argc, argv);
+	create_file(&cub, argv[1]);
+	is_map_valid(&cub);
+	map_floodfill(&cub);
 	init_game(&cub);
+	game_loop(&cub);
+	free_all_resources(&cub);
 	game_loop(&cub);
 	free_all_resources(&cub);
 	return (EXIT_SUCCESS);

@@ -148,7 +148,7 @@ int	check_valid_characters(char **map, int row, int col)
 
 	cell = map[row][col];
 	if (cell != '0' && cell != '1' && cell != 'N' && cell != 'S'
-		&& cell != 'E' && cell != 'W' && cell != ' ')
+		&& cell != 'E' && cell != 'W' && cell != ' ' && cell != '\t')
 	{
 		fprintf(stderr, "Error: Invalid character '%c' at row %d, col %d.\n", cell, row, col);
 		return (1);
@@ -230,7 +230,7 @@ void	calculate_map_width(t_cub *cub)
 	if (!cub->map || !cub->map[0])
 	{
 		fprintf(stderr, "Error: Map is empty.\n");
-		return ;
+		error_terminate_mlx(cub, ERROR_INVALID_MAP);
 	}
 	row = 0;
 	while (cub->map[row])
@@ -255,7 +255,7 @@ int	check_map_closure(char **map, int row, int col)
 			!is_valid_position(map, row, col - 1) || map[row][col - 1] == ' ' ||
 			!is_valid_position(map, row, col + 1) || map[row][col + 1] == ' ')
 		{
-			fprintf(stderr, "Error: Map is not closed at row %d, col %d.\n", row, col);
+			fprintf(stderr, "Row %d, col %d\n", row, col);
 			return (1);
 		}
 	}
@@ -303,9 +303,17 @@ int	is_map_valid(t_cub *cub)
 		||validate_map_content(cub, &p_count))
 		return (1);
 	if (p_count == 0)
-	{
-		fprintf(stderr, "Error: No player found on the map.\n");
+		handle_error(ERROR_INVALID_PLAYER);
+}
+
+int	is_map_valid(t_cub *cub)
+{
+	int	p_count;
+
+	p_count = 0;
+	if (check_map_is_empty(cub) || check_empty_lines(cub->map)
+		||validate_map_content(cub, &p_count))
 		return (1);
-	}
-	return (0);
+	if (p_count == 0)
+		handle_error(ERROR_INVALID_PLAYER);
 }

@@ -3,10 +3,9 @@ WE ./textures/test1.png
 SO ./textures/test2.png
 EA ./textures/test3.png
 
+
 C 0,50,100
 F 50,255,50
-
-C 10,150,100
 
 
 
