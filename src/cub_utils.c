@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:53:08 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/18 13:00:36 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 14:00:49 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,27 @@ void	skip_rgb_whitespace(char **strs)
 		strs[i] = trimmed_str;
 		i++;
 	}
+}
+
+char *skip_whitespace(char *str)
+{
+	char *trimmed_str;
+	int i;
+
+	i = 0;
+	while(str[i] == ' ' || str[i] == '\t' || str[i] == '\r')
+		i++;
+	trimmed_str = ft_strdup(str + i);
+	free(str);
+	return(trimmed_str);
+}
+
+int	is_map_line(char *line)
+{
+	while (*line == ' ' || *line == '\t' || *line == '\r')
+		line++;
+	if (*line == '1')
+		return (1);
+	else
+		return (0);
 }

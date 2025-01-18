@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/18 13:07:44 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 15:33:43 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	parse_colors(char *line, uint32_t *color, t_cub *cub)
 	r = ft_atoi(rgb_values[0]);
 	g = ft_atoi(rgb_values[1]);
 	b = ft_atoi(rgb_values[2]);
-	printf("r %i g %i b %i \n", r, g, b);
-
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
 		free_array(rgb_values);
@@ -90,9 +88,7 @@ void	copy_map(char **lines, t_cub *cub)
 	cub->map_height = i;
 	cub->map = malloc(sizeof(char *) * (i + 1));
 	if (!cub->map)
-	{
 		error_terminate_mlx(cub, ERROR_MALLOC_FAIL);
-	}
 	i = 0;
 	while (lines[i])
 	{
@@ -100,6 +96,7 @@ void	copy_map(char **lines, t_cub *cub)
 		i++;
 	}
 	cub->map[i] = NULL;
+	calculate_map_width(cub);
 }
 
 void	parse_cub_file(t_cub *cub, char **lines)
@@ -115,10 +112,10 @@ void	parse_cub_file(t_cub *cub, char **lines)
 			parse_colors(lines[i], &cub->floor_color, cub);
 		else if (strncmp(lines[i], "C ", 2) == 0 && !cub->ceiling_color)
 			parse_colors(lines[i], &cub->ceiling_color, cub);
-		else if (lines[i][0] == '1')
+		else if (is_map_line(lines[i]))
 		{
+			printf("%s\n", lines[i]);
 			copy_map(&lines[i], cub);
-			calculate_map_width(cub);
 			is_map_valid(cub);
 			break ;
 		}

@@ -216,10 +216,7 @@ void	calculate_map_width(t_cub *cub)
 
 	max_width = 0;
 	if (!cub->map || !cub->map[0])
-	{
-		fprintf(stderr, "Error: Map is empty.\n");
-		return;
-	}
+		error_terminate_mlx(cub, ERROR_INVALID_MAP);
 	row = 0;
 	while (cub->map[row])
 	{
@@ -229,6 +226,7 @@ void	calculate_map_width(t_cub *cub)
 		row++;
 	}
 	cub->map_width = max_width;
+	printf("map max width %zu", max_width);
 }
 
 int	check_map_closure(char **map, int row, int col)

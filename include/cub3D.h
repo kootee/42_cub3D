@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/18 12:44:17 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 14:39:12 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ void 	parse_map(t_cub *cub, char *map_file);
 void	validate_map(char **map, size_t map_height);
 int		check_borders(char **map, size_t map_height);
 int		is_line_wall(char *line);
+void    map_floodfill(t_cub *cub);
 
 /* Key actions */
 void	left_key(t_cub *cub);
@@ -208,5 +209,5 @@ uint32_t	get_pixel_color(uint8_t *pixel_buffer);
 bool		is_texture_coordinate(char *str);
 void    	check_texture(char *path, t_cub *cub);
 void		skip_rgb_whitespace(char **strs);
-
+int			is_map_line(char *line);
 #endif
