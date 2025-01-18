@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/17 19:35:35 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 12:44:17 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,5 +207,6 @@ void	error_terminate_mlx(t_cub *cub, int errno);
 uint32_t	get_pixel_color(uint8_t *pixel_buffer);
 bool		is_texture_coordinate(char *str);
 void    	check_texture(char *path, t_cub *cub);
+void		skip_rgb_whitespace(char **strs);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:09:25 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/17 19:38:58 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 12:31:12 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	free_array(char **array)
 {
 	int	i;
 
-	i = 0;
 	if (!array)
 		return ;
+	i = 0;
 	while (array[i])
 	{
 		free(array[i]);

@@ -6,11 +6,29 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/17 20:03:49 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/18 13:07:44 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+static void	check_colors(char **rgb_values, t_cub *cub)
+{
+	if (!rgb_values)
+		error_terminate_mlx(cub, ERROR_MALLOC_FAIL);
+	skip_rgb_whitespace(rgb_values);
+	if (!rgb_values[0] \
+	|| !rgb_values[1] \
+	|| !rgb_values[2] \
+	|| (ft_strlen(rgb_values[0]) == 0 || ft_strlen(rgb_values[0]) > 4) \
+	|| (ft_strlen(rgb_values[1]) == 0 || ft_strlen(rgb_values[1]) > 4) \
+	|| (ft_strlen(rgb_values[2]) == 0 || ft_strlen(rgb_values[2]) > 4))
+	{
+		free_array(rgb_values);
+		free_array(cub->map_file_lines);
+		error_terminate_mlx(cub, ERROR_INVALID_RGB_VAL);
+	}
+}
 
 void	parse_colors(char *line, uint32_t *color, t_cub *cub)
 {
@@ -20,17 +38,12 @@ void	parse_colors(char *line, uint32_t *color, t_cub *cub)
 	int		b;
 
 	rgb_values = ft_split(line + 2, ',');
-	if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2] \
-		|| ft_strlen(rgb_values[0]) > 4 || ft_strlen(rgb_values[1]) > 4 \
-		|| ft_strlen(rgb_values[2]) > 4)
-	{
-		free_array(rgb_values);
-		free_array(cub->map_file_lines);
-		error_terminate_mlx(cub, ERROR_INVALID_RGB_VAL);
-	}
+	check_colors(rgb_values, cub);
 	r = ft_atoi(rgb_values[0]);
 	g = ft_atoi(rgb_values[1]);
 	b = ft_atoi(rgb_values[2]);
+	printf("r %i g %i b %i \n", r, g, b);
+
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
 		free_array(rgb_values);
