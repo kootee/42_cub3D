@@ -273,5 +273,5 @@ void	is_map_valid(t_cub *cub)
 		row++;
 	}
 	if (p_count == 0)
-		handle_error(ERROR_INVALID_PLAYER);
+		error_terminate_mlx(cub, ERROR_INVALID_PLAYER);
 }
