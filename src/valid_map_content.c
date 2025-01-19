@@ -48,77 +48,32 @@ int	check_map_boundaries(t_cub *cub)
 	return (0);
 }
 
-static int	is_player_char(char c)
+void	set_player_direction(t_cub *cub, char p_char)
 {
-	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
-}
-
-int	validate_and_set_player(t_cub *cub, int r, int c, char p_char, int *p_count)
-{
-	*p_count += 1;
-	if (*p_count > 1)
-	{
-		fprintf(stderr, "Error\nMap must have exactly one player.\n");
-		return (1);
-	}
-	cub->player.ppos.x = c;
-	cub->player.ppos.y = r;
-	printf("Player position set: x=%f, y=%f\n", cub->player.ppos.x, cub->player.ppos.y);
 	if (p_char == 'N')
 	{
-		cub->player.dir.x = 0.0;
-		cub->player.dir.y = -1.0;
+		cub->player.dir = (t_vector){0.0, -1.0};
 		cub->player.plane_x = 0.66;
 		cub->player.plane_y = 0.0;
 	}
 	else if (p_char == 'S')
 	{
-		cub->player.dir.x = 0.0;
-		cub->player.dir.y = 1.0;
+		cub->player.dir = (t_vector){0.0, 1.0};
 		cub->player.plane_x = -0.66;
 		cub->player.plane_y = 0.0;
 	}
 	else if (p_char == 'E')
 	{
-		cub->player.dir.x = 1.0;
-		cub->player.dir.y = 0.0;
+		cub->player.dir = (t_vector){1.0, 0.0};
 		cub->player.plane_x = 0.0;
 		cub->player.plane_y = 0.66;
 	}
 	else if (p_char == 'W')
 	{
-		cub->player.dir.x = -1.0;
-		cub->player.dir.y = 0.0;
+		cub->player.dir = (t_vector){-1.0, 0.0};
 		cub->player.plane_x = 0.0;
 		cub->player.plane_y = -0.66;
 	}
-	return (0);
-}
-
-int	validate_player_position(t_cub *cub)
-{
-	size_t	i;
-	size_t	j;
-	int		p_count;
-
-	p_count = 0;
-	for (i = 0; i < cub->map_height; i++)
-	{
-		for (j = 0; cub->map[i][j]; j++)
-		{
-			if (is_player_char(cub->map[i][j]))
-			{
-				if (validate_and_set_player(cub, i, j, cub->map[i][j], &p_count))
-					return (1);
-			}
-		}
-	}
-	if (p_count != 1)
-	{
-		fprintf(stderr, "Error\nMap must have exactly one player start.\n");
-		return (1);
-	}
-	return (0);
 }
 
 int	is_valid_position(char **map, int row, int col)
@@ -138,7 +93,6 @@ int	check_valid_characters(char **map, int row, int col)
 	if (cell != '0' && cell != '1' && cell != 'N' && cell != 'S'
 		&& cell != 'E' && cell != 'W' && cell != ' ' && cell != '\t')
 	{
-		fprintf(stderr, "Error: Invalid character '%c' at row %d, col %d.\n", cell, row, col);
 		return (1);
 	}
 	return (0);
@@ -154,39 +108,12 @@ int	count_players(t_cub *cub, int *p_count, int row, int col)
 		(*p_count)++;
 		if (*p_count > 1)
 		{
-			ft_putstr_fd("Multiple players found.\n", STDERR_FILENO);
+			ft_putstr_fd("Multiple players found.\n", 1);
 			return (1);
 		}
 		cub->player.ppos.x = col + 0.5;
 		cub->player.ppos.y = row + 0.5;
-		if (cell == 'N')
-		{
-			cub->player.dir.x = 0.0;
-			cub->player.dir.y = -1.0;
-			cub->player.plane_x = 0.66;
-			cub->player.plane_y = 0.0;
-		}
-		else if (cell == 'S')
-		{
-			cub->player.dir.x = 0.0;
-			cub->player.dir.y = 1.0;
-			cub->player.plane_x = -0.66;
-			cub->player.plane_y = 0.0;
-		}
-		else if (cell == 'E')
-		{
-			cub->player.dir.x = 1.0;
-			cub->player.dir.y = 0.0;
-			cub->player.plane_x = 0.0;
-			cub->player.plane_y = 0.66;
-		}
-		else if (cell == 'W')
-		{
-			cub->player.dir.x = -1.0;
-			cub->player.dir.y = 0.0;
-			cub->player.plane_x = 0.0;
-			cub->player.plane_y = -0.66;
-		}
+		set_player_direction(cub, cell);
 	}
 	return (0);
 }
@@ -199,33 +126,10 @@ int	check_empty_lines(char **map)
 	while (map[row])
 	{
 		if (strlen(map[row]) == 0)
-		{
-			fprintf(stderr, "Error: Empty line in map at row %d.\n", row);
 			return (1);
-		}
 		row++;
 	}
 	return (0);
-}
-
-void	calculate_map_width(t_cub *cub)
-{
-	int		row;
-	size_t	max_width;
-	size_t	current_width;
-
-	max_width = 0;
-	if (!cub->map || !cub->map[0])
-		error_terminate_mlx(cub, ERROR_INVALID_MAP);
-	row = 0;
-	while (cub->map[row])
-	{
-		current_width = strlen(cub->map[row]);
-		if (current_width > max_width)
-			max_width = current_width;
-		row++;
-	}
-	cub->map_width = max_width;
 }
 
 int	check_map_closure(char **map, int row, int col)
@@ -263,7 +167,7 @@ void	is_map_valid(t_cub *cub)
 		while (cub->map[row][col])
 		{
 			if (check_valid_characters(cub->map, row, col))
-				error_terminate_mlx(cub, ERROR_INVALID_PLAYER);
+				error_terminate_mlx(cub, ERROR_INVALID_CHARACTER);
 			if (check_map_closure(cub->map, row, col))
 				error_terminate_mlx(cub, ERROR_UNCLOSED_MAP);
 			if (count_players(cub, &p_count, row, col))

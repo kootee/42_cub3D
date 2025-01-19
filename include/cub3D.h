@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/19 13:15:06 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:12:07 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ typedef enum e_errorcode
 	ERROR_INVALID_FILE_NAME = 205,
 	ERROR_INVALID_MAP = 206,
 	ERROR_TEXTURE = 207,
-	ERROR_INVALID_PLAYER_POSITION = 208,
 	ERROR_INVALID_RGB_VAL = 209,
 	ERROR_INVALID_PLAYER = 210,
 	ERROR_UNCLOSED_MAP = 211,
-	ERROR_INVALID_FILE = 212
+	ERROR_INVALID_FILE = 212,
+	ERROR_INVALID_CHARACTER = 213
 }	t_errorcode;
 
 typedef enum s_rgb_values

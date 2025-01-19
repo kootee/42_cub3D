@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 14:25:00 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/18 16:35:11 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/19 17:42:15 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,24 @@ void	map_floodfill(t_cub *cub)
 		}
 		i++;
 	}
+}
+
+void	calculate_map_width(t_cub *cub)
+{
+	int		row;
+	size_t	max_width;
+	size_t	current_width;
+
+	max_width = 0;
+	if (!cub->map || !cub->map[0])
+		error_terminate_mlx(cub, ERROR_INVALID_MAP);
+	row = 0;
+	while (cub->map[row])
+	{
+		current_width = strlen(cub->map[row]);
+		if (current_width > max_width)
+			max_width = current_width;
+		row++;
+	}
+	cub->map_width = max_width;
 }
