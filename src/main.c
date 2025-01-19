@@ -6,32 +6,11 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:32:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/18 16:34:19 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:50:22 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-static void	init_game(t_cub *cub)
-{
-	load_textures(cub);
-	cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", true);
-	if (cub->mlx == NULL)
-		handle_error(mlx_errno);
-	cub->mlx_img = mlx_new_image(cub->mlx, WIN_X, WIN_Y);
-	if (cub->mlx_img == NULL)
-		error_terminate_mlx(cub, mlx_errno);
-	if (mlx_image_to_window(cub->mlx, cub->mlx_img, 0, 0) < 0)
-		error_terminate_mlx(cub, mlx_errno);
-	printf("****Game started****\n");
-	printf("map_width: %zu\n", cub->map_width);
-	printf("player.ppos.x: %f\n", cub->player.ppos.x);
-	printf("player.ppos.y: %f\n", cub->player.ppos.y);
-	printf("player.dir.x: %f\n", cub->player.dir.x);
-	printf("player.dir.y: %f\n", cub->player.dir.y);
-	printf("player.plane_x: %f\n", cub->player.plane_x);
-	printf("player.plane_y: %f\n", cub->player.plane_y);
-}
 
 static void	ft_key_hook(void *param)
 {

@@ -144,11 +144,11 @@ int	check_valid_characters(char **map, int row, int col)
 	return (0);
 }
 
-int	count_players(char **map, int *p_count, int row, int col, t_cub *cub)
+int	count_players(t_cub *cub, int *p_count, int row, int col)
 {
 	char	cell;
 
-	cell = map[row][col];
+	cell = cub->map[row][col];
 	if (cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W')
 	{
 		(*p_count)++;
@@ -266,7 +266,7 @@ void	is_map_valid(t_cub *cub)
 				error_terminate_mlx(cub, ERROR_INVALID_PLAYER);
 			if (check_map_closure(cub->map, row, col))
 				error_terminate_mlx(cub, ERROR_UNCLOSED_MAP);
-			if (count_players(cub->map, &p_count, row, col, cub))
+			if (count_players(cub, &p_count, row, col))
 				error_terminate_mlx(cub, ERROR_INVALID_PLAYER);
 			col++;
 		}
