@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:45:01 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/17 19:30:44 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/19 13:37:15 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	handle_error(int errno)
 	else if (errno == ERROR_INVALID_FILE_NAME)
 		ft_putstr_fd("Error: Invalid file name\n", STDERR_FILENO);
 	else if (errno == ERROR_TEXTURE)
-		ft_putstr_fd("Error: Failed to load texture\n", STDERR_FILENO);
+		ft_putstr_fd("Error: Invalid texture\n", STDERR_FILENO);
 	else if (errno == ERROR_INVALID_PLAYER_POSITION)
 		ft_putstr_fd("Error: Invalid player position\n", STDERR_FILENO);
 	else if (errno == ERROR_INVALID_PLAYER)

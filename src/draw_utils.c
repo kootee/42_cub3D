@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:47:41 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/18 16:34:40 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/19 13:14:51 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,5 @@ uint32_t	set_minimap_color(t_cub *cub, t_vector *pt)
 	color = DARKORANGE;
 	if (cub->map[y][x] == '1')
 		color = ORANGE;
-	else if (cub->map[y][x] == '0' \
-			|| cub->map[y][x] == 'N' \
-			|| cub->map[y][x] == 'W' \
-			|| cub->map[y][x] == 'S' \
-			|| cub->map[y][x] == 'E')
-		color = DARKORANGE;
 	return (color);
 }

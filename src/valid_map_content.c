@@ -154,7 +154,7 @@ int	count_players(t_cub *cub, int *p_count, int row, int col)
 		(*p_count)++;
 		if (*p_count > 1)
 		{
-			fprintf(stderr, "Error: Multiple players found.\n");
+			ft_putstr_fd("Multiple players found.\n", STDERR_FILENO);
 			return (1);
 		}
 		cub->player.ppos.x = col + 0.5;
@@ -255,7 +255,7 @@ void	is_map_valid(t_cub *cub)
 
 	p_count = 0;
 	if (!cub->map || !cub->map[0] || check_empty_lines(cub->map))
-		handle_error(ERROR_INVALID_MAP_PTS);
+		error_terminate_mlx(cub, ERROR_INVALID_MAP_PTS);
 	row = 0;
 	while (cub->map[row])
 	{

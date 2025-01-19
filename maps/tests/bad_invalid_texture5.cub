@@ -6,11 +6,9 @@ NO ./textures/test.png
 WE ./textures/test1.png
 
 SO ./textures/test2.png
+SO ./textures/test2.png
 
 EA ./textures/test3
-
-
-WE ./textures/test2.png
 
 
 1111111111111
