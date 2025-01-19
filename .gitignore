@@ -52,4 +52,5 @@ Mkfile.old
 dkms.conf
 
 #MLX42
-.MLX42/
+MLX42/
+cub3D
