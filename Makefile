@@ -3,7 +3,6 @@ NAME	= cub3D
 CC		= cc
 CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -ffast-math -Ofast
 DBFLAGS = -g
-LDFLAGS = -mmacosx-version-min=11.7
 LIBMLX	= MLX42
 LIBFT	= libft
 debug	?= 0
@@ -42,9 +41,6 @@ INCLUDES = -I ./include -I $(LIBMLX)/include/MLX42 -I ./libft/include
 LIBS = $(LIBMLX)/build/libmlx42.a -ldl -lglfw \
 		-L"/usr/local/opt/glfw/lib/" -pthread -lm \
 		-L$(LIBFT) -lft
-
-#-L"/Users/${USER}/.brew/opt/glfw/lib/" -pthread -lm \
-#-L"/usr/local/opt/glfw/lib/" -pthread -lm
 
 all: $(BUILD_DIR) libs $(NAME)
 

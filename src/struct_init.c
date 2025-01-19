@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 23:23:49 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/19 12:50:32 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/19 14:46:51 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_game(t_cub *cub)
 {
 	load_textures(cub);
-	cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", true);
+	cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", false);
 	if (cub->mlx == NULL)
 		handle_error(mlx_errno);
 	cub->mlx_img = mlx_new_image(cub->mlx, WIN_X, WIN_Y);
