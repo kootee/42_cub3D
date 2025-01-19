@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/18 16:29:59 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/19 13:42:25 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,28 @@ void	parse_colors(char *line, uint32_t *color, t_cub *cub)
 
 void	parse_textures(char *line, t_cub *cub)
 {
-	if (strncmp(line, "NO ", 3) == 0)
+	if (strncmp(line, "NO ", 3) == 0 && !cub->textures.north_path)
 	{
 		cub->textures.north_path = ft_strdup(line + 3);
 		check_texture(cub->textures.north_path, cub);
 	}
-	else if (strncmp(line, "SO ", 3) == 0)
+	else if (strncmp(line, "SO ", 3) == 0 && !cub->textures.south_path)
 	{
 		cub->textures.south_path = ft_strdup(line + 3);
 		check_texture(cub->textures.south_path, cub);
 	}
-	else if (strncmp(line, "WE ", 3) == 0)
+	else if (strncmp(line, "WE ", 3) == 0 && !cub->textures.west_path)
 	{
 		cub->textures.west_path = ft_strdup(line + 3);
 		check_texture(cub->textures.west_path, cub);
 	}
-	else if (strncmp(line, "EA ", 3) == 0)
+	else if (strncmp(line, "EA ", 3) == 0 && !cub->textures.east_path)
 	{
 		cub->textures.east_path = ft_strdup(line + 3);
 		check_texture(cub->textures.east_path, cub);
 	}
 	else
-		error_terminate_mlx(cub, ERROR_INVALID_FILE_NAME);
+		error_terminate_mlx(cub, ERROR_TEXTURE);
 }
 
 void	copy_map(char **lines, t_cub *cub)

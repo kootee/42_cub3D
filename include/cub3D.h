@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/19 13:07:48 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/19 13:15:06 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # define MINIMAP_TILE_SIZE 15
 # define MAX_FILE_SIZE 1048576
 # define ALPHA 0xFF
-//# define M_PI_2 1.5707963267948966 // π/2
 
 # define BLACK		0x000000ff
 # define WHITE		0xffffffff
