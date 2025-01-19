@@ -2,11 +2,9 @@ C 0,50,100
 
 F 50,50,50
 
-NO ./textures/test.png
-WE ./textures/test1.png
 
-SO ./textures/test2.png
-SO ./textures/test2.png
+
+
 
 EA ./textures/test3
 
