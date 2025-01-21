@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:45:01 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/19 13:37:15 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:11:10 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	handle_error(int errno)
 		ft_putstr_fd("Error: Invalid file name\n", STDERR_FILENO);
 	else if (errno == ERROR_TEXTURE)
 		ft_putstr_fd("Error: Invalid texture\n", STDERR_FILENO);
-	else if (errno == ERROR_INVALID_PLAYER_POSITION)
-		ft_putstr_fd("Error: Invalid player position\n", STDERR_FILENO);
+	else if (errno == ERROR_INVALID_CHARACTER)
+		ft_putstr_fd("Error: Invalid character\n", STDERR_FILENO);
 	else if (errno == ERROR_INVALID_PLAYER)
 		ft_putstr_fd("Error: Invalid player\n", STDERR_FILENO);
 	else if (errno == ERROR_INVALID_RGB_VAL)
