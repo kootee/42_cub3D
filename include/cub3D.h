@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/19 15:12:07 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/21 13:57:59 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,12 @@ void		free_all_resources(t_cub *cub);
 
 int			check_valid_characters(char **map, int row, int col);
 void		calculate_map_width(t_cub *cub);
+int			check_map_boundaries(t_cub *cub);
+void		set_player_direction(t_cub *cub, char p_char);
+int			is_valid_position(char **map, int row, int col);
+int			count_players(t_cub *cub, int *p_count, int row, int col);
+int			check_empty_lines(char **map);
+int			check_map_closure(char **map, int row, int col);
 
 /* Parse map */
 int			validate_arguments(int argc, char **argv);

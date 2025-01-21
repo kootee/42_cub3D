@@ -34,7 +34,8 @@ SOURCES = src/main.c \
 			src/parse_all.c \
 			src/free.c \
 			src/parse_map_utils.c \
-			src/cub_utils.c
+			src/cub_utils.c \
+			src/valid_map_content_utils.c
 
 BUILD_DIR = build
 OBJECTS = $(SOURCES:src/%.c=$(BUILD_DIR)/%.o)
