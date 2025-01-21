@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/21 13:46:27 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:10:34 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,24 +165,24 @@ void		init_game(t_cub *cub);
 void		load_textures(t_cub *cub);
 void		free_textures(t_cub *cub);
 void		free_texture_paths(t_textures *textures);
-
 void		parse_textures(char *line, t_cub *cub);
 void		free_array(char **array);
 void		parse_cub_file(t_cub *cub, char **lines);
-void		copy_map(char **lines, t_cub *cub);
+void		set_texture_path(t_cub *cub, char *line, char **texture_path);
 void		free_all_resources(t_cub *cub);
 
-int			check_valid_characters(char **map, int row, int col);
-void		calculate_map_width(t_cub *cub);
-
 /* Parse map */
+void		copy_map(char **lines, t_cub *cub);
 int			validate_arguments(int argc, char **argv);
+void		calculate_map_width(t_cub *cub);
 void		map_floodfill(t_cub *cub);
 int			check_top_and_bottom_rows(t_cub *cub);
 int			check_middle_rows(t_cub *cub);
 int			check_map_boundaries(t_cub *cub);
 int			check_map_closure(char **map, int row, int col);
 int			check_empty_lines(char **map);
+int			is_valid_position(char **map, int row, int col);
+int			check_valid_characters(char **map, int row, int col);
 
 /* Key actions */
 void		left_key(t_cub *cub);
@@ -200,7 +200,6 @@ void		error_terminate_mlx(t_cub *cub, int errno);
 /* Cub utils */
 uint32_t	get_pixel_color(uint8_t *pixel_buffer);
 bool		is_texture_coordinate(char *str);
-void		check_texture(char *path, t_cub *cub);
 void		skip_rgb_whitespace(char **strs);
 int			is_valid_map_line(t_cub *cub, char *line);
 

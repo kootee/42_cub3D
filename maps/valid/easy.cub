@@ -2,7 +2,7 @@
 F 0, 0, 255
 C 52, 235, 158
 
-NO      ./textures/north.png
+NO            ./textures/north.png
 SO ./textures/south.png
 WE ./textures/west.png
 EA ./textures/east.png
