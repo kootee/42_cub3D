@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:10:49 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/21 14:22:09 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/21 14:32:55 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	count_players(t_cub *cub, int *p_count, int row, int col)
 		(*p_count)++;
 		if (*p_count > 1)
 		{
-			ft_putstr_fd("Multiple players found.\n", 1);
+			ft_putstr_fd("Multiple players found.\n", STDERR_FILENO);
 			return (1);
 		}
 		cub->player.ppos.x = col + 0.5;
