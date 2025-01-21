@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:34:01 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/15 15:13:04 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:25:20 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ static int	check_file_format(const char *filename)
 	if (strlen(filename) < 4 \
 		|| strcmp(filename + strlen(filename) - 4, ".cub") != 0)
 	{
-		fprintf(stderr, "Error: Invalid file format\n");
-		return (1);
+		return (ERROR_OPEN_ERROR);
 	}
 	return (0);
 }
@@ -44,8 +43,7 @@ void	handle_arguments(int argc, char **argv)
 {
 	if (argc != 2)
 	{
-		fprintf(stderr, "Error: Wrong number of arguments\n");
-		handle_error(1);
+		handle_error(ERROR_CMD_COUNT_ERROR);
 	}
 	if (check_file_format(argv[1]))
 		handle_error(1);

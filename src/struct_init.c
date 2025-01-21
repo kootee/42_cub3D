@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 23:23:49 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/19 12:50:32 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:21:56 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,6 @@ void	init_game(t_cub *cub)
 		error_terminate_mlx(cub, mlx_errno);
 	if (mlx_image_to_window(cub->mlx, cub->mlx_img, 0, 0) < 0)
 		error_terminate_mlx(cub, mlx_errno);
-	printf("****Game started****\n");
-	printf("map_width: %zu\n", cub->map_width);
-	printf("player.ppos.x: %f\n", cub->player.ppos.x);
-	printf("player.ppos.y: %f\n", cub->player.ppos.y);
-	printf("player.dir.x: %f\n", cub->player.dir.x);
-	printf("player.dir.y: %f\n", cub->player.dir.y);
-	printf("player.plane_x: %f\n", cub->player.plane_x);
-	printf("player.plane_y: %f\n", cub->player.plane_y);
 }
 
 static void	init_player_struct(t_cub *cub)

@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 14:25:00 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/21 14:11:27 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/21 14:22:42 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	check_map_boundaries(t_cub *cub)
 {
 	if (check_top_and_bottom_rows(cub) || check_middle_rows(cub))
 	{
-		fprintf(stderr, "Error\nMap is not surrounded by walls.\n");
+		ft_putstr_fd("Error\nMap is not surrounded by walls.\n", 1);
 		return (1);
 	}
 	return (0);

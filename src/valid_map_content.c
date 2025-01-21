@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:10:49 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/21 14:10:50 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/21 14:22:09 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	check_map_closure(char **map, int row, int col)
 			!is_valid_position(map, row, col - 1) || map[row][col - 1] == ' ' ||
 			!is_valid_position(map, row, col + 1) || map[row][col + 1] == ' ')
 		{
-			fprintf(stderr, "Row %d, col %d\n", row, col);
 			return (1);
 		}
 	}
