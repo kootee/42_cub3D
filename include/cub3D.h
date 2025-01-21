@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
 /*   Updated: 2025/01/21 13:57:59 by psitkin          ###   ########.fr       */
@@ -53,11 +53,11 @@ typedef enum e_errorcode
 	ERROR_INVALID_FILE_NAME = 205,
 	ERROR_INVALID_MAP = 206,
 	ERROR_TEXTURE = 207,
-	ERROR_INVALID_RGB_VAL = 209,
-	ERROR_INVALID_PLAYER = 210,
-	ERROR_UNCLOSED_MAP = 211,
-	ERROR_INVALID_FILE = 212,
-	ERROR_INVALID_CHARACTER = 213
+	ERROR_INVALID_RGB_VAL = 208,
+	ERROR_INVALID_PLAYER = 209,
+	ERROR_UNCLOSED_MAP = 210,
+	ERROR_INVALID_FILE = 211,
+	ERROR_INVALID_CHARACTER = 212
 }	t_errorcode;
 
 typedef enum s_rgb_values
@@ -165,11 +165,10 @@ void		init_game(t_cub *cub);
 void		load_textures(t_cub *cub);
 void		free_textures(t_cub *cub);
 void		free_texture_paths(t_textures *textures);
-
 void		parse_textures(char *line, t_cub *cub);
 void		free_array(char **array);
 void		parse_cub_file(t_cub *cub, char **lines);
-void		copy_map(char **lines, t_cub *cub);
+void		set_texture_path(t_cub *cub, char *line, char **texture_path);
 void		free_all_resources(t_cub *cub);
 
 int			check_valid_characters(char **map, int row, int col);
@@ -182,8 +181,17 @@ int			check_empty_lines(char **map);
 int			check_map_closure(char **map, int row, int col);
 
 /* Parse map */
+void		copy_map(char **lines, t_cub *cub);
 int			validate_arguments(int argc, char **argv);
+void		calculate_map_width(t_cub *cub);
 void		map_floodfill(t_cub *cub);
+int			check_top_and_bottom_rows(t_cub *cub);
+int			check_middle_rows(t_cub *cub);
+int			check_map_boundaries(t_cub *cub);
+int			check_map_closure(char **map, int row, int col);
+int			check_empty_lines(char **map);
+int			is_valid_position(char **map, int row, int col);
+int			check_valid_characters(char **map, int row, int col);
 
 /* Key actions */
 void		left_key(t_cub *cub);
@@ -201,7 +209,6 @@ void		error_terminate_mlx(t_cub *cub, int errno);
 /* Cub utils */
 uint32_t	get_pixel_color(uint8_t *pixel_buffer);
 bool		is_texture_coordinate(char *str);
-void		check_texture(char *path, t_cub *cub);
 void		skip_rgb_whitespace(char **strs);
 int			is_valid_map_line(t_cub *cub, char *line);
 

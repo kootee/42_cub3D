@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:26:45 by psitkin           #+#    #+#             */
-/*   Updated: 2025/01/19 13:42:25 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:12:44 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,13 @@ void	parse_colors(char *line, uint32_t *color, t_cub *cub)
 void	parse_textures(char *line, t_cub *cub)
 {
 	if (strncmp(line, "NO ", 3) == 0 && !cub->textures.north_path)
-	{
-		cub->textures.north_path = ft_strdup(line + 3);
-		check_texture(cub->textures.north_path, cub);
-	}
+		set_texture_path(cub, line + 2, &cub->textures.north_path);
 	else if (strncmp(line, "SO ", 3) == 0 && !cub->textures.south_path)
-	{
-		cub->textures.south_path = ft_strdup(line + 3);
-		check_texture(cub->textures.south_path, cub);
-	}
+		set_texture_path(cub, line + 2, &cub->textures.south_path);
 	else if (strncmp(line, "WE ", 3) == 0 && !cub->textures.west_path)
-	{
-		cub->textures.west_path = ft_strdup(line + 3);
-		check_texture(cub->textures.west_path, cub);
-	}
+		set_texture_path(cub, line + 2, &cub->textures.west_path);
 	else if (strncmp(line, "EA ", 3) == 0 && !cub->textures.east_path)
-	{
-		cub->textures.east_path = ft_strdup(line + 3);
-		check_texture(cub->textures.east_path, cub);
-	}
+		set_texture_path(cub, line + 2, &cub->textures.east_path);
 	else
 		error_terminate_mlx(cub, ERROR_TEXTURE);
 }

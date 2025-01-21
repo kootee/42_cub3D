@@ -15,7 +15,7 @@
 void	init_game(t_cub *cub)
 {
 	load_textures(cub);
-	cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", true);
+	cub->mlx = mlx_init(WIN_X, WIN_Y, "Cub3D", false);
 	if (cub->mlx == NULL)
 		handle_error(mlx_errno);
 	cub->mlx_img = mlx_new_image(cub->mlx, WIN_X, WIN_Y);

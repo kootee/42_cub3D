@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:42:07 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/14 15:41:05 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/19 14:35:28 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	draw_floor_ceiling(t_cub *cub, t_ray_data *ray, int x_coord)
 	while (y_coord < ray->draw_start && y_coord < WIN_Y)
 		ft_putpixel(cub->mlx_img, x_coord, y_coord++, cub->ceiling_color);
 	y_coord = ray->draw_end;
-	while (y_coord < WIN_Y)
+	while (y_coord < WIN_Y - 1)
 		ft_putpixel(cub->mlx_img, x_coord, y_coord++, cub->floor_color);
 }
 

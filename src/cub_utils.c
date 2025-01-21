@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:53:08 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/18 16:36:28 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:12:51 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ bool	is_texture_coordinate(char *str)
 {
 	return (strncmp(str, "NO ", 3) == 0
 		|| strncmp(str, "SO ", 3) == 0
-		||strncmp(str, "WE ", 3) == 0
+		|| strncmp(str, "WE ", 3) == 0
 		|| strncmp(str, "EA ", 3) == 0);
 }
 
-void	check_texture(char *path, t_cub *cub)
+void	set_texture_path(t_cub *cub, char *line, char **texture_path)
 {
-	if (!path)
+	while (*line && (*line == ' ' || *line == '\t' || *line == '\r'))
+		line++;
+	*texture_path = ft_strdup(line);
+	if (!texture_path)
 		error_terminate_mlx(cub, ERROR_MALLOC_FAIL);
 }
 
@@ -43,19 +46,6 @@ void	skip_rgb_whitespace(char **strs)
 		strs[i] = trimmed_str;
 		i++;
 	}
-}
-
-char	*skip_whitespace(char *str)
-{
-	char	*trimmed_str;
-	int		i;
-
-	i = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\r')
-		i++;
-	trimmed_str = ft_strdup(str + i);
-	free(str);
-	return (trimmed_str);
 }
 
 int	is_valid_map_line(t_cub *cub, char *line)
