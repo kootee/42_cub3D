@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/19 15:12:07 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/21 13:46:27 by ktoivola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ typedef enum e_errorcode
 	ERROR_INVALID_FILE_NAME = 205,
 	ERROR_INVALID_MAP = 206,
 	ERROR_TEXTURE = 207,
-	ERROR_INVALID_RGB_VAL = 209,
-	ERROR_INVALID_PLAYER = 210,
-	ERROR_UNCLOSED_MAP = 211,
-	ERROR_INVALID_FILE = 212,
-	ERROR_INVALID_CHARACTER = 213
+	ERROR_INVALID_RGB_VAL = 208,
+	ERROR_INVALID_PLAYER = 209,
+	ERROR_UNCLOSED_MAP = 210,
+	ERROR_INVALID_FILE = 211,
+	ERROR_INVALID_CHARACTER = 212
 }	t_errorcode;
 
 typedef enum s_rgb_values
@@ -178,6 +178,11 @@ void		calculate_map_width(t_cub *cub);
 /* Parse map */
 int			validate_arguments(int argc, char **argv);
 void		map_floodfill(t_cub *cub);
+int			check_top_and_bottom_rows(t_cub *cub);
+int			check_middle_rows(t_cub *cub);
+int			check_map_boundaries(t_cub *cub);
+int			check_map_closure(char **map, int row, int col);
+int			check_empty_lines(char **map);
 
 /* Key actions */
 void		left_key(t_cub *cub);

@@ -1,52 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   valid_map_content.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 13:43:12 by ktoivola          #+#    #+#             */
+/*   Updated: 2025/01/21 13:46:06 by ktoivola         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
-
-static int	check_top_and_bottom_rows(t_cub *cub)
-{
-	size_t	i;
-
-	i = 0;
-	while (cub->map[0][i])
-	{
-		if (cub->map[0][i] != '1' && cub->map[0][i] != ' ')
-			return (1);
-		i++;
-	}
-	i = 0;
-	while (cub->map[cub->map_height - 1][i])
-	{
-		if (cub->map[cub->map_height - 1][i] != '1'
-			&& cub->map[cub->map_height - 1][i] != ' ')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static int	check_middle_rows(t_cub *cub)
-{
-	size_t	i;
-	size_t	len;
-
-	i = 1;
-	while (i < cub->map_height - 1)
-	{
-		len = strlen(cub->map[i]);
-		if (cub->map[i][0] != '1' || cub->map[i][len - 1] != '1')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	check_map_boundaries(t_cub *cub)
-{
-	if (check_top_and_bottom_rows(cub) || check_middle_rows(cub))
-	{
-		fprintf(stderr, "Error\nMap is not surrounded by walls.\n");
-		return (1);
-	}
-	return (0);
-}
 
 void	set_player_direction(t_cub *cub, char p_char)
 {
@@ -114,39 +78,6 @@ int	count_players(t_cub *cub, int *p_count, int row, int col)
 		cub->player.ppos.x = col + 0.5;
 		cub->player.ppos.y = row + 0.5;
 		set_player_direction(cub, cell);
-	}
-	return (0);
-}
-
-int	check_empty_lines(char **map)
-{
-	int	row;
-
-	row = 0;
-	while (map[row])
-	{
-		if (strlen(map[row]) == 0)
-			return (1);
-		row++;
-	}
-	return (0);
-}
-
-int	check_map_closure(char **map, int row, int col)
-{
-	char	cell;
-
-	cell = map[row][col];
-	if (cell == '0' || cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W')
-	{
-		if (!is_valid_position(map, row - 1, col) || map[row - 1][col] == ' ' ||
-			!is_valid_position(map, row + 1, col) || map[row + 1][col] == ' ' ||
-			!is_valid_position(map, row, col - 1) || map[row][col - 1] == ' ' ||
-			!is_valid_position(map, row, col + 1) || map[row][col + 1] == ' ')
-		{
-			fprintf(stderr, "Row %d, col %d\n", row, col);
-			return (1);
-		}
 	}
 	return (0);
 }
