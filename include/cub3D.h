@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/21 13:57:59 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/21 14:42:17 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,8 +185,6 @@ void		copy_map(char **lines, t_cub *cub);
 int			validate_arguments(int argc, char **argv);
 void		calculate_map_width(t_cub *cub);
 void		map_floodfill(t_cub *cub);
-int			check_top_and_bottom_rows(t_cub *cub);
-int			check_middle_rows(t_cub *cub);
 int			check_map_boundaries(t_cub *cub);
 int			check_map_closure(char **map, int row, int col);
 int			check_empty_lines(char **map);
