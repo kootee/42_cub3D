@@ -6,7 +6,7 @@
 /*   By: psitkin <psitkin@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 14:25:00 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/19 17:42:15 by psitkin          ###   ########.fr       */
+/*   Updated: 2025/01/21 14:33:19 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,52 @@ void	calculate_map_width(t_cub *cub)
 		row++;
 	}
 	cub->map_width = max_width;
+}
+
+static int	check_top_and_bottom_rows(t_cub *cub)
+{
+	size_t	i;
+
+	i = 0;
+	while (cub->map[0][i])
+	{
+		if (cub->map[0][i] != '1' && cub->map[0][i] != ' ')
+			return (1);
+		i++;
+	}
+	i = 0;
+	while (cub->map[cub->map_height - 1][i])
+	{
+		if (cub->map[cub->map_height - 1][i] != '1'
+			&& cub->map[cub->map_height - 1][i] != ' ')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+static int	check_middle_rows(t_cub *cub)
+{
+	size_t	i;
+	size_t	len;
+
+	i = 1;
+	while (i < cub->map_height - 1)
+	{
+		len = strlen(cub->map[i]);
+		if (cub->map[i][0] != '1' || cub->map[i][len - 1] != '1')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	check_map_boundaries(t_cub *cub)
+{
+	if (check_top_and_bottom_rows(cub) || check_middle_rows(cub))
+	{
+		ft_putstr_fd("Error\nMap is not surrounded by walls.\n", STDERR_FILENO);
+		return (1);
+	}
+	return (0);
 }

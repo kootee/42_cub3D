@@ -6,7 +6,7 @@
 /*   By: ktoivola <ktoivola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:34:19 by ktoivola          #+#    #+#             */
-/*   Updated: 2025/01/21 14:10:34 by ktoivola         ###   ########.fr       */
+/*   Updated: 2025/01/21 13:57:59 by psitkin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,15 @@ void		free_array(char **array);
 void		parse_cub_file(t_cub *cub, char **lines);
 void		set_texture_path(t_cub *cub, char *line, char **texture_path);
 void		free_all_resources(t_cub *cub);
+
+int			check_valid_characters(char **map, int row, int col);
+void		calculate_map_width(t_cub *cub);
+int			check_map_boundaries(t_cub *cub);
+void		set_player_direction(t_cub *cub, char p_char);
+int			is_valid_position(char **map, int row, int col);
+int			count_players(t_cub *cub, int *p_count, int row, int col);
+int			check_empty_lines(char **map);
+int			check_map_closure(char **map, int row, int col);
 
 /* Parse map */
 void		copy_map(char **lines, t_cub *cub);
